@@ -86,6 +86,24 @@ const shapeMesh = new THREE.Mesh(shapeGeomery, shapeMaterial);
 shapeMesh.position.set(0, 1, 2);
 scene.add(shapeMesh)
 
+// 입체 별 만들기
+const extrudeSettings = {
+  steps: 1,
+  depth: 0.1,
+  bevelEnabled: true, // 모서리 둥글게
+  bevelThickense: 0.1,
+  bevelSize: 0.3,
+  bevelSegments: 100,
+}
+
+const extrudeGeometry = new THREE.ExtrudeGeometry(starShape, extrudeSettings);
+const extrudeMaterial = new THREE.MeshStandardMaterial({color:0x0ddaaf});
+const extrudeMesh = new THREE.Mesh(extrudeGeometry, extrudeMaterial);
+extrudeMesh.position.set(2, 1.3, 2);
+extrudeMesh.castShadow = true;
+extrudeMesh.receiveShadow = true;
+scene.add(extrudeMesh)
+
 // 마우스에 따른 카메라 시점 변경
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.update();
