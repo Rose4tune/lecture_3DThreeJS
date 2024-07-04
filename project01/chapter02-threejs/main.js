@@ -67,6 +67,25 @@ torusMesh.castShadow = true;
 torusMesh.receiveShadow = true;
 scene.add(torusMesh)
 
+// 평면 별 만들기
+const starShape = new THREE.Shape();
+starShape.moveTo(0, 1);
+starShape.lineTo(0.2, 0.2);
+starShape.lineTo(1, 0.2);
+starShape.lineTo(0.4, -0.1);
+starShape.lineTo(0.6, -1);
+starShape.lineTo(0, -0.5);
+starShape.lineTo(-0.6, -1);
+starShape.lineTo(-0.4, -0.1);
+starShape.lineTo(-1, 0.2);
+starShape.lineTo(-0.2, 0.2);
+
+const shapeGeomery = new THREE.ShapeGeometry(starShape);
+const shapeMaterial = new THREE.MeshStandardMaterial({color:0xff00ff});
+const shapeMesh = new THREE.Mesh(shapeGeomery, shapeMaterial);
+shapeMesh.position.set(0, 1, 2);
+scene.add(shapeMesh)
+
 // 마우스에 따른 카메라 시점 변경
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.update();
