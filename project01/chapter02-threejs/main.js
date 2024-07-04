@@ -32,6 +32,7 @@ floor.rotation.x = -Math.PI / 2;
 floor.receiveShadow = true;
 scene.add(floor)
 
+// 정육면체 만들기
 const geometry = new THREE.BoxGeometry(1,1,1); //가로, 세로, 높이
 const material = new THREE.MeshStandardMaterial({color:0xff0000});
 const mesh = new THREE.Mesh(geometry, material);
