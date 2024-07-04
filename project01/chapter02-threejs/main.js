@@ -36,6 +36,7 @@ const geometry = new THREE.BoxGeometry(1,1,1); //가로, 세로, 높이
 const material = new THREE.MeshStandardMaterial({color:0xff0000});
 const mesh = new THREE.Mesh(geometry, material);
 mesh.castShadow = true;
+mesh.receiveShadow = true;
 mesh.position.y = 0.5;
 scene.add(mesh);
 
