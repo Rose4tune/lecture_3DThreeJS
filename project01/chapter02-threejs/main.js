@@ -14,7 +14,8 @@ const camera = new THREE.PerspectiveCamera(
   0.1, //near
   100 //far
 );
-camera.position.y = 1;
+camera.position.y = 5;
+camera.position.y = 5;
 camera.position.z = 5;
 
 // 직사광선
@@ -24,7 +25,7 @@ directionalLight.position.set(3, 4, 5);
 directionalLight.lookAt(0, 0, 0);
 scene.add(directionalLight);
 
-// 평면 Geometry (바닥) 만들기
+// 평면 Geometry (바닥)
 const floorGeometry = new THREE.PlaneGeometry(20, 20);
 const floorMaterial = new THREE.MeshStandardMaterial({color: 0xbbbbbb});
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
@@ -32,109 +33,119 @@ floor.rotation.x = -Math.PI / 2;
 floor.receiveShadow = true;
 scene.add(floor)
 
-// 정육면체 만들기
-const geometry = new THREE.BoxGeometry(1,1,1); //가로, 세로, 높이
-const material = new THREE.MeshStandardMaterial({color:0xff0000});
-const mesh = new THREE.Mesh(geometry, material);
-mesh.castShadow = true;
-mesh.receiveShadow = true;
-mesh.position.y = 0.5;
-scene.add(mesh);
+// Mesh FrontSide
+const frontSideGeometry = new THREE.BoxGeometry(1, 1, 1);
+const frontSideMaterial = new THREE.MeshStandardMaterial({
+  color: 0x00ffff,
+  side: THREE.FrontSide,
+});
+const frontSideMesh = new THREE.Mesh(frontSideGeometry, frontSideMaterial);
+frontSideMesh.position.z = 4;
+frontSideMesh.position.y = 0.5;
+frontSideMesh.castShadow = true;
+frontSideMesh.receiveShadow = true;
+scene.add(frontSideMesh);
 
-// 캡슐 만들기
-const capsuleGeometry = new THREE.CapsuleGeometry(1, 2, 20);
-const capsuleMaterial = new THREE.MeshStandardMaterial({color: 0xffff00});
-const capsuleMesh = new THREE.Mesh(capsuleGeometry, capsuleMaterial);
-capsuleMesh.position.set(3, 1.75, 0);
-capsuleMesh.castShadow = true;
-capsuleMesh.receiveShadow = true;
-scene.add(capsuleMesh)
+// Mesh BackSide
+const backSideGeometry = new THREE.BoxGeometry(1, 1, 1);
+const backSideMaterial = new THREE.MeshStandardMaterial({
+  color: 0x00ff00,
+  side: THREE.BackSide,
+});
+const backSideMesh = new THREE.Mesh(backSideGeometry, backSideMaterial);
+backSideMesh.position.set(2, 0.5, 4);
+backSideMesh.position.y = 0.51;
+backSideMesh.receiveShadow = true;
+scene.add(backSideMesh);
 
-// 원기둥 만들기
-const cylinderGeometry = new THREE.CylinderGeometry(1, 1, 2);
-const cylinderMaterial = new THREE.MeshStandardMaterial({color:0x00ff00});
-const cylinderMesh = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
-cylinderMesh.position.set(-3, 1, 0);
-cylinderMesh.castShadow = true;
-cylinderMesh.receiveShadow = true;
-scene.add(cylinderMesh)
+// Mesh DoubleSide
+const doubleSideGeometry = new THREE.BoxGeometry(1, 1, 1);
+const doubleSideMaterial = new THREE.MeshStandardMaterial({
+  color: 0x00ff00,
+  side: THREE.DoubleSide,
+});
+const doubleSideMesh = new THREE.Mesh(doubleSideGeometry, doubleSideMaterial);
+doubleSideMesh.position.set(4, 0.5, 4);
+doubleSideMesh.position.y = 0.51;
+doubleSideMesh.receiveShadow = true;
+scene.add(doubleSideMesh);
 
-// 도넛 만들기
-const torusGeomety = new THREE.TorusGeometry(0.5, 0.1, 16, 100);
-const torusMaterial = new THREE.MeshStandardMaterial({color: 0x0000ff});
-const torusMesh = new THREE.Mesh(torusGeomety, torusMaterial)
-torusMesh.position.set(0, 0.5, 1);
-torusMesh.castShadow = true;
-torusMesh.receiveShadow = true;
-scene.add(torusMesh)
+// TorusKnot
+const torusKnotGeometry = new THREE.TorusKnotGeometry(0.5, 0.15, 100, 20);
+//** Mesh Standard Material */
+const torusKnotStandMaterial = new THREE.MeshStandardMaterial({color: 0xff0000});
+torusKnotStandMaterial.roughness = 0.5;
+torusKnotStandMaterial.metalness = 1;
 
-// 평면 별 만들기
-const starShape = new THREE.Shape();
-starShape.moveTo(0, 1);
-starShape.lineTo(0.2, 0.2);
-starShape.lineTo(1, 0.2);
-starShape.lineTo(0.4, -0.1);
-starShape.lineTo(0.6, -1);
-starShape.lineTo(0, -0.5);
-starShape.lineTo(-0.6, -1);
-starShape.lineTo(-0.4, -0.1);
-starShape.lineTo(-1, 0.2);
-starShape.lineTo(-0.2, 0.2);
+const torusKnotStandardMesh = new THREE.Mesh(torusKnotGeometry, torusKnotStandMaterial);
+torusKnotStandardMesh.position.set(-4, 1, 0);
+torusKnotStandardMesh.castShadow = true;
+torusKnotStandardMesh.receiveShadow = true;
+scene.add(torusKnotStandardMesh)
 
-const shapeGeomery = new THREE.ShapeGeometry(starShape);
-const shapeMaterial = new THREE.MeshStandardMaterial({color:0xff00ff});
-const shapeMesh = new THREE.Mesh(shapeGeomery, shapeMaterial);
-shapeMesh.position.set(0, 1, 2);
-scene.add(shapeMesh)
+//** Mesh Lambert Material */ 
+const torusKnotLambertMaterial = new THREE.MeshLambertMaterial({color:0xff0000});
+torusKnotLambertMaterial.emissive = new THREE.Color(0x00ff00);
+torusKnotLambertMaterial.emissiveIntensity = 0.2;
 
-// 입체 별 만들기
-const extrudeSettings = {
-  steps: 1,
-  depth: 0.1,
-  bevelEnabled: true, // 모서리 둥글게
-  bevelThickense: 0.1,
-  bevelSize: 0.3,
-  bevelSegments: 100,
-}
+const torusKnotLambertMesh = new THREE.Mesh(torusKnotGeometry, torusKnotLambertMaterial);
+torusKnotLambertMesh.position.set(-2, 1, 0);
+torusKnotLambertMesh.castShadow = true;
+torusKnotLambertMesh.receiveShadow = true;
+scene.add(torusKnotLambertMesh)
 
-const extrudeGeometry = new THREE.ExtrudeGeometry(starShape, extrudeSettings);
-const extrudeMaterial = new THREE.MeshStandardMaterial({color:0x0ddaaf});
-const extrudeMesh = new THREE.Mesh(extrudeGeometry, extrudeMaterial);
-extrudeMesh.position.set(2, 1.3, 2);
-extrudeMesh.castShadow = true;
-extrudeMesh.receiveShadow = true;
-scene.add(extrudeMesh)
+//** Mesh Phong Material */ 
+const torusKnotPhongMaterial = new THREE.MeshPhongMaterial({color:0xff0000});
+torusKnotPhongMaterial.emissive = new THREE.Color(0x00ff00);
+torusKnotPhongMaterial.emissiveIntensity = 0.2;
+torusKnotPhongMaterial.specular = new THREE.Color(0x0000ff);
+torusKnotPhongMaterial.shininess = 100;
 
-// 구 만들기
-const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
-const sphereMaterial = new THREE.MeshStandardMaterial({color:0x98daaf});
-const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-sphere.position.set(0, 1, -3);
-// scene.add(sphere)
+const torusKnotPhongMesh = new THREE.Mesh(torusKnotGeometry, torusKnotPhongMaterial);
+torusKnotPhongMesh.position.set(0, 1, 0);
+torusKnotPhongMesh.castShadow = true;
+torusKnotPhongMesh.receiveShadow = true;
+scene.add(torusKnotPhongMesh)
 
-// 점으로 나타내기
-const numPoints = 1000;
-const positions = new Float32Array(numPoints * 3);
+//** Mesh Basic Material */ 
+const torusKnotBasicMaterial = new THREE.MeshBasicMaterial({color:0xff0000});
+const torusKnotBasicMesh = new THREE.Mesh(torusKnotGeometry, torusKnotBasicMaterial);
+torusKnotBasicMesh.position.set(2, 1, 0);
+torusKnotBasicMesh.castShadow = true;
+torusKnotBasicMesh.receiveShadow = true;
+scene.add(torusKnotBasicMesh)
 
-for (let i = 0; i < numPoints.length; i++) {
-  const x = (Math.random() - 0.5) * 1;
-  const y = (Math.random() - 0.5) * 1;
-  const z = (Math.random() - 0.5) * 1;
+//** Mesh Depth Material */ 
+const torusKnotDepthMaterial = new THREE.MeshDepthMaterial({color:0xffffff});
+torusKnotDepthMaterial.opacity = 0.5;
+const torusKnotDepthMesh = new THREE.Mesh(torusKnotGeometry, torusKnotDepthMaterial);
+torusKnotDepthMesh.position.set(4, 1, 0);
+torusKnotDepthMesh.castShadow = true;
+torusKnotDepthMesh.receiveShadow = true;
+scene.add(torusKnotDepthMesh)
 
-  positions[i * 3] = x;
-  positions[i * 3 + 1] = y;
-  positions[i * 3 + 2] = z;
-}
+// Texture Loader
+const textureLoader = new THREE.TextureLoader();
+//** 동기 방식 */
+textureLoader.load("/threejs.webp", (texture) => {
+  const textureBoxGeometry = new THREE.BoxGeometry(1, 1, 1);
+  const textureMaterial = new THREE.MeshStandardMaterial({map: texture});
+  const textureMesh = new THREE.Mesh(textureBoxGeometry, textureMaterial);
+  textureMesh.position.set(0, 0.5, 2);
+  textureMesh.castShadow = true;
+  textureMesh.receiveShadow = true;
+  scene.add(textureMesh)
+})
+//** 비동기 방식 */
+const texture = await textureLoader.loadAsync('/threejs.webp');
+const textureBoxGeometry = new THREE.BoxGeometry(1, 1, 1);
+const textureMaterial = new THREE.MeshStandardMaterial({map: texture});
+const textureMesh = new THREE.Mesh(textureBoxGeometry, textureMaterial);
+textureMesh.position.set(2, 0.5, 2);
+textureMesh.castShadow = true;
+textureMesh.receiveShadow = true;
+scene.add(textureMesh)
 
-const bufferGeometry = new THREE.BufferGeometry(); // 일반 geometry 보다 렌더링을 좀 더 효율적으로 할 수 있음
-bufferGeometry.setAttribute(
-  "position",
-  new THREE.BufferAttribute(positions, 3)
-)
-const pointsMaterial = new THREE.PointsMaterial({color: 0xffff00, size:0.05});
-const point = new THREE.Points(sphereGeometry, pointsMaterial);
-point.position.set(0, 0, -5);
-scene.add(point)
 
 // 마우스에 따른 카메라 시점 변경
 const orbitControls = new OrbitControls(camera, renderer.domElement);
@@ -151,6 +162,7 @@ window.addEventListener('resize', () => {
 const render = () => {
   renderer.render(scene, camera);
   requestAnimationFrame(render)
+  textureMesh.rotation.y += 0.01;
 }
 
 render();
