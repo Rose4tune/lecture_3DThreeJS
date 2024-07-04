@@ -48,6 +48,15 @@ capsuleMesh.castShadow = true;
 capsuleMesh.receiveShadow = true;
 scene.add(capsuleMesh)
 
+// 원기둥 만들기
+const cylinderGeometry = new THREE.CylinderGeometry(1, 1, 2);
+const cylinderMaterial = new THREE.MeshStandardMaterial({color:0x00ff00});
+const cylinderMesh = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+cylinderMesh.position.set(-3, 1, 0);
+cylinderMesh.castShadow = true;
+cylinderMesh.receiveShadow = true;
+scene.add(cylinderMesh)
+
 // 마우스에 따른 카메라 시점 변경
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.update();
