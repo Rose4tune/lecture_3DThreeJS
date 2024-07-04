@@ -109,7 +109,31 @@ const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
 const sphereMaterial = new THREE.MeshStandardMaterial({color:0x98daaf});
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphere.position.set(0, 1, -3);
-scene.add(sphere)
+// scene.add(sphere)
+
+// 점으로 나타내기
+const numPoints = 1000;
+const positions = new Float32Array(numPoints * 3);
+
+for (let i = 0; i < numPoints.length; i++) {
+  const x = (Math.random() - 0.5) * 1;
+  const y = (Math.random() - 0.5) * 1;
+  const z = (Math.random() - 0.5) * 1;
+
+  positions[i * 3] = x;
+  positions[i * 3 + 1] = y;
+  positions[i * 3 + 2] = z;
+}
+
+const bufferGeometry = new THREE.BufferGeometry(); // 일반 geometry 보다 렌더링을 좀 더 효율적으로 할 수 있음
+bufferGeometry.setAttribute(
+  "position",
+  new THREE.BufferAttribute(positions, 3)
+)
+const pointsMaterial = new THREE.PointsMaterial({color: 0xffff00, size:0.05});
+const point = new THREE.Points(sphereGeometry, pointsMaterial);
+point.position.set(0, 0, -5);
+scene.add(point)
 
 // 마우스에 따른 카메라 시점 변경
 const orbitControls = new OrbitControls(camera, renderer.domElement);
