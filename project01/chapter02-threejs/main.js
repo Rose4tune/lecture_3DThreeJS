@@ -37,6 +37,15 @@ const mesh = new THREE.Mesh(geometry, material);
 
 scene.add(mesh);
 
+// 캡슐 만들기
+const capsuleGeometry = new THREE.CapsuleGeometry(1, 2, 20);
+const capsuleMaterial = new THREE.MeshStandardMaterial({color: 0xffff00});
+const capsuleMesh = new THREE.Mesh(capsuleGeometry, capsuleMaterial);
+capsuleMesh.position.set(3, 1.75, 0);
+capsuleMesh.castShadow = true;
+capsuleMesh.receiveShadow = true;
+scene.add(capsuleMesh)
+
 // 마우스에 따른 카메라 시점 변경
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.update();
