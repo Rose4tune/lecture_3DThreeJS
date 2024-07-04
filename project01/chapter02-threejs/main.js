@@ -23,6 +23,14 @@ directionalLight.position.set(3, 4, 5);
 directionalLight.lookAt(0, 0, 0);
 scene.add(directionalLight);
 
+// 평면 Geometry (바닥) 만들기
+const floorGeometry = new THREE.PlaneGeometry(20, 20);
+const floorMaterial = new THREE.MeshStandardMaterial({color: 0xbbbbbb});
+const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+floor.rotation.x = -Math.PI / 2;
+floor.receiveShadow = true;
+scene.add(floor)
+
 const geometry = new THREE.BoxGeometry(1,1,1); //가로, 세로, 높이
 const material = new THREE.MeshStandardMaterial({color:0xff0000});
 const mesh = new THREE.Mesh(geometry, material);
