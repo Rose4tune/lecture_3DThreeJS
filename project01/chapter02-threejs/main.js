@@ -1,6 +1,10 @@
 import "./style.css";
 import * as THREE from "three";
 
+const renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
   60, //fov
@@ -8,7 +12,6 @@ const camera = new THREE.PerspectiveCamera(
   0.1, //near
   100 //far
 );
-camera.position.x = 1;
 camera.position.y = 1;
 camera.position.z = 5;
 
@@ -17,10 +20,6 @@ const material = new THREE.MeshBasicMaterial({color:0xff0000});
 const mesh = new THREE.Mesh(geometry, material);
 
 scene.add(mesh);
-
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
 
 window.addEventListener('resize', () => {
   // 리사이즈 시 화면과 물체의 크기가 이상해 지지 않도록 하는 기본 셋팅
