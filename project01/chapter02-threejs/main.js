@@ -3,6 +3,7 @@ import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.shadowMap.enabled = true;
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -34,7 +35,8 @@ scene.add(floor)
 const geometry = new THREE.BoxGeometry(1,1,1); //가로, 세로, 높이
 const material = new THREE.MeshStandardMaterial({color:0xff0000});
 const mesh = new THREE.Mesh(geometry, material);
-
+mesh.castShadow = true;
+mesh.position.y = 0.5;
 scene.add(mesh);
 
 // 캡슐 만들기
