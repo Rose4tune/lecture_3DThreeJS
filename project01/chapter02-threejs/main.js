@@ -104,6 +104,13 @@ extrudeMesh.castShadow = true;
 extrudeMesh.receiveShadow = true;
 scene.add(extrudeMesh)
 
+// 구 만들기
+const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+const sphereMaterial = new THREE.MeshStandardMaterial({color:0x98daaf});
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.position.set(0, 1, -3);
+scene.add(sphere)
+
 // 마우스에 따른 카메라 시점 변경
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.update();
