@@ -57,6 +57,15 @@ cylinderMesh.castShadow = true;
 cylinderMesh.receiveShadow = true;
 scene.add(cylinderMesh)
 
+// 도넛 만들기
+const torusGeomety = new THREE.TorusGeometry(0.5, 0.1, 16, 100);
+const torusMaterial = new THREE.MeshStandardMaterial({color: 0x0000ff});
+const torusMesh = new THREE.Mesh(torusGeomety, torusMaterial)
+torusMesh.position.set(0, 0.5, 1);
+torusMesh.castShadow = true;
+torusMesh.receiveShadow = true;
+scene.add(torusMesh)
+
 // 마우스에 따른 카메라 시점 변경
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.update();
