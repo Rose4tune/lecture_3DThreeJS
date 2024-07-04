@@ -15,8 +15,15 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.y = 1;
 camera.position.z = 5;
 
+// 직사광선
+const directionalLight = new THREE.DirectionalLight(0xffffff, 5); //빛의 색, 세기
+directionalLight.castShadow = true; // 빛의 그림자 설정
+directionalLight.position.set(3, 4, 5);
+directionalLight.lookAt(0, 0, 0);
+scene.add(directionalLight);
+
 const geometry = new THREE.BoxGeometry(1,1,1); //가로, 세로, 높이
-const material = new THREE.MeshBasicMaterial({color:0xff0000});
+const material = new THREE.MeshStandardMaterial({color:0xff0000});
 const mesh = new THREE.Mesh(geometry, material);
 
 scene.add(mesh);
