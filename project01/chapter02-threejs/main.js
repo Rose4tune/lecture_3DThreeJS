@@ -1,5 +1,6 @@
 import "./style.css";
 import * as THREE from "three";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -28,6 +29,10 @@ const mesh = new THREE.Mesh(geometry, material);
 
 scene.add(mesh);
 
+// 마우스에 따른 카메라 시점 변경
+const orbitControls = new OrbitControls(camera, renderer.domElement);
+orbitControls.update();
+
 window.addEventListener('resize', () => {
   // 리사이즈 시 화면과 물체의 크기가 이상해 지지 않도록 하는 기본 셋팅
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -36,4 +41,9 @@ window.addEventListener('resize', () => {
   renderer.render(scene, camera);
 })
 
-renderer.render(scene, camera);
+const render = () => {
+  renderer.render(scene, camera);
+  requestAnimationFrame(render)
+}
+
+render();
