@@ -3,7 +3,8 @@ import * as THREE from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = true; // 그림자 활성화
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // BasicShadowMap, PCFShadowMap
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -19,68 +20,31 @@ camera.position.y = 5;
 camera.position.z = 5;
 
 //** Directional Light */
-// const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
-// directionalLight.castShadow = true;
-// directionalLight.position.set(3, 4, 5);
-// directionalLight.lookAt(0, 0, 0);
-// scene.add(directionalLight);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+directionalLight.castShadow = true;
+directionalLight.position.set(3, 4, 5);
+directionalLight.lookAt(0, 0, 0);
+scene.add(directionalLight);
 
-// const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
-// scene.add(directionalLightHelper)
+// Shadow Size
+directionalLight.shadow.mapSize.width = 4096;
+directionalLight.shadow.mapSize.height = 4096;
 
+// Shadow Camera
+directionalLight.shadow.camera.top = 2;
+directionalLight.shadow.camera.bottom = -2;
+directionalLight.shadow.camera.left = -2;
+directionalLight.shadow.camera.right = 2;
+directionalLight.shadow.camera.near = 0.1;
+directionalLight.shadow.camera.far = 100;
 
-//** Ambient Light */
-// const ambientLight = new THREE.AmbientLight(0xffffff, 5);
-// scene.add(ambientLight)
-
-
-//** Hemisphere Light */
-// const hemisphereLight = new THREE.HemisphereLight(0xb4a912, 0x12f34f, 5);
-// hemisphereLight.position.set(0, 1, 0);
-// hemisphereLight.lookAt(0, 0, 0);
-// scene.add(hemisphereLight)
-
-// const hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 1);
-// scene.add(hemisphereLightHelper)
-
-
-//** Point Light */
-// const pointLight = new THREE.PointLight(0xffffff, 5, 5, 4);
-// pointLight.castShadow = true;
-// pointLight.position.set(1, 1, 1);
-// scene.add(pointLight)
-
-// const pointLightHelper = new THREE.PointLightHelper(pointLight, 1);
-// scene.add(pointLightHelper)
-
-
-//** Rect Area Light */
-// const rectAreaLight = new THREE.RectAreaLight(0xffffff, 5, 2, 2);
-// rectAreaLight.position.set(0, 1, 2);
-// scene.add(rectAreaLight)
-
-
-//** Spot Light */
-const targetObj = new THREE.Object3D();
-scene.add(targetObj);
-
-const spotLight = new THREE.SpotLight(0xffffff, 10, 100, Math.PI/4, 1, 1);
-spotLight.castShadow = true;
-spotLight.position.set(0, 3, 0);
-spotLight.target = targetObj;
-spotLight.target.position.set(1, 0, 2);
-scene.add(spotLight)
-
-const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-scene.add(spotLightHelper)
+const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1);
+scene.add(directionalLightHelper)
 
 
 // 평면 Geometry (바닥)
 const floorGeometry = new THREE.PlaneGeometry(20, 20);
-const floorMaterial = new THREE.MeshStandardMaterial({
-  color: 0xbbbbbb,
-  // side: THREE.DoubleSide
-});
+const floorMaterial = new THREE.MeshStandardMaterial({color: 0xbbbbbb});
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -Math.PI / 2;
 floor.receiveShadow = true;
@@ -88,7 +52,7 @@ scene.add(floor)
 
 // 육면체
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-const boxMaterial = new THREE.MeshStandardMaterial({color:0xffffff});
+const boxMaterial = new THREE.MeshStandardMaterial({color:0xffff00});
 const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
 boxMesh.castShadow = true;
 boxMesh.receiveShadow = true;
