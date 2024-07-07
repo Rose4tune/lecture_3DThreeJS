@@ -46,17 +46,9 @@ const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight
 
 //** GLTFLoader */
 const glrfLoader = new GLTFLoader();
-// 동기
-// glrfLoader.load("/dancer.glb", (data) => {
-//   const chracter = data.scene;
-//   chracter.position.y = 0.8
-//   chracter.scale.set(0.01, 0.01, 0.01)
-//   scene.add(chracter)
-// })
-
-// 비동기
 const gltf = await glrfLoader.loadAsync("/dancer.glb");
 const chracter = gltf.scene;
+const animationClips = gltf.animations;
 chracter.position.y = 0.8;
 chracter.scale.set(0.01, 0.01, 0.01);
 chracter.castShadow = true;
@@ -70,6 +62,17 @@ chracter.traverse(obj => {
 })
 console.log(gltf)
 scene.add(chracter)
+
+const mixer = new THREE.AnimationMixer(chracter);
+const action = mixer.clipAction(animationClips[3]);
+action.setLoop(THREE.LoopRepeat);
+// action.setDuration(10);
+// action.setEffectiveTimeScale(0.5);
+// action.setEffectiveWeight(2);
+action.play();
+// setTimeout(() => {
+//   mixer.clipAction(animationClips[3]).paused = true;
+// }, 3000)
 
 // 평면 Geometry (바닥)
 const floorGeometry = new THREE.PlaneGeometry(20, 20);
@@ -107,6 +110,9 @@ const render = () => {
   renderer.render(scene, camera);
   requestAnimationFrame(render)
   orbitControls.update();
+  if(mixer) {
+    mixer.update(clock.getDelta())
+  }
 }
 
 render();
