@@ -1,10 +1,13 @@
-function App() {
-  const [count, setCount] = useState(0)
+import { MainCanvas } from "./component/MainCanvas"
 
+function App() {
   return (
-    <>
-      <h1>지금부터 r3f를 배워보자</h1>
-    </>
+    <div style={{
+      width: "100vw",
+      height: "100vh"
+    }}>
+      <MainCanvas />
+    </div>
   )
 }
 
