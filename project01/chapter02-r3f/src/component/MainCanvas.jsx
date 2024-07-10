@@ -1,6 +1,7 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Color } from "three";
+import { Meshes } from "./Meshes";
 
 export const MainCanvas = () => {
   return (
@@ -20,6 +21,7 @@ export const MainCanvas = () => {
     >
       <OrbitControls/>
       <directionalLight
+        castShadow
         args={[0xffffff, 5]}
         position={[4, 4, 4]}
         shadow-camera-left={-25}
@@ -31,10 +33,7 @@ export const MainCanvas = () => {
         shadow-mapSize-width={4096}
         shadow-mapSize-height={4096}
       />
-      <mesh position={[1, 0, 0]}>
-        <boxGeometry args={[1, 1, 1]}/>
-        <meshBasicMaterial color={0xff0000}/>
-      </mesh>
+      <Meshes/>
     </Canvas>
   )
 }
