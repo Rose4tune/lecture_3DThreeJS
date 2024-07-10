@@ -1,4 +1,4 @@
-import { Box, Circle, Cone, Cylinder, Plane, Sphere, Torus } from '@react-three/drei';
+import { Box, Circle, Cone, Cylinder, Plane, Sphere, Torus, TorusKnot } from '@react-three/drei';
 import * as THREE from 'three';
 
 export const Meshes = () => {
@@ -32,6 +32,58 @@ export const Meshes = () => {
         position={[-3, 1.2, -3]}
         material-color={"hotpink"}
       />
+
+      {/* Material 실습 */}
+      <TorusKnot
+        args={[1, 0.2, 128, 128, 2, 3]}
+        position={[-3, 1.6, 0]}
+        castShadow
+        receiveShadow
+      >
+        <meshStandardMaterial
+          color={0xff0000}
+          roughness={0.5}
+          metalness={1}
+        />
+      </TorusKnot>
+      <TorusKnot
+        args={[1, 0.2, 128, 128, 2, 3]}
+        position={[-7, 1.6, 0]}
+        material-color={"teal"}
+        castShadow
+        receiveShadow
+      >
+        <meshLambertMaterial
+          color={0x0abff0}
+          emissive={0xff0000}
+          emissiveIntensity={0.5}
+        />
+      </TorusKnot>
+      <TorusKnot
+        args={[1, 0.2, 128, 128, 2, 3]}
+        position={[-11, 1.6, 0]}
+        material-color={"teal"}
+        castShadow
+        receiveShadow
+      >
+        <meshPhongMaterial
+          color={0xff0000}
+          emissive={0x00ff00}
+          emissiveIntensity={0.5}
+          specular={0x0000ff}
+          shininess={100}
+        />
+      </TorusKnot>
+      <TorusKnot
+        args={[1, 0.2, 128, 128, 2, 3]}
+        position={[-15, 1.6, 0]}
+        castShadow
+        receiveShadow
+      >
+        <meshDepthMaterial
+          opacity={0.5}
+        />
+      </TorusKnot>
     </>
   )
 }
