@@ -9,7 +9,7 @@ export const MainCanvas = () => {
   return (
     <Canvas
       gl={{antialias: true}}
-      shadows={{// =="soft"
+      shadows={{
         enabled: true,
         type: THREE.PCFShadowMap
       }}
