@@ -13,7 +13,7 @@ export const Meshes = () => {
         castShadow
         receiveShadow
       >
-        <meshStandardMaterial color={0xff0000}/>
+        <meshStandardMaterial color={0xffffff}/>
       </TorusKnot>
     </>
   )
