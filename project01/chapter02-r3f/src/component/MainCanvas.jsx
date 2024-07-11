@@ -3,12 +3,16 @@ import { Canvas } from "@react-three/fiber";
 import { Color } from "three";
 import { Meshes } from "./Meshes";
 import { Lights } from "./Lights";
+import * as THREE from "three";
 
 export const MainCanvas = () => {
   return (
     <Canvas
       gl={{antialias: true}}
-      shadows={"soft"}
+      shadows={{// =="soft"
+        enabled: true,
+        type: THREE.PCFShadowMap
+      }}
       camera={{
         fov: 60,
         aspect: window.innerWidth / window.innerHeight,

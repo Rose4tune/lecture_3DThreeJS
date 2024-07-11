@@ -8,19 +8,19 @@ export const Lights = () => {
   // useHelper(lightRef, THREE.PointLightHelper, 1, 0xffff00);
   // useHelper(lightRef, THREE.HemisphereLightHelper, 1, 0xffff00);
   
-  const targetRef = useRef(null);
-  const [target, setTarget] = useState();
+  // const targetRef = useRef(null);
+  // const [target, setTarget] = useState();
 
-  useHelper(lightRef, THREE.SpotLightHelper, 1, 0xffffff);
+  // useHelper(lightRef, THREE.SpotLightHelper, 1, 0xffffff);
 
-  useEffect(() => {
-    if(targetRef.current) setTarget(targetRef.current);
-  }, []);
+  // useEffect(() => {
+  //   if(targetRef.current) setTarget(targetRef.current);
+  // }, []);
   
 
   return (
     <>
-      {/* <directionalLight
+      <directionalLight
         ref={lightRef}
         castShadow
         args={[0xffffff, 5]}
@@ -33,7 +33,7 @@ export const Lights = () => {
         shadow-camera-far={1000}
         shadow-mapSize-width={4096}
         shadow-mapSize-height={4096}
-      /> */}
+      />
 
       {/* <ambientLight args={[0xffffff, 10]}/> */}
 
@@ -63,7 +63,7 @@ export const Lights = () => {
         castShadow
       /> */}
 
-      <SpotLight
+      {/* <SpotLight
         color={0xffffff}
         intensity={10}
         distance={100}
@@ -79,7 +79,7 @@ export const Lights = () => {
         debug
         position={[3, 3, 3]}
         target={target}
-      />
+      /> */}
     </>
   )
 }
