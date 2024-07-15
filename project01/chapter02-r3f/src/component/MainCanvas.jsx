@@ -1,4 +1,6 @@
 import { Canvas } from "@react-three/fiber";
+import { Physics } from "@react-three/cannon";
+
 import { Color } from "three";
 import { Meshes } from "./Meshes";
 import { Lights } from "./Lights";
@@ -24,9 +26,17 @@ export const MainCanvas = () => {
         background: new Color(0x000000)
       }}
     >
+      <Physics
+        gravity={[0, -9, 0]} //힘 작용 방향 (아래쪽)
+        defaultContactMaterial={{
+          restitution: 0.1,
+          friction: 1
+        }}
+      >
+        <Lights/>
+        <Meshes/>
+      </Physics>
       <Controls/>
-      <Lights/>
-      <Meshes/>
     </Canvas>
   )
 }
