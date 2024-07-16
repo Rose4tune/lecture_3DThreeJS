@@ -1,11 +1,13 @@
 import {
   Box,
   Circle,
+  Points,
   useAnimations,
   useGLTF,
   useScroll,
+  useTexture,
 } from "@react-three/drei";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import gsap from "gsap";
 import { IsEnteredAtom } from "../stores";
@@ -20,6 +22,16 @@ export default function Dancer() {
   const dancerRef = useRef(null);
   const { scene, animations } = useGLTF("/models/dancer.glb");
   const { actions } = useAnimations(animations, dancerRef);
+
+  const texture = useTexture("/texture/5.png");
+  const { positions } = useMemo(() => {
+    const count = 500;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      positions[i] = (Math.random() - 0.5) * 25;
+    }
+    return { positions };
+  }, []);
 
   const scroll = useScroll();
 
@@ -134,6 +146,45 @@ export default function Dancer() {
         >
           <meshStandardMaterial color={"#dc4f00"} side={THREE.DoubleSide} />
         </Circle>
+
+        <Points positions={positions.slice(0, positions.length / 3)}>
+          <pointsMaterial
+            size={0.5}
+            color={new THREE.Color("#dc4f00")}
+            sizeAttenuation
+            depthWrite
+            alphaMap={texture}
+            transparent
+            alphaTest={0.001}
+          />
+        </Points>
+        <Points
+          positions={positions.slice(
+            positions.length / 3,
+            (positions.length * 2) / 3
+          )}
+        >
+          <pointsMaterial
+            size={0.5}
+            color={new THREE.Color("#dc4f00")}
+            sizeAttenuation
+            depthWrite
+            alphaMap={texture}
+            transparent
+            alphaTest={0.001}
+          />
+        </Points>
+        <Points positions={positions.slice((positions.length * 2) / 3)}>
+          <pointsMaterial
+            size={0.5}
+            color={new THREE.Color("#dc4f00")}
+            sizeAttenuation
+            depthWrite
+            alphaMap={texture}
+            transparent
+            alphaTest={0.001}
+          />
+        </Points>
       </>
     );
   }
