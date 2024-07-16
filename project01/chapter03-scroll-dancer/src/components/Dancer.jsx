@@ -1,10 +1,17 @@
-import { useAnimations, useGLTF, useScroll } from "@react-three/drei";
+import {
+  Box,
+  Circle,
+  useAnimations,
+  useGLTF,
+  useScroll,
+} from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import gsap from "gsap";
 import { IsEnteredAtom } from "../stores";
 import { Loader } from "./Loader";
 import { useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
 
 let timeline;
 export default function Dancer() {
@@ -98,8 +105,35 @@ export default function Dancer() {
   if (isEntered) {
     return (
       <>
-        <ambientLight intensity={2} />
         <primitive ref={dancerRef} object={scene} scale={0.05} />
+        <ambientLight intensity={2} />
+        <rectAreaLight position={[0, 10, 0]} intensity={30} />
+        <pointLight
+          position={[0, 5, 0]}
+          intensity={45}
+          castShadow
+          receiveShadow
+        />
+        <hemisphereLight
+          position={[0, 5, 0]}
+          intensity={0}
+          groundColor={"lime"}
+          color={"blue"}
+        />
+
+        <Box position={[0, 0, 0]} args={[100, 100, 100]}>
+          <meshStandardMaterial color={"#dc4f00"} side={THREE.DoubleSide} />
+        </Box>
+
+        <Circle
+          castShadow
+          receiveShadow
+          args={[8, 32]}
+          rotation-x={-Math.PI / 2}
+          position-y={-4.4}
+        >
+          <meshStandardMaterial color={"#dc4f00"} side={THREE.DoubleSide} />
+        </Circle>
       </>
     );
   }
