@@ -2,6 +2,7 @@ import {
   Box,
   Circle,
   Points,
+  PositionalAudio,
   useAnimations,
   useGLTF,
   useScroll,
@@ -332,6 +333,12 @@ export default function Dancer() {
             alphaTest={0.001}
           />
         </Points>
+        <PositionalAudio
+          position={[-24, 0, 0]}
+          autoplay
+          url="/audio/bgm.mp3"
+          distance={50}
+        />
       </>
     );
   }
