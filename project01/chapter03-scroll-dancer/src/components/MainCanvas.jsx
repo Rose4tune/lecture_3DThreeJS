@@ -4,9 +4,13 @@ import { ScrollControls } from "@react-three/drei";
 import * as THREE from "three";
 import Dancer from "./Dancer";
 import { Loader } from "./Loader";
+import { MovingDOM } from "./MovingDOM";
+import { useRecoilValue } from "recoil";
+import { IsEnteredAtom } from "../stores";
 
 export default function MainCanvas() {
   const aspectRatio = window.innerWidth / window.innerHeight;
+  const isEntered = useRecoilValue(IsEnteredAtom);
   return (
     <Canvas
       id="canvas"
@@ -21,8 +25,9 @@ export default function MainCanvas() {
       }}
       scene={{ background: new THREE.Color(0x000000) }}
     >
-      <ScrollControls pages={8} damping={0.25}>
+      <ScrollControls pages={isEntered ? 8 : 0} damping={0.25}>
         <Suspense fallback={<Loader />}>
+          <MovingDOM />
           <Dancer />
         </Suspense>
       </ScrollControls>
