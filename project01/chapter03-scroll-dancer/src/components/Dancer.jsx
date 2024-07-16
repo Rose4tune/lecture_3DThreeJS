@@ -1,17 +1,25 @@
-import { useAnimations, useGLTF } from "@react-three/drei";
+import { useAnimations, useGLTF, useScroll } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import gsap from "gsap";
 import { IsEnteredAtom } from "../stores";
 import { Loader } from "./Loader";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 
+let timeline;
 export default function Dancer() {
   const three = useThree();
   const isEntered = useRecoilValue(IsEnteredAtom);
   const dancerRef = useRef(null);
   const { scene, animations } = useGLTF("/models/dancer.glb");
   const { actions } = useAnimations(animations, dancerRef);
+
+  const scroll = useScroll();
+
+  useFrame(() => {
+    if (!isEntered) return;
+    timeline.seek(scroll.offset * timeline.duration());
+  });
 
   useEffect(() => {
     if (!isEntered) return;
@@ -44,6 +52,20 @@ export default function Dancer() {
       }
     );
   }, [isEntered, three.camera.position]);
+
+  useEffect(() => {
+    if (!isEntered) return;
+    if (!dancerRef.current) return;
+    timeline = gsap.timeline();
+    timeline.from(
+      dancerRef.current.rotation,
+      {
+        duration: 4,
+        y: -4 * Math.PI,
+      },
+      0.5
+    );
+  }, [isEntered]);
 
   if (isEntered) {
     return (
