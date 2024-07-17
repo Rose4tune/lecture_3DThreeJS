@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-
 import * as THREE from "three";
+import { InstancedBoxes } from "./InstancedBoxes";
 
 export const MainCanvas = () => {
   return (
@@ -19,6 +19,7 @@ export const MainCanvas = () => {
       <ambientLight intensity={2} />
       <directionalLight position={[100, 100, 100]} intensity={2} />
       <OrbitControls />
+      <InstancedBoxes />
     </Canvas>
   );
 };
