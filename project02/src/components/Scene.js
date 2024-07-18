@@ -30,10 +30,14 @@ export default function Scene() {
   return (
     <>
       <Earth position={[0, -0.7, -2]} />
-      {
-        content && <Weather weather={"clear"} />
-        // weather={content[0].weatherData.weather[0].main.toLowerCase()}
-      }
+      {content?.map((el, i) => (
+        <Weather
+          key={i + "ModelKey"}
+          position={[-1 + i * 0.5, 0, 0]}
+          // weather={el.weatherData.weather[0].main.toLowerCase()}
+          Weather={"Clear"}
+        />
+      ))}
     </>
   );
 }
