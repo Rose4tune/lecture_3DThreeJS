@@ -8,4 +8,22 @@ const getCurrentWeather = (lat, lon, key) => {
     });
 };
 
-export { getCurrentWeather };
+const getCityWeather = (city, key) => {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
+
+  return fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        return {
+          city,
+          weatherData: data,
+        };
+      }
+    })
+    .catch((error) => {
+      console.error("error", error);
+    });
+};
+
+export { getCurrentWeather, getCityWeather };
