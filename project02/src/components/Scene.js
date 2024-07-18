@@ -24,13 +24,16 @@ export default function Scene() {
   }, []);
 
   useEffect(() => {
-    console.log(content);
+    console.log("cities data:", content);
   }, [content]);
 
   return (
     <>
       <Earth position={[0, -0.7, -2]} />
-      <Weather weather={"clear"} />
+      {
+        content && <Weather weather={"clear"} />
+        // weather={content[0].weatherData.weather[0].main.toLowerCase()}
+      }
     </>
   );
 }
