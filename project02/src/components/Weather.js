@@ -1,15 +1,14 @@
 import { useGLTF } from "@react-three/drei";
+import { useMemo } from "react";
 
 export default function Weather(props) {
   const { position, weather } = props;
   const { nodes } = useGLTF("/models/weather.glb");
 
-  let weatherModel;
-  if (nodes[weather]) {
-    weatherModel = nodes[weather].clone();
-  } else {
-    weatherModel = nodes.cloud.clone();
-  }
+  const weatherModel = useMemo(() => {
+    const cloneModel = nodes[weather] || nodes.cloud;
+    return cloneModel.clone();
+  }, [weather]);
 
   return (
     <>
