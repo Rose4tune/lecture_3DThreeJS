@@ -23,20 +23,28 @@ export default function Scene() {
     getCitiesWeather("Seoul", API);
   }, [API]);
 
-  useEffect(() => {
-    console.log("cities data:", content);
-  }, [content]);
+  // useEffect(() => {
+  //   console.log("cities data:", content);
+  // }, [content]);
 
   return (
     <>
       <Earth />
-      {content?.map((el, i) => (
-        <Weather
-          key={i + "ModelKey"}
-          position={[-1 + i * 0.5, 0, 0]}
-          weather={el.weatherData.weather[0].main.toLowerCase()}
-        />
-      ))}
+      {content?.map((el, i) => {
+        const angle = (i / (content.length - 1)) * (Math.PI / 1.5) + 0.55;
+        const radius = 1.3;
+
+        const x = radius * Math.cos(angle).toFixed(2);
+        const y = radius * Math.sin(angle).toFixed(2);
+        return (
+          <Weather
+            key={i + "ModelKey"}
+            position={[x, y - 1, 0]}
+            rotation-y={i + 100}
+            weather={el.weatherData.weather[0].main.toLowerCase()}
+          />
+        );
+      })}
     </>
   );
 }

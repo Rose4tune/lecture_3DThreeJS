@@ -13,7 +13,7 @@ export default function Earth(props) {
   return (
     <mesh
       ref={earthRef}
-      position={[0, -0.7, 0]}
+      position={[0, -0.9, 0]}
       scale={0.8}
       rotation-x={-Math.PI / 2}
     >
