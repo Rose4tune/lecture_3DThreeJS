@@ -21,7 +21,7 @@ export default function Scene() {
 
   useEffect(() => {
     getCitiesWeather("Seoul", API);
-  }, []);
+  }, [API]);
 
   useEffect(() => {
     console.log("cities data:", content);
@@ -34,8 +34,7 @@ export default function Scene() {
         <Weather
           key={i + "ModelKey"}
           position={[-1 + i * 0.5, 0, 0]}
-          // weather={el.weatherData.weather[0].main.toLowerCase()}
-          Weather={"Clear"}
+          weather={el.weatherData.weather[0].main.toLowerCase()}
         />
       ))}
     </>
