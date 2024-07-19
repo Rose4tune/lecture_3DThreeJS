@@ -29,7 +29,7 @@ export default function Scene() {
 
   return (
     <>
-      <Earth position={[0, -0.7, -2]} />
+      <Earth />
       {content?.map((el, i) => (
         <Weather
           key={i + "ModelKey"}
