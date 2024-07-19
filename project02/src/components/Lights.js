@@ -11,7 +11,7 @@ export default function Lights() {
         castShadow
         receiveShadow
       />
-      <ambientLight intensity={0.5} color={"#ffffff"} />
+      <ambientLight intensity={2} color={"#ffffff"} />
     </>
   );
 }
