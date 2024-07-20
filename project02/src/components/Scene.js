@@ -36,7 +36,7 @@ export default function Scene() {
           <Weather
             key={i + "ModelKey"}
             position={[x, y - 1, 0]}
-            rotation-y={i + 100}
+            rotationY={i + 100}
             weather={el.weatherData.weather[0].main.toLowerCase()}
           />
         );

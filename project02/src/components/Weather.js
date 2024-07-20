@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 
 export default function Weather(props) {
-  const { position, weather } = props;
+  const { position, weather, rotationY } = props;
   const { nodes } = useGLTF("/models/weather.glb");
 
   const weatherRef = useRef(null);
@@ -19,7 +19,7 @@ export default function Weather(props) {
 
   return (
     <>
-      <mesh ref={weatherRef} position={position}>
+      <mesh ref={weatherRef} position={position} rotation-y={rotationY}>
         <primitive object={weatherModel} />
       </mesh>
     </>
