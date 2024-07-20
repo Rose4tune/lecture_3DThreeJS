@@ -22,7 +22,6 @@ const Scene = lazy(() => {
 export default function Home() {
   return (
     <Canvas camera={{ position: [0, 0, 2], fov: 45 }}>
-      <color attach="background" args={["rgb(67, 127, 240) 100%)"]} />
       <Suspense fallback={<Sphere />}>
         <Lights />
         <Scene />
