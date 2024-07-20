@@ -1,6 +1,8 @@
 import { Canvas } from "@react-three/fiber";
 import Lights from "../components/Lights";
 import { lazy, Suspense } from "react";
+import { OrbitControls } from "@react-three/drei";
+import { Vector3 } from "three";
 
 function Sphere() {
   return (
@@ -24,6 +26,16 @@ export default function Home() {
         <Lights />
         <Scene />
       </Suspense>
+      <OrbitControls
+        makeDefault //카메라 위치 변경 시 끊김현상 방지
+        enablePan={false}
+        minAzimuthAngle={-Math.PI / 4}
+        maxAzimuthAngle={Math.PI / 4}
+        minPolarAngle={Math.PI / 6}
+        maxPolarAngle={Math.PI - Math.PI / 6}
+        maxDistance={15}
+        minDistance={2}
+      />
     </Canvas>
   );
 }
