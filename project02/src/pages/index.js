@@ -19,7 +19,7 @@ const Scene = lazy(() => {
 
 export default function Home() {
   return (
-    <Canvas camera={{ position: [0, 0, 2], fov: 45 }}>
+    <Canvas camera={{ position: [0, 0, 3], fov: 45 }}>
       <Suspense fallback={<Sphere />}>
         <Lights />
         <Scene />

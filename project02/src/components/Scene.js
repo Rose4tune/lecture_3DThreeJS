@@ -26,7 +26,7 @@ export default function Scene() {
   return (
     <>
       <Earth />
-      {content?.map((el, i) => {
+      {content?.map(({ city, weatherData }, i) => {
         const angle = (i / (content.length - 1)) * (Math.PI / 1.5) + 0.55;
         const radius = 1.3;
 
@@ -37,7 +37,8 @@ export default function Scene() {
             key={i + "ModelKey"}
             position={[x, y - 0.9, 0]}
             rotationY={i + 100}
-            weather={el.weatherData.weather[0].main.toLowerCase()}
+            cityName={city}
+            weather={weatherData.weather[0].main.toLowerCase()}
           />
         );
       })}
