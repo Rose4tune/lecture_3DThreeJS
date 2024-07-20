@@ -4,20 +4,29 @@ import Lights from "../components/Lights";
 import { lazy, Suspense } from "react";
 import { motion } from "framer-motion-3d";
 
+const variants = {
+  initial: {
+    rotateX: Math.PI / 2,
+    rotateZ: 1,
+  },
+  animate1: {
+    rotateZ: [0, 1, 4, Math.PI],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+    },
+  },
+  animate2: {
+    rotateZ: [0, Math.PI],
+    transition: {
+      duration: 6,
+    },
+  },
+};
+
 function FrameworkModel() {
   return (
-    <motion.mesh
-      initial={{ rotateX: Math.PI / 2, rotateZ: 1, x: 0, y: 0, z: -3 }}
-      animate={{
-        rotateZ: [0, 1, 4, Math.PI],
-        scale: [0.5, 1, 0.5],
-        x: 0,
-        y: 1,
-        z: 0,
-        transition: { duration: 2, delay: 1, type: "spring" },
-      }}
-      transition={{ duration: 3, repeat: Infinity }}
-    >
+    <motion.mesh variants={variants} initial="initial" animate="animate1">
       <cylinderGeometry args={[1, 1, 0.5, 8]} />
       <motion.meshBasicMaterial
         initial={{ opacity: 1 }}
