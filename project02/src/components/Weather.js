@@ -1,6 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
+import { motion } from "framer-motion-3d";
 
 export default function Weather(props) {
   const { position, weather, rotationY } = props;
@@ -19,9 +20,14 @@ export default function Weather(props) {
 
   return (
     <>
-      <mesh ref={weatherRef} position={position} rotation-y={rotationY}>
+      <motion.mesh
+        ref={weatherRef}
+        position={position}
+        rotation-y={rotationY}
+        whileHover={{ scale: 1.5, transition: 0.5 }}
+      >
         <primitive object={weatherModel} />
-      </mesh>
+      </motion.mesh>
     </>
   );
 }
