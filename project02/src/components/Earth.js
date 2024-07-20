@@ -12,7 +12,7 @@ export default function Earth(props) {
   });
 
   return (
-    <group position={[0, -0.5, 0]}>
+    <group position={[0, -0.8, 0]}>
       <mesh
         ref={earthRef}
         onPointerEnter={() => setIsHover(true)}
