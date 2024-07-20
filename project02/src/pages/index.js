@@ -1,8 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import Lights from "../components/Lights";
-// import Scene from "../components/Scene";
 import { lazy, Suspense } from "react";
-import { motion } from "framer-motion-3d";
 
 function Sphere() {
   return (
@@ -15,7 +13,7 @@ function Sphere() {
 
 const Scene = lazy(() => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(import("../components/Scene")), 2000);
+    setTimeout(() => resolve(import("../components/Scene")), 500);
   });
 });
 
