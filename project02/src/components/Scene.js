@@ -10,7 +10,7 @@ export default function Scene() {
   const [content, setContent] = useState();
 
   const getCitiesWeather = () => {
-    const promises = cities.map((city) => getCityWeather(city, API));
+    const promises = cities?.map((city) => getCityWeather(city, API));
 
     Promise.all(promises)
       .then((weatherDataArray) => {
@@ -22,10 +22,6 @@ export default function Scene() {
   useEffect(() => {
     getCitiesWeather("Seoul", API);
   }, [API]);
-
-  // useEffect(() => {
-  //   console.log("cities data:", content);
-  // }, [content]);
 
   return (
     <>
