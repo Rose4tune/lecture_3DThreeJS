@@ -3,7 +3,7 @@ import Earth from "./Earth";
 import Weather from "./Weather";
 import { getCityWeather } from "../utils/weather";
 import { cities } from "../utils/cities";
-import { Bounds } from "@react-three/drei";
+import { Bounds, Stars } from "@react-three/drei";
 import FocuseWeather from "./FocuseWeather";
 import Clouds from "./Clouds";
 
@@ -28,6 +28,15 @@ export default function Scene() {
     <>
       <Earth />
       <Clouds />
+      <Stars
+        radius={50}
+        depth={50}
+        count={1000}
+        factor={4}
+        saturation={0}
+        fade
+        speed={1}
+      />
       <Bounds clip observe margin={0.6}>
         <FocuseWeather>
           {content?.map(({ city, weatherData }, i) => {

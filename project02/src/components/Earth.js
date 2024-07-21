@@ -1,4 +1,4 @@
-import { Html, useGLTF } from "@react-three/drei";
+import { Html, Sparkles, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { useBodyClass } from "../utils/hook";
@@ -16,6 +16,13 @@ export default function Earth(props) {
 
   return (
     <group position={[0, -0.8, 0]}>
+      <Sparkles
+        position={[0, 0, 0]}
+        count={80}
+        scale={1.8}
+        size={2}
+        speed={0.4}
+      />
       <mesh
         ref={earthRef}
         onPointerEnter={() => setIsHover(true)}
