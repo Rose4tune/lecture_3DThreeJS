@@ -1,29 +1,51 @@
+import Hochimin from "../pages/Hochimin";
 import Home from "../pages/index";
+import Losangeles from "../pages/Losangeles";
+import NewYork from "../pages/NewYork";
+import Osaka from "../pages/Osaka";
+import Seoul from "../pages/Seoul";
+import { getCityWeather } from "./weather";
 
 export const routerInfo = [
   {
     path: "/",
     element: <Home />,
+    errorElement: <div className="layout-detail">Error</div>,
     children: [
       {
         path: "seoul",
-        element: <div className="layout-detail">Seoul</div>,
-      },
-      {
-        path: "newyork",
-        element: <div className="layout-detail">new york</div>,
+        element: <Seoul />,
+        loader: async () => {
+          return getCityWeather("Seoul");
+        },
       },
       {
         path: "hochiminhcity",
-        element: <div className="layout-detail">Ho Chi Minh City</div>,
+        element: <Hochimin />,
+        loader: async () => {
+          return getCityWeather("Ho Chi Minh City");
+        },
+      },
+      {
+        path: "newyork",
+        element: <NewYork />,
+        loader: async () => {
+          return getCityWeather("New York");
+        },
       },
       {
         path: "osaka",
-        element: <div className="layout-detail">Osaka</div>,
+        element: <Osaka />,
+        loader: async () => {
+          return getCityWeather("Osaka");
+        },
       },
       {
         path: "losangeles",
-        element: <div className="layout-detail">Los Angeles</div>,
+        element: <Losangeles />,
+        loader: async () => {
+          return getCityWeather("Los Angeles");
+        },
       },
     ],
   },
