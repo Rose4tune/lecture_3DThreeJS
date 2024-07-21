@@ -1,6 +1,7 @@
-import { Html, useGLTF } from "@react-three/drei";
+import { Html, Sparkles, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
+import { useBodyClass } from "../utils/hook";
 
 export default function Earth(props) {
   const { scene } = useGLTF("/models/earth.glb");
@@ -11,8 +12,17 @@ export default function Earth(props) {
     earthRef.current.rotation.y += delta * 0.1;
   });
 
+  useBodyClass(isHover, "drag");
+
   return (
     <group position={[0, -0.8, 0]}>
+      <Sparkles
+        position={[0, 0, 0]}
+        count={80}
+        scale={1.8}
+        size={2}
+        speed={0.4}
+      />
       <mesh
         ref={earthRef}
         onPointerEnter={() => setIsHover(true)}
@@ -22,13 +32,12 @@ export default function Earth(props) {
       >
         <primitive object={scene} />
       </mesh>
-      {isHover && (
-        <Html center>
-          <span className="rotation-icon">
-            <img src="/icons/rotation.png" alf="icon" />
-          </span>
-        </Html>
-      )}
+
+      <Html center>
+        <span className="rotation-icon">
+          <img src="/icons/rotation.png" alf="icon" />
+        </span>
+      </Html>
     </group>
   );
 }
