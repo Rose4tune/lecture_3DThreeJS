@@ -2,7 +2,9 @@ import { Canvas } from "@react-three/fiber";
 import Lights from "../components/Lights";
 import { lazy, Suspense } from "react";
 import { OrbitControls } from "@react-three/drei";
-import { Outlet } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import AnimatedOutlet from "../components/AnimatedOutlet";
 
 function Sphere() {
   return (
@@ -20,6 +22,8 @@ const Scene = lazy(() => {
 });
 
 export default function Home() {
+  const location = useLocation();
+
   return (
     <>
       <Canvas camera={{ position: [0, 0, 3], fov: 45 }}>
@@ -38,7 +42,9 @@ export default function Home() {
           minDistance={2}
         />
       </Canvas>
-      <Outlet />
+      <AnimatePresence>
+        <AnimatedOutlet key={location.pathname} />
+      </AnimatePresence>
     </>
   );
 }
