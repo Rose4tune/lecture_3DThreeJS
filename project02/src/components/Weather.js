@@ -1,20 +1,39 @@
 import { useGLTF } from "@react-three/drei";
-import { useMemo } from "react";
+import { useFrame } from "@react-three/fiber";
+import { useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion-3d";
+import CityName from "./CityName";
 
 export default function Weather(props) {
-  const { position, weather } = props;
+  const { position, weather, rotationY, cityName } = props;
   const { nodes } = useGLTF("/models/weather.glb");
+
+  const weatherRef = useRef(null);
+  const [isHover, setIsHover] = useState(false);
 
   const weatherModel = useMemo(() => {
     const cloneModel = nodes[weather] || nodes.cloud;
     return cloneModel.clone();
   }, [weather]);
 
+  useFrame((_, delta) => {
+    weatherRef.current.rotation.y += delta;
+  });
+
   return (
-    <>
-      <mesh position={position}>
+    <group position={position} rotation-y={rotationY}>
+      <motion.mesh
+        ref={weatherRef}
+        onPointerEnter={() => setIsHover(true)}
+        onPointerLeave={() => setIsHover(false)}
+        whileHover={{
+          scale: 1.5,
+          transition: 0.5,
+        }}
+      >
         <primitive object={weatherModel} />
-      </mesh>
-    </>
+      </motion.mesh>
+      {isHover && <CityName cityName={cityName} />}
+    </group>
   );
 }

@@ -1,9 +1,11 @@
+import { Environment } from "@react-three/drei";
 import { useRef } from "react";
 
 export default function Lights() {
   const drectRef = useRef();
   return (
     <>
+      <Environment preset="forest" />
       <directionalLight
         ref={drectRef}
         position={[0, 5, 5]}
@@ -11,7 +13,7 @@ export default function Lights() {
         castShadow
         receiveShadow
       />
-      <ambientLight intensity={0.5} color={"#ffffff"} />
+      <ambientLight intensity={2} color={"#ffffff"} />
     </>
   );
 }
