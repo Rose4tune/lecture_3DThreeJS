@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion-3d";
 import CityName from "./CityName";
 import { useNavigate } from "react-router-dom";
+import { useBodyClass } from "../utils/hook";
 
 export default function Weather(props) {
   const { position, weather, rotationY, cityName } = props;
@@ -27,6 +28,8 @@ export default function Weather(props) {
   const onClick = () => {
     navigate(`/${farmatCityName(cityName)}`);
   };
+
+  useBodyClass(isHover, "pointer");
 
   return (
     <group position={position} rotation-y={rotationY}>
