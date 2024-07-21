@@ -5,6 +5,7 @@ import { getCityWeather } from "../utils/weather";
 import { cities } from "../utils/cities";
 import { Bounds } from "@react-three/drei";
 import FocuseWeather from "./FocuseWeather";
+import Clouds from "./Clouds";
 
 export default function Scene() {
   const [content, setContent] = useState();
@@ -26,6 +27,7 @@ export default function Scene() {
   return (
     <>
       <Earth />
+      <Clouds />
       <Bounds clip observe margin={0.6}>
         <FocuseWeather>
           {content?.map(({ city, weatherData }, i) => {
