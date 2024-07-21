@@ -26,7 +26,7 @@ export default function Scene() {
   return (
     <>
       <Earth />
-      <Bounds fit clip observe margin={0.6}>
+      <Bounds clip observe margin={0.6}>
         <FocuseWeather>
           {content?.map(({ city, weatherData }, i) => {
             const angle = (i / (content.length - 1)) * (Math.PI / 1.5) + 0.55;
