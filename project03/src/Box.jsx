@@ -1,22 +1,20 @@
-import React, { useState } from 'react'
-// import { useBox } from "@react-three/cannon";
+import React, { useState } from "react";
+import { useBox } from "@react-three/cannon";
 
 export function Box(props) {
+  const [meshRef] = useBox(() => ({ args: [1, 1, 1], mass: 1, ...props }));
 
-  // const [meshRef] = useBox(
-  //   () => ({ args: [1, 1, 1], mass: 1, ...props }),
-  // )
-
-  const [hovered, setHover] = useState(false)
+  const [hovered, setHover] = useState(false);
 
   return (
     <mesh
       {...props}
-      // ref={meshRef}
+      ref={meshRef}
       onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}>
+      onPointerOut={() => setHover(false)}
+    >
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+      <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
     </mesh>
-  )
+  );
 }
