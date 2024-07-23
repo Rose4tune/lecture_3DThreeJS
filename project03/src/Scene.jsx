@@ -5,6 +5,7 @@ import { useControls } from "leva";
 import Box from "./Box";
 import Sphere from "./Sphere";
 import Cylinder from "./Cylinder";
+import Torus from "./Torus";
 
 function Scene() {
   const bgValue = useControls({ bgColor: "#fff" });
@@ -27,6 +28,7 @@ function Scene() {
             <Sphere position={[2, 1, 0]} />
             <Cylinder position={[-2, 1, 0]} />
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
+            <Torus position={[-2, 1, 2]} />
           </Debug>
         </Physics>
       </Canvas>
