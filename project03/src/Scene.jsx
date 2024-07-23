@@ -1,36 +1,29 @@
 import { Canvas } from "@react-three/fiber";
 import { Ground } from "./Ground";
 import { Debug, Physics } from "@react-three/cannon";
-import { useControls } from "leva";
-import Box from "./Box";
-import Sphere from "./Sphere";
-import Cylinder from "./Cylinder";
-import Torus from "./Torus";
-import Icosahedron from "./Icosahedron";
+import Car from "./Car";
+import DummyMovementArea from "./dummy/DummyMovementArea";
+import DummyBox from "./dummy/DummyBox";
+import DummyBall from "./dummy/DummyBall";
+import DummyWall from "./dummy/DummyWall";
 
 function Scene() {
-  const bgValue = useControls({ bgColor: "#fff" });
-
-  const gravity = useControls("Gravity", {
-    x: { value: 0, min: -10, max: 10, step: 0.1 },
-    y: { value: -9.8, min: -10, max: 10, step: 0.1 },
-    z: { value: 0, min: -10, max: 10, step: 0.1 },
-  });
-
   return (
     <>
-      <Canvas camera={{ position: [0, 2, 4] }}>
-        <color attach={"background"} args={[bgValue.bgColor]} />
-        <Physics gravity={[gravity.x, gravity.y, gravity.z]}>
+      <Canvas camera={{ fov: 45, position: [1.5, 2, 3] }}>
+        <ambientLight />
+        <directionalLight position={[0, 5, 5]} />
+        <Physics gravity={[0, -2.6, 0]}>
           <Debug>
-            <ambientLight />
-            <directionalLight position={[0, 5, 5]} />
-            <Box position={[0, 1, 0]} />
-            <Sphere position={[2, 1, 0]} />
-            <Cylinder position={[-2, 1, 0]} />
+            <Car />
+            <DummyMovementArea position={[0, 0.1, -2]} />
+            <DummyBox position={[1, 0.2, -2]} args={[1, 1, 1]} />
+            <DummyBall position={[0, 0.2, -2]} args={[0.15]} />
+            <DummyWall position={[5, 0.5, 0]} args={[1, 1, 10]} />
+            <DummyWall position={[0, 0.5, 5]} args={[10, 1, 1]} />
+            <DummyWall position={[0, 0.5, -5]} args={[10, 1, 1]} />
+            <DummyWall position={[-5, 0.5, 0]} args={[1, 1, 10]} />
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
-            <Torus position={[-2, 1, 2]} />
-            <Icosahedron position={[1, 1, 2]} />
           </Debug>
         </Physics>
       </Canvas>
