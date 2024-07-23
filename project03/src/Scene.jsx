@@ -2,6 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { Ground } from "./Ground";
 import { Debug, Physics } from "@react-three/cannon";
 import Car from "./Car";
+import DummyMovementArea from "./dummy/DummyMovementArea";
 
 function Scene() {
   return (
@@ -12,6 +13,7 @@ function Scene() {
         <Physics gravity={[0, -2.6, 0]}>
           <Debug>
             <Car />
+            <DummyMovementArea position={[0, 0.1, -2]} />
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
           </Debug>
         </Physics>
