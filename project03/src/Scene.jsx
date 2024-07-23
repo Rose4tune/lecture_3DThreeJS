@@ -1,8 +1,10 @@
 import { Canvas } from "@react-three/fiber";
-import { Box } from "./Box";
 import { Ground } from "./Ground";
 import { Debug, Physics } from "@react-three/cannon";
 import { useControls } from "leva";
+import Box from "./Box";
+import Sphere from "./Sphere";
+import Cylinder from "./Cylinder";
 
 function Scene() {
   const bgValue = useControls({ bgColor: "#fff" });
@@ -22,6 +24,8 @@ function Scene() {
             <ambientLight />
             <directionalLight position={[0, 5, 5]} />
             <Box position={[0, 1, 0]} />
+            <Sphere position={[2, 1, 0]} />
+            <Cylinder position={[-2, 1, 0]} />
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
           </Debug>
         </Physics>

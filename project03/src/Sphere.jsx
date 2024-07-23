@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { useBox } from "@react-three/cannon";
+import { useSphere } from "@react-three/cannon";
 
-export default function Box(props) {
-  const [meshRef, api] = useBox(() => ({ args: [2, 1, 1], mass: 1, ...props }));
+export default function Sphere(props) {
+  const [meshRef, api] = useSphere(() => ({
+    args: [0.5],
+    mass: 1,
+    ...props,
+  }));
 
   const [hovered, setHover] = useState(false);
 
@@ -14,7 +18,7 @@ export default function Box(props) {
       onPointerOut={() => setHover(false)}
       onPointerDown={() => api.velocity.set(0, 5, 0)}
     >
-      <boxGeometry args={[1, 1, 1]} />
+      <sphereGeometry args={[0.5]} />
       <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
     </mesh>
   );
