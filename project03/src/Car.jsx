@@ -15,9 +15,9 @@ export default function Car() {
 
   let width, height, front, mass, wheelRadius;
 
-  width = 0.16;
-  height = 0.12;
-  front = 0.17;
+  width = 0.32;
+  height = 0.16;
+  front = 0.28;
   mass = 150;
   wheelRadius = 0.05;
 
@@ -30,12 +30,12 @@ export default function Car() {
       shapes: [
         {
           args: chassisBodyArgs,
-          position: [0, 0, 0],
+          position: [0, 0.07, 0],
           type: "Box",
         },
         {
-          args: [width, height, front],
-          position: [0, height, 0],
+          args: [width, height * 1.8, front],
+          position: [0, height * 1.4, 0],
           type: "Box",
         },
       ],
