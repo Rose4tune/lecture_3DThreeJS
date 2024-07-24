@@ -1,31 +1,23 @@
-import { useControls } from "leva";
-import DummyCarBody from "./dummy/DummyCarBody";
 import { useCompoundBody, useRaycastVehicle } from "@react-three/cannon";
 import { useRef, useMemo } from "react";
 import useWheels from "./utils/useWheels";
-import DummyWheel from "./dummy/DummyWheel";
 import useVehicleControls from "./utils/useVehicleControls";
 import { Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 import useFollowCam from "./utils/useFollowCam";
+import CarBody from "./components/CarBody";
+import Wheel from "./components/Wheel";
 
 export default function Car() {
   const { pivot } = useFollowCam();
   const worldPosition = useMemo(() => new Vector3(), []);
-
-  const chassisBodyValue = useControls("chassisBody", {
-    width: { value: 0.16, min: 0, max: 1 },
-    height: { value: 0.12, min: 0, max: 1 },
-    front: { value: 0.17 * 2, min: 0, max: 1 },
-  });
-
   const position = [0, 0.5, 0];
 
   let width, height, front, mass, wheelRadius;
 
-  width = 0.16;
-  height = 0.12;
-  front = 0.17;
+  width = 0.32;
+  height = 0.16;
+  front = 0.28;
   mass = 150;
   wheelRadius = 0.05;
 
@@ -38,12 +30,12 @@ export default function Car() {
       shapes: [
         {
           args: chassisBodyArgs,
-          position: [0, 0, 0],
+          position: [0, 0.07, 0],
           type: "Box",
         },
         {
-          args: [width, height, front],
-          position: [0, height, 0],
+          args: [width, height * 1.8, front],
+          position: [0, height * 1.4, 0],
           type: "Box",
         },
       ],
@@ -77,16 +69,12 @@ export default function Car() {
   return (
     <group ref={vehicle}>
       <group ref={chassisBody}>
-        <DummyCarBody
-          width={chassisBodyValue.width}
-          height={chassisBodyValue.height}
-          front={chassisBodyValue.front}
-        />
+        <CarBody />
       </group>
-      <DummyWheel wheelRef={wheels[0]} radius={wheelRadius} />
-      <DummyWheel wheelRef={wheels[1]} radius={wheelRadius} />
-      <DummyWheel wheelRef={wheels[2]} radius={wheelRadius} />
-      <DummyWheel wheelRef={wheels[3]} radius={wheelRadius} />
+      <Wheel wheelRef={wheels[0]} radius={wheelRadius} leftSide={true} />
+      <Wheel wheelRef={wheels[1]} radius={wheelRadius} />
+      <Wheel wheelRef={wheels[2]} radius={wheelRadius} leftSide={true} />
+      <Wheel wheelRef={wheels[3]} radius={wheelRadius} />
     </group>
   );
 }

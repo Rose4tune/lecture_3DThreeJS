@@ -1,6 +1,6 @@
 import { useThree } from "@react-three/fiber";
 import { useEffect, useMemo } from "react";
-import { CameraHelper, Object3D } from "three";
+import { Object3D } from "three";
 
 export default function useFollowCam() {
   const { scene, camera } = useThree();
@@ -12,9 +12,6 @@ export default function useFollowCam() {
 
     pivot.add(camera);
     scene.add(pivot);
-
-    // const helper = new CameraHelper(camera);
-    // scene.add(helper);
   };
 
   useEffect(() => {

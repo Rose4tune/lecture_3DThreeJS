@@ -4,7 +4,9 @@ import { useRef } from "react";
 export default function useWheels(width, height, front, radius) {
   const wheels = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
-  const wheelPosition = height * 0.3;
+  const positionHeight = height * 0.4;
+  const positionWidth = width * 0.4;
+  const positionFront = front * 0.6;
 
   const wheelInfo = {
     radius,
@@ -26,22 +28,38 @@ export default function useWheels(width, height, front, radius) {
   const wheelInfos = [
     {
       ...wheelInfo,
-      chassisConnectionPointLocal: [-width * 0.65, wheelPosition, front],
+      chassisConnectionPointLocal: [
+        -positionWidth,
+        positionHeight,
+        positionFront,
+      ],
       isFrontWheel: true,
     },
     {
       ...wheelInfo,
-      chassisConnectionPointLocal: [width * 0.65, wheelPosition, front],
+      chassisConnectionPointLocal: [
+        positionWidth,
+        positionHeight,
+        positionFront,
+      ],
       isFrontWheel: true,
     },
     {
       ...wheelInfo,
-      chassisConnectionPointLocal: [-width * 0.65, wheelPosition, -front],
+      chassisConnectionPointLocal: [
+        -positionWidth,
+        positionHeight,
+        -positionFront,
+      ],
       isFrontWheel: false,
     },
     {
       ...wheelInfo,
-      chassisConnectionPointLocal: [width * 0.65, wheelPosition, -front],
+      chassisConnectionPointLocal: [
+        positionWidth,
+        positionHeight,
+        -positionFront,
+      ],
       isFrontWheel: false,
     },
   ];
