@@ -15,7 +15,7 @@ export function Ground(props) {
     <group>
       <mesh {...props} ref={meshRef} receiveShadow>
         <planeGeometry args={[15, 15]} />
-        <meshStandardMaterial color="black" wireframe />
+        <meshStandardMaterial color="white" opacity={0} transparent />
       </mesh>
 
       <Tree position={[1, 0.5, -1]} />
