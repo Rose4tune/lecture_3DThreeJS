@@ -1,0 +1,37 @@
+import { useSphere } from "@react-three/cannon";
+import { useGLTF } from "@react-three/drei";
+import { useRef } from "react";
+
+export default function Ball(props) {
+  const { nodes, materials } = useGLTF("/assets/models/ball.glb");
+  const [ref] = useSphere(() => ({
+    args: [0.15],
+    mass: 5,
+    ...props,
+  }));
+
+  return (
+    <group ref={ref}>
+      <group scale={0.15} position={[0, -0.153, -0.004]}>
+        <mesh
+          geometry={nodes.beach_ball_red_0_1.geometry}
+          material={materials.material}
+        />
+        <mesh
+          geometry={nodes.beach_ball_red_0_2.geometry}
+          material={materials.blue}
+        />
+        <mesh
+          geometry={nodes.beach_ball_red_0_3.geometry}
+          material={materials.white}
+        />
+        <mesh
+          geometry={nodes.beach_ball_red_0_4.geometry}
+          material={materials.yellow}
+        />
+      </group>
+    </group>
+  );
+}
+
+useGLTF.preload("/assets/models/ball.glb");
