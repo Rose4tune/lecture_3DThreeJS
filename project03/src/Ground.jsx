@@ -7,6 +7,7 @@ import RoadSign from "./components/RoadSign";
 import Banner from "./components/Banner";
 import MotionStage from "./components/MotionStage";
 import MotionStage2 from "./components/MotionStage2";
+import Road from "./components/Road";
 
 export function Ground(props) {
   const [meshRef] = usePlane(() => ({
@@ -41,6 +42,17 @@ export function Ground(props) {
       <Banner position={[0, 1, -4.9]} />
       <MotionStage position={[3, 0.55, 4]} />
       <MotionStage2 position={[-4, 0.55, 5.5]} />
+
+      <Road
+        position={[-8.8, -0.06, 4.5]}
+        scale={0.04}
+        rotation-y={Math.PI / 2}
+      />
+      <Road
+        position={[-8.8, -0.06, -4.5]}
+        scale={0.04}
+        rotation-y={Math.PI / 2}
+      />
     </group>
   );
 }
