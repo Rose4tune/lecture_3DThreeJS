@@ -29,16 +29,16 @@ export function Ground(props) {
 
       <Ball position={[2, 0.2, 1]} args={[0.15]} />
 
-      <DummyWall position={[5, 0.5, 0]} args={[1, 1, 10]} />
+      {/* <DummyWall position={[5, 0.5, 0]} args={[1, 1, 10]} />
       <DummyWall position={[0, 0.5, 5]} args={[10, 1, 1]} />
       <DummyWall position={[0, 0.5, -5]} args={[10, 1, 1]} />
-      <DummyWall position={[-5, 0.5, 0]} args={[1, 1, 10]} />
+      <DummyWall position={[-5, 0.5, 0]} args={[1, 1, 10]} /> */}
 
       <HowToPlay />
 
       <RoadSign position={[0, 0.5, 3]} />
       <Banner position={[0, 1, -4.9]} />
-      <MotionStage position={[3, 0.5, 0]} />
+      <MotionStage position={[3, 0.55, 4]} />
     </group>
   );
 }

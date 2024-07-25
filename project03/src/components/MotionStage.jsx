@@ -1,12 +1,15 @@
-import { useGLTF, useTexture } from "@react-three/drei";
+import { Html, useGLTF, useTexture } from "@react-three/drei";
 import Picture from "./Picture";
 import { useRef } from "react";
 import { useBox } from "@react-three/cannon";
 import { motion } from "framer-motion-3d";
+import { stage1 } from "../utils/atom";
+import { useRecoilValue } from "recoil";
 
 export default function MotionStage({ position }) {
   const { nodes, materials } = useGLTF("/assets/models/popup.glb");
   const texture = useTexture(`/assets/images/github.png`);
+  const stage = useRecoilValue(stage1);
 
   const [ref] = useBox(
     () => ({
@@ -28,16 +31,27 @@ export default function MotionStage({ position }) {
         position={[x, y + 0.1, z + 1]}
         rotation-x={-Math.PI / 2}
         initial={{ scale: 0.5 }}
-        animate={{
-          opacity: 0.5,
-          y: [0.05, 0.5, 0.05],
-          transition: {
-            duration: 2,
-            ease: "easeInOut",
-            delay: 0.3,
-            repeat: Infinity,
-          },
-        }}
+        animate={
+          !stage
+            ? {
+                opacity: 0.5,
+                y: [0.05, 0.5, 0.05],
+                transition: {
+                  duration: 2,
+                  ease: "easeInOut",
+                  delay: 0.3,
+                  repeat: Infinity,
+                },
+              }
+            : {
+                opacity: 0.1,
+                y: 0.05,
+                transition: {
+                  duration: 0.3,
+                  ease: "easeInOut",
+                },
+              }
+        }
       >
         <circleGeometry args={[1, 32]} />
         <meshBasicMaterial transparent color="white" opacity={0.3} />
@@ -59,6 +73,14 @@ export default function MotionStage({ position }) {
           scale={[1.957, -1.036, 0.135]}
         />
         <Picture nodes={nodes} texture={texture} />
+        {stage && (
+          <Html center>
+            <div className="information enter">
+              <img src={`/assets/images/enter.png`} alt="enter" />
+              <p>Enter</p>
+            </div>
+          </Html>
+        )}
       </group>
     </group>
   );
