@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { stage1 } from "./atom";
 
 export default function useVehicleControls(vehicleApi, chassisApi) {
   const [controls, setControls] = useState({});
+  const motionStage = useRecoilValue(stage1);
 
   useEffect(() => {
     const KeyDownPressHandler = (e) => {
@@ -9,14 +12,12 @@ export default function useVehicleControls(vehicleApi, chassisApi) {
         ...controls,
         [e.key]: true,
       }));
-      // console.log("down:", e);
     };
     const KeyUpPressHandler = (e) => {
       setControls((controls) => ({
         ...controls,
         [e.key]: false,
       }));
-      // console.log("up:", e);
     };
 
     window.addEventListener("keydown", KeyDownPressHandler);
@@ -59,6 +60,21 @@ export default function useVehicleControls(vehicleApi, chassisApi) {
       }
     }
   }, [controls, vehicleApi, chassisApi]);
+
+  const onHandleHistory = () => {
+    const url = "https://github.com/Rose4tune";
+    window.open(url, "_blank");
+  };
+
+  useEffect(() => {
+    if (controls.Enter && motionStage) {
+      onHandleHistory();
+      setControls((prevControls) => ({
+        ...prevControls,
+        Enter: false,
+      }));
+    }
+  }, [controls, motionStage]);
 
   return controls;
 }
