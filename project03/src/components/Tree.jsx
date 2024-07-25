@@ -1,14 +1,34 @@
-import { useGLTF } from "@react-three/drei";
+import { Html, useGLTF } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 import { motion } from "framer-motion-3d";
+import { useEffect, useState } from "react";
 
 export default function Tree(props) {
   const { nodes, materials } = useGLTF("/assets/models/tree.glb");
+  const [info, setInfo] = useState(false);
+
   const [ref] = useBox(() => ({
     args: [0.12, 1, 0.12],
     type: "Static",
+    onCollide: handleCollision,
     ...props,
   }));
+
+  const handleCollision = (e) => {
+    console.log(e);
+    if (e.collisionFilters.bodyFilterGroup === 5) {
+      setInfo(true);
+    }
+  };
+
+  useEffect(() => {
+    let timeOut;
+    if (info) {
+      timeOut = setTimeout(() => setInfo(false), 800);
+    }
+
+    return () => clearTimeout(timeOut);
+  }, [info]);
 
   return (
     <group ref={ref} {...props}>
@@ -27,6 +47,11 @@ export default function Tree(props) {
           duration: 0.3,
         }}
       />
+      {info && (
+        <Html center>
+          <div className="information">This is a Tree</div>
+        </Html>
+      )}
     </group>
   );
 }

@@ -25,6 +25,7 @@ export default function Car() {
 
   const [chassisBody, chassisApi] = useCompoundBody(
     () => ({
+      collisionFilterGroup: 5,
       position,
       mass,
       shapes: [
