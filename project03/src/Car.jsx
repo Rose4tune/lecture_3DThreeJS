@@ -69,7 +69,7 @@ export default function Car() {
 
   return (
     <group ref={vehicle}>
-      <group ref={chassisBody}>
+      <group ref={chassisBody} name="chssisbody">
         <CarBody />
       </group>
       <Wheel wheelRef={wheels[0]} radius={wheelRadius} leftSide={true} />
