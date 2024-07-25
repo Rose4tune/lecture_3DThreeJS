@@ -5,6 +5,7 @@ import Ball from "./components/Ball";
 import HowToPlay from "./components/HowToPlay";
 import RoadSign from "./components/RoadSign";
 import Banner from "./components/Banner";
+import MotionStage from "./components/MotionStage";
 
 export function Ground(props) {
   const [meshRef] = usePlane(() => ({
@@ -37,6 +38,7 @@ export function Ground(props) {
 
       <RoadSign position={[0, 0.5, 3]} />
       <Banner position={[0, 1, -4.9]} />
+      <MotionStage position={[3, 0.5, 0]} />
     </group>
   );
 }
