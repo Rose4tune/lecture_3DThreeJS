@@ -1,4 +1,5 @@
 import { Text, Text3D } from "@react-three/drei";
+import { motion } from "framer-motion-3d";
 
 export default function HowToPlay() {
   const fontUrl = "/assets/fonts/Pretendard.json";
@@ -13,7 +14,18 @@ export default function HowToPlay() {
   };
 
   return (
-    <group position={[0.3, 0, 1]} rotation={[-Math.PI / 2, 0, 0]}>
+    <motion.group
+      position={[0.3, 0, 1]}
+      rotation={[-Math.PI / 2, 0, 0]}
+      animate={{
+        scale: [0, 1],
+        y: [-2, 0],
+      }}
+      transition={{
+        delay: 1.5,
+        duration: 0.3,
+      }}
+    >
       <Text3D {...fontStyle}>
         How to Play
         <meshNormalMaterial />
@@ -28,6 +40,6 @@ export default function HowToPlay() {
           <meshNormalMaterial />
         </Text3D>
       </group>
-    </group>
+    </motion.group>
   );
 }
