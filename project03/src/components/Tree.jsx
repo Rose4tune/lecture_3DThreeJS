@@ -15,7 +15,6 @@ export default function Tree(props) {
   }));
 
   const handleCollision = (e) => {
-    console.log(e);
     if (e.collisionFilters.bodyFilterGroup === 5) {
       setInfo(true);
     }
