@@ -1,8 +1,11 @@
 import { Text, Text3D } from "@react-three/drei";
 import { motion } from "framer-motion-3d";
+import { useSetRecoilState } from "recoil";
+import { isStartScene } from "../utils/atom";
 
 export default function HowToPlay() {
   const fontUrl = "/assets/fonts/Pretendard.json";
+  const setStart = useSetRecoilState(isStartScene);
 
   const fontStyle = {
     font: fontUrl,
@@ -25,6 +28,7 @@ export default function HowToPlay() {
         delay: 1.5,
         duration: 0.3,
       }}
+      onAnimationComplete={() => setStart(true)}
     >
       <Text3D {...fontStyle}>
         How to Play
