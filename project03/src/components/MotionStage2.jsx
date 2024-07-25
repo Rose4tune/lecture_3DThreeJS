@@ -2,6 +2,7 @@ import { useGLTF, useTexture } from "@react-three/drei";
 import Picture from "./Picture";
 import { useRef } from "react";
 import { useBox } from "@react-three/cannon";
+import BoxDrop from "./BoxDrop";
 
 export default function MotionStage2({ position }) {
   const { nodes, materials } = useGLTF("/assets/models/popup.glb");
@@ -37,6 +38,8 @@ export default function MotionStage2({ position }) {
         />
         <Picture nodes={nodes} texture={texture} />
       </group>
+
+      <BoxDrop />
     </group>
   );
 }
