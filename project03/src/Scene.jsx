@@ -4,6 +4,8 @@ import { Debug, Physics } from "@react-three/cannon";
 import { useRecoilValue } from "recoil";
 import { isStartScene } from "./utils/atom";
 import Car from "./Car";
+import { Stats, StatsGl } from "@react-three/drei";
+import DrawCallCounter from "./components/DrawCallCounter";
 
 function Scene() {
   const isStart = useRecoilValue(isStartScene);
@@ -19,6 +21,8 @@ function Scene() {
             <Ground rotation={[-Math.PI / 2, 0, 0]} />
           </Debug>
         </Physics>
+        <StatsGl />
+        <DrawCallCounter />
       </Canvas>
     </>
   );
