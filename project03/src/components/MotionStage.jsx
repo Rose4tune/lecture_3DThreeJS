@@ -8,7 +8,7 @@ import { useRecoilValue } from "recoil";
 
 export default function MotionStage({ position }) {
   const { nodes, materials } = useGLTF("/assets/models/popup.glb");
-  const texture = useTexture(`/assets/images/github.png`);
+  const texture = useTexture(`/assets/images/github.webp`);
   const stage = useRecoilValue(stage1);
 
   const [ref] = useBox(
@@ -76,7 +76,7 @@ export default function MotionStage({ position }) {
         {stage && (
           <Html center>
             <div className="information enter">
-              <img src={`/assets/images/enter.png`} alt="enter" />
+              <img src={`/assets/images/enter.webp`} alt="enter" />
               <p>Enter</p>
             </div>
           </Html>

@@ -6,7 +6,7 @@ import BoxDrop from "./BoxDrop";
 
 export default function MotionStage2({ position }) {
   const { nodes, materials } = useGLTF("/assets/models/popup.glb");
-  const texture = useTexture(`/assets/images/info.jpg`);
+  const texture = useTexture(`/assets/images/motion_2.webp`);
 
   const [ref] = useBox(
     () => ({
