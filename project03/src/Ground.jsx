@@ -8,6 +8,7 @@ import Banner from "./components/Banner";
 import MotionStage from "./components/MotionStage";
 import MotionStage2 from "./components/MotionStage2";
 import Road from "./components/Road";
+import AllTree from "./components/AllTree";
 
 export function Ground(props) {
   const [meshRef] = usePlane(() => ({
@@ -24,17 +25,9 @@ export function Ground(props) {
         <meshStandardMaterial color="white" opacity={0} transparent />
       </mesh>
 
-      <Tree position={[1, 0.5, -1]} />
-      <Tree position={[0, 0.5, -1]} />
-      <Tree position={[-1, 0.5, -1]} />
-      <Tree position={[-2, 0.5, -1]} />
+      <AllTree />
 
       <Ball position={[2, 0.2, 1]} args={[0.15]} />
-
-      {/* <DummyWall position={[5, 0.5, 0]} args={[1, 1, 10]} />
-      <DummyWall position={[0, 0.5, 5]} args={[10, 1, 1]} />
-      <DummyWall position={[0, 0.5, -5]} args={[10, 1, 1]} />
-      <DummyWall position={[-5, 0.5, 0]} args={[1, 1, 10]} /> */}
 
       <HowToPlay />
 
