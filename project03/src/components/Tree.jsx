@@ -1,18 +1,20 @@
 import { Html, useGLTF } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 import { motion } from "framer-motion-3d";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function Tree(props) {
-  const { nodes, materials } = useGLTF("/assets/models/tree.glb");
+export default function Tree({ position, model, material }) {
   const [info, setInfo] = useState(false);
 
-  const [ref] = useBox(() => ({
-    args: [0.12, 1, 0.12],
-    type: "Static",
-    onCollide: handleCollision,
-    ...props,
-  }));
+  const [ref] = useBox(
+    () => ({
+      args: [0.12, 1, 0.12],
+      type: "Static",
+      onCollide: handleCollision,
+      position,
+    }),
+    useRef(null)
+  );
 
   const handleCollision = (e) => {
     if (e.collisionFilters.bodyFilterGroup === 5) {
@@ -30,11 +32,9 @@ export default function Tree(props) {
   }, [info]);
 
   return (
-    <group ref={ref} {...props}>
-      <motion.mesh
+    <group ref={ref}>
+      <motion.group
         scale={0.2}
-        geometry={nodes.tree.geometry}
-        material={materials["Material.003"]}
         position={[0.015, 0, 0.02]}
         rotation={[-1.555, 0, 0]}
         animate={{
@@ -45,7 +45,9 @@ export default function Tree(props) {
           delay: 1,
           duration: 0.3,
         }}
-      />
+      >
+        <model.TreeMesh material={material} />
+      </motion.group>
       {info && (
         <Html center>
           <div className="information">This is a Tree</div>
@@ -54,5 +56,3 @@ export default function Tree(props) {
     </group>
   );
 }
-
-useGLTF.preload("/assets/models/tree.glb");
