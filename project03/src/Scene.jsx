@@ -6,9 +6,33 @@ import { isStartScene } from "./utils/atom";
 import Car from "./Car";
 import { Stats, StatsGl } from "@react-three/drei";
 import DrawCallCounter from "./components/DrawCallCounter";
+import fontjson from "./Pretendard.json";
+import { useEffect } from "react";
 
 function Scene() {
   const isStart = useRecoilValue(isStartScene);
+
+  useEffect(() => {
+    const fontData = fontjson;
+    const targetText = "How To Play↑←↓→";
+    const modefiedGlyphs = {};
+
+    for (let i = 0; i < targetText.length; i++) {
+      const char = targetText[i];
+      const charKey = char in fontData.glyphs ? char : char.toUpperCase();
+
+      if (charKey in fontData.glyphs) {
+        modefiedGlyphs[charKey] = fontData.glyphs[charKey];
+      }
+    }
+
+    const modefiedFontData = {
+      ...fontData,
+      glyphs: modefiedGlyphs,
+    };
+
+    console.log(JSON.stringify(modefiedFontData));
+  }, []);
 
   return (
     <>
