@@ -51,7 +51,40 @@ export const Lobby = () => {
           </NextBtn>
         </>
       )}
-      {currentStep === STEPS.JOB_POSITION && <></>}
+      {currentStep === STEPS.JOB_POSITION && (
+        <>
+          <LoginTitle>패디에서 공유할 내 직군이에요.</LoginTitle>
+          <Input
+            autoFocus
+            placeholder="개발 직군을 입력해주세요."
+            onChange={(e) => {
+              setTempJobPosition(e.currentTarget.value);
+            }}
+            onKeyUp={(e) => {
+              if (!isValidText(tempJobPosition)) return;
+              if (e.key === "Enter") {
+                setCurrentStep((prev) => prev + 1);
+              }
+            }}
+          />
+          <NextBtn
+            disabled={!isValidText(tempJobPosition)}
+            className={isValidText(tempJobPosition) ? "valid" : "disabled"}
+            onClick={() => {
+              setCurrentStep((prev) => prev + 1);
+            }}
+          >
+            이대로 진행할래요
+          </NextBtn>
+          <PrevBtn
+            onClick={() => {
+              setCurrentStep((prev) => prev - 1);
+            }}
+          >
+            이전으로 돌아갈래요
+          </PrevBtn>
+        </>
+      )}
       {currentStep === STEPS.CHRATER && <></>}
       {currentStep === STEPS.FINISH && <></>}
     </LoginContainer>
@@ -115,4 +148,14 @@ const NextBtn = styled.button`
   }
 `;
 
-const PrevBtn = styled.button``;
+const PrevBtn = styled.button`
+  padding: 10px;
+  width: 280px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-weight: 600;
+  color: #666666;
+  cursor: pointer;
+`;
