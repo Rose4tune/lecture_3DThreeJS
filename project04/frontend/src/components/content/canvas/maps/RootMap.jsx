@@ -5,8 +5,8 @@ import { CharacterSelectFinishedAtom } from "../../../../store/PlayersAtom";
 import { CharacterInit } from "../../lobby/CharacterInit";
 
 export const RootMap = () => {
-  const chracterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
+  const characterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
   return (
-    <>{!chracterSelectFinished ? <CharacterInit /> : <GroundElements />}</>
+    <>{!characterSelectFinished ? <CharacterInit /> : <GroundElements />}</>
   );
 };

@@ -12,10 +12,9 @@ import { MainCanvas } from "../canvas/MainCanvas";
 
 export const Lobby = () => {
   const [currentStep, setCurrentStep] = useState(STEPS.NICK_NAME);
-
   const [tempNickname, setTempNickname] = useState();
   const [tempJobPosition, setTempJobPosition] = useState();
-  const [selectedCharacterGlbNameIndex, SetSelectedCharacterGlbNameIndex] =
+  const [selectedCharacterGlbNameIndex, setSelectedCharacterGlbNameIndex] =
     useRecoilState(SelectedCharacterGlbNameIndexAtom);
 
   const setCharacterSelectFinished = useSetRecoilState(
@@ -27,17 +26,17 @@ export const Lobby = () => {
     <LoginContainer>
       {currentStep === STEPS.NICK_NAME && (
         <>
-          <LoginTitle>패디에서 사용할 내 이름이에요</LoginTitle>
+          <LoginTitle>패디에서 사용할 내 이름이에요.</LoginTitle>
           <Input
             autoFocus
-            placeholder="별명을 입력해주세요"
+            placeholder="별명을 입력해주세요."
             onChange={(e) => {
               setTempNickname(e.currentTarget.value);
             }}
             onKeyUp={(e) => {
               if (!isValidText(tempNickname)) return;
               if (e.key === "Enter") {
-                setCurrentStep(STEPS.JOB_POSITION);
+                setCurrentStep((prev) => prev + 1);
               }
             }}
           />
@@ -45,7 +44,7 @@ export const Lobby = () => {
             disabled={!isValidText(tempNickname)}
             className={isValidText(tempNickname) ? "valid" : "disabled"}
             onClick={() => {
-              setCurrentStep(STEPS.JOB_POSITION);
+              setCurrentStep((prev) => prev + 1);
             }}
           >
             이대로 진행할래요
@@ -100,7 +99,7 @@ export const Lobby = () => {
               className={
                 !tempNickname || !tempJobPosition ? "disabled" : "valid"
               }
-              onClick={(e) => {
+              onClick={() => {
                 if (!tempNickname || !tempJobPosition) return;
                 socket.emit("initialize", {
                   tempNickname,
@@ -127,8 +126,8 @@ export const Lobby = () => {
             </NextBtn>
 
             <PrevBtn
-              onClick={(e) => {
-                SetSelectedCharacterGlbNameIndex((prev) => {
+              onClick={() => {
+                setSelectedCharacterGlbNameIndex((prev) => {
                   if (prev === undefined) return 1;
                   if (prev === 2) return 0;
                   return prev + 1;
@@ -138,7 +137,7 @@ export const Lobby = () => {
               다른 캐릭터도 볼래요
             </PrevBtn>
             <PrevBtn
-              onClick={(e) => {
+              onClick={() => {
                 setCurrentStep((prev) => prev - 1);
               }}
             >
@@ -147,7 +146,6 @@ export const Lobby = () => {
           </CharacterCanvasContainer>
         </>
       )}
-      {currentStep === STEPS.FINISH && <></>}
     </LoginContainer>
   );
 };
