@@ -1,12 +1,13 @@
-import { MainCanvas } from "./components/content/canvas/MainCanvas";
+import { RecoilRoot } from "recoil";
 import { ClientSocketControl } from "./components/utilComponents/ClientSocketControl";
+import { Content } from "./components/content/Content";
 
 function App() {
   return (
-    <>
-      <MainCanvas />
+    <RecoilRoot>
+      <Content />
       <ClientSocketControl />
-    </>
+    </RecoilRoot>
   );
 }
 

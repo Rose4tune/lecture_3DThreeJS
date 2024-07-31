@@ -1,6 +1,5 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Player } from "./maps/player";
 import { RootMap } from "./maps/RootMap";
 
 export const MainCanvas = () => {
@@ -33,7 +32,6 @@ export const MainCanvas = () => {
       />
       <OrbitControls />
       <RootMap />
-      <Player />
     </Canvas>
   );
 };
