@@ -1,12 +1,12 @@
 import { RecoilRoot } from "recoil";
-import { ClientSocketControl } from "./components/utilComponents/ClientSocketControl";
+import { ClientSocketControls } from "./components/utilComponents/ClientSocketControls";
 import { Content } from "./components/content/Content";
 
 function App() {
   return (
     <RecoilRoot>
       <Content />
-      <ClientSocketControl />
+      <ClientSocketControls />
     </RecoilRoot>
   );
 }

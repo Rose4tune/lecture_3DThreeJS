@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { STEPS } from "../../../data/constans";
+import { STEPS } from "../../../data/constants";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   CharacterSelectFinishedAtom,

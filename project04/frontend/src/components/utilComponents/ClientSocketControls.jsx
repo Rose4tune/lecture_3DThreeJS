@@ -3,7 +3,7 @@ import { socket } from "../../sockets/clientSocket";
 import { useRecoilState } from "recoil";
 import { MeAtom } from "../../store/PlayersAtom";
 
-export const ClientSocketControl = () => {
+export const ClientSocketControls = () => {
   const [me, setMe] = useRecoilState(MeAtom);
 
   useEffect(() => {

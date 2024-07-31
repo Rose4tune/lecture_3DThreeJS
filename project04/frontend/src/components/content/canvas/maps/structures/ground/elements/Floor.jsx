@@ -1,6 +1,6 @@
 import { useLoader } from "@react-three/fiber";
 import { RepeatWrapping, TextureLoader } from "three";
-import { groundMapSize } from "../../../../../../../data/constans";
+import { groundMapSize } from "../../../../../../../data/constants";
 
 export const Floor = () => {
   const sandTexture = useLoader(TextureLoader, "/sand.jpg");
