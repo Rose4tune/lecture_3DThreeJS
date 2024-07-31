@@ -15,7 +15,6 @@ export const CharacterInit = () => {
   );
 
   const controls = useRef(null);
-
   useEffect(() => {
     if (!controls.current?.target) return;
     camera.position.set(8, 8, 8);
@@ -25,13 +24,25 @@ export const CharacterInit = () => {
   return (
     <>
       {selectedCharacterGlbNameIndex === 0 && (
-        <Man player={undefined} position={new Vector3(0, 0, 0)} />
+        <Man
+          player={undefined}
+          position={new Vector3(0, 0, 0)}
+          modelIndex={0}
+        />
       )}
       {selectedCharacterGlbNameIndex === 1 && (
-        <Woman player={undefined} position={new Vector3(0, 0, 0)} />
+        <Woman
+          player={undefined}
+          position={new Vector3(0, 0, 0)}
+          modelIndex={1}
+        />
       )}
       {selectedCharacterGlbNameIndex === 2 && (
-        <Kid player={undefined} position={new Vector3(0, 0, 0)} />
+        <Kid
+          player={undefined}
+          position={new Vector3(0, 0, 0)}
+          modelIndex={2}
+        />
       )}
       <OrbitControls
         ref={controls}

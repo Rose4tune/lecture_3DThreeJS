@@ -1,29 +1,13 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
-import { SkeletonUtils } from "three-stdlib";
-import { useGraph } from "@react-three/fiber";
+import { usePlayer } from "./hooks/usePlayer";
 
-export function Woman({ player, position }) {
-  const playerId = player?.id;
-  const memoizedPosition = useMemo(() => position, []);
-  const playerRef = useRef(null);
-  const { scene, materials, animations } = useGLTF(
-    "/models/CubeWomanCharacter.glb"
+export function Woman({ player, position, modelIndex }) {
+  const { playerRef, memoizedPosition, playerId, nodes, materials } = usePlayer(
+    {
+      player,
+      position,
+      modelIndex: modelIndex ?? player.selectedCharacterGlbNameIndex,
+    }
   );
-  const clone = useMemo(() => SkeletonUtils.clone(scene), []);
-  const objectMap = useGraph(clone);
-  const nodes = objectMap.nodes;
-  const [animation, setAnimation] = useState(
-    "CharacterArmature|CharacterArmature|CharacterArmature|Idle"
-  );
-  const { actions } = useAnimations(animations, playerRef);
-
-  useEffect(() => {
-    actions[animation]?.reset().fadeIn(0.5).play();
-    return () => {
-      actions[animation]?.fadeOut(0.5);
-    };
-  }, [actions, animation]);
 
   return (
     <group
@@ -54,5 +38,3 @@ export function Woman({ player, position }) {
     </group>
   );
 }
-
-useGLTF.preload("/models/CubeWomanCharacter.glb");
