@@ -1,5 +1,8 @@
 import { Floor } from "./elements/Floor";
 import { JungleGym } from "./elements/JungleGym";
+import { Dinosaur } from "./elements/npc/Dinosaur";
+import { ShibaInu } from "./elements/npc/ShibaInu";
+import { Zombie } from "./elements/npc/Zombie";
 import { PineTrees } from "./elements/PineTrees";
 import { Swing } from "./elements/Swing";
 import { Tree } from "./elements/Tree";
@@ -8,6 +11,11 @@ export const GroundElements = () => {
   return (
     <>
       <Floor />
+
+      <Dinosaur />
+      <ShibaInu />
+      <Zombie />
+
       <JungleGym />
 
       <Tree position={[-9, 0, -8]} />
