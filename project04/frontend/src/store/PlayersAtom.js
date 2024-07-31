@@ -1,5 +1,11 @@
 import { atom } from "recoil";
 
+// 모든 플레이어들
+export const PlayersAtom = atom({
+  key: "PlayersAtom",
+  default: [],
+});
+
 // 내 socket 정보
 export const MeAtom = atom({
   key: "MeAtom",
