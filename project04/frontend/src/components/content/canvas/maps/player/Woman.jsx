@@ -26,6 +26,8 @@ export function Woman({ player, position, modelIndex }) {
             <primitive object={nodes.Root} />
           </group>
           <skinnedMesh
+            castShadow
+            receiveShadow
             name="Character"
             geometry={nodes.Character.geometry}
             material={materials["Atlas.001"]}
