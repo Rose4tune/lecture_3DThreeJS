@@ -3,11 +3,17 @@ import { useFrame, useGraph } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { SkeletonUtils } from "three-stdlib";
-import { MeAtom } from "../../../../../../store/PlayersAtom";
+import {
+  MeAtom,
+  PlayerGroundStructuresFloorPlaneCornersSelector,
+} from "../../../../../../store/PlayersAtom";
 
 export const usePlayer = ({ player, position, modelIndex }) => {
   const playerId = player?.id;
   const me = useRecoilValue(MeAtom);
+  const playerGroundStructuresFloorPlaneCorners = useRecoilValue(
+    PlayerGroundStructuresFloorPlaneCornersSelector
+  );
 
   const memoizedPosition = useMemo(() => position, []);
 
@@ -82,6 +88,26 @@ export const usePlayer = ({ player, position, modelIndex }) => {
         playerRef.current.position.z + 12
       );
       camera.lookAt(playerRef.current.position);
+    }
+
+    const currentCloseStructure = playerGroundStructuresFloorPlaneCorners.find(
+      (structure) => {
+        return (
+          playerRef.current.position.x < structure.corners[0].x &&
+          playerRef.current.position.x > structure.corners[2].x &&
+          playerRef.current.position.z < structure.corners[0].z &&
+          playerRef.current.position.z > structure.corners[2].z
+        );
+      }
+    );
+
+    if (currentCloseStructure) {
+      camera.lookAt(currentCloseStructure.position);
+      camera.position.set(
+        playerRef.current.position.x + 6,
+        playerRef.current.position.y + 6,
+        playerRef.current.position.z + 6
+      );
     }
   });
 
