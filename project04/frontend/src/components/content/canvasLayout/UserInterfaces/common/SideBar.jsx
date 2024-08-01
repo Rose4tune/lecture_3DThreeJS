@@ -4,7 +4,7 @@ import {
   CurrentMapAtom,
   CurrentMyRoomPlayerAtom,
   MeAtom,
-} from "../../../../../../store/PlayersAtom";
+} from "../../../../../store/PlayersAtom";
 import styled from "styled-components";
 import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
