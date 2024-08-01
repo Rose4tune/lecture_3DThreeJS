@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   CurrentMapAtom,
@@ -13,26 +13,41 @@ import SportsCricketIcon from "@mui/icons-material/SportsCricket";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 
 export const SideBar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const setCurrentMap = useSetRecoilState(CurrentMapAtom);
   const setCurrentMyRoomPlayer = useSetRecoilState(CurrentMyRoomPlayerAtom);
   const me = useRecoilValue(MeAtom);
 
+  const handleClick = useCallback(
+    (mapType) => (e) => {
+      e.stopPropagation();
+      setCurrentMyRoomPlayer(mapType === "MY_ROOM" ? me : undefined);
+      setCurrentMap(mapType);
+      setIsDropdownOpen(false);
+    },
+    [me, setCurrentMap, setCurrentMyRoomPlayer]
+  );
+
   return (
     <>
       <SideBarWrapper className={isDropdownOpen ? "opened" : "closed"}>
-        <div>
+        <div onClick={handleClick("GROUND")}>
           <SportsCricketIcon />
           <span>놀이터로 가기</span>
         </div>
-        <div>
+        <div onClick={handleClick("MY_ROOM")}>
           <HomeIcon /> <span>내 방으로 가기</span>
         </div>
-        <div>
+        <div onClick={handleClick("MINI_GAME")}>
           <SportsEsportsIcon /> <span>게임 방으로 가기</span>
         </div>
       </SideBarWrapper>
-      <DropdownController>
+      <DropdownController
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsDropdownOpen((prev) => !prev);
+        }}
+      >
         {isDropdownOpen ? <CloseIcon /> : <MenuIcon />}
       </DropdownController>
     </>
