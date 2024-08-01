@@ -7,6 +7,7 @@ import {
   MeAtom,
   PlayerGroundStructuresFloorPlaneCornersSelector,
 } from "../../../../../../store/PlayersAtom";
+import { calculateMinimapPosition } from "../../../../../../utils";
 
 export const usePlayer = ({ player, position, modelIndex }) => {
   const playerId = player?.id;
@@ -16,6 +17,7 @@ export const usePlayer = ({ player, position, modelIndex }) => {
   );
 
   const memoizedPosition = useMemo(() => position, []);
+  const point = document.getElementById(`player-point-${playerId}`);
 
   const playerRef = useRef(null);
   const nicknameRef = useRef(null);
@@ -64,6 +66,13 @@ export const usePlayer = ({ player, position, modelIndex }) => {
 
       playerRef.current.position.sub(direction);
       playerRef.current.lookAt(position);
+
+      if (point) {
+        point.style.transform = `translate(
+          ${calculateMinimapPosition(playerRef.current.position).x}px,
+          ${calculateMinimapPosition(playerRef.current.position).y}px
+          )`;
+      }
 
       setAnimation("CharacterArmature|CharacterArmature|CharacterArmature|Run");
     } else {
