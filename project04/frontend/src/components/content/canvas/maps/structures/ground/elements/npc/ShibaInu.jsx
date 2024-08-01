@@ -2,7 +2,7 @@ import { useAnimations, useGLTF } from "@react-three/drei";
 import { useEffect, useMemo, useRef } from "react";
 import { gsap } from "gsap";
 import { Vector3 } from "three";
-import { NicknameBoard } from "../../3dUIs/NicknameBoard";
+import { TextBoard } from "../../3dUIs/TextBoard";
 import { useFrame } from "@react-three/fiber";
 
 const name = "ground-shiba-inu";
@@ -59,7 +59,7 @@ export const ShibaInu = () => {
 
   return (
     <>
-      <NicknameBoard ref={nameRef} text="PUPPI" isNpc />
+      <TextBoard ref={nameRef} text="PUPPI" isNpc />
       <primitive
         ref={ref}
         scale={0.7}

@@ -1,7 +1,8 @@
 import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo, useRef } from "react";
 import { Vector3 } from "three";
-import { NicknameBoard } from "../../3dUIs/NicknameBoard";
+import { TextBoard } from "../../3dUIs/TextBoard";
+import { useAnimatedText } from "../../../../../../../hooks/useAnimatedText";
 import { useFrame } from "@react-three/fiber";
 
 const name = "ground-npc-dinosaur";
@@ -34,7 +35,7 @@ export const Dinosaur = () => {
 
   return (
     <>
-      <NicknameBoard ref={nameRef} text="DINO" isNpc />
+      <TextBoard ref={nameRef} text="디노" isNpc />
       <primitive
         ref={ref}
         visible

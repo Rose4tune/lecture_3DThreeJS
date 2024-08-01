@@ -1,7 +1,7 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Vector3 } from "three";
-import { NicknameBoard } from "../../3dUIs/NicknameBoard";
+import { TextBoard } from "../../3dUIs/TextBoard";
 import { useFrame } from "@react-three/fiber";
 
 const name = "ground-npc-zombie";
@@ -42,7 +42,7 @@ export const Zombie = () => {
 
   return (
     <>
-      <NicknameBoard ref={nameRef} text="ZOMBIE" isNpc />
+      <TextBoard ref={nameRef} text="ZOMBIE" isNpc />
       <primitive
         ref={ref}
         scale={1.2}
