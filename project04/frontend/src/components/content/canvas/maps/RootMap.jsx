@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { GroundElements } from "./structures/ground";
 import { useRecoilValue } from "recoil";
 import {
@@ -11,6 +11,7 @@ import { useThree } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { Player } from "./player/Player";
 import { Line } from "@react-three/drei";
+import { Loader } from "../../loader/Loader";
 
 export const RootMap = () => {
   const characterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
@@ -29,7 +30,7 @@ export const RootMap = () => {
   }, [camera.position]);
 
   return (
-    <>
+    <Suspense fallback={<Loader />}>
       {!characterSelectFinished ? (
         <CharacterInit />
       ) : (
@@ -61,6 +62,6 @@ export const RootMap = () => {
           })}
         </>
       )}
-    </>
+    </Suspense>
   );
 };
