@@ -2,13 +2,16 @@ import { useAnimations, useGLTF } from "@react-three/drei";
 import { useEffect, useMemo, useRef } from "react";
 import { gsap } from "gsap";
 import { Vector3 } from "three";
+import { NicknameBoard } from "../../3dUIs/NicknameBoard";
+import { useFrame } from "@react-three/fiber";
 
 const name = "ground-shiba-inu";
 
 export const ShibaInu = () => {
   const ref = useRef(null);
-  const { scene, animations } = useGLTF("/models/Shiba Inu.glb");
+  const nameRef = useRef(null);
 
+  const { scene, animations } = useGLTF("/models/Shiba Inu.glb");
   const { actions } = useAnimations(animations, ref);
   const position = useMemo(() => new Vector3(-1, 0, 21), []);
 
@@ -42,15 +45,30 @@ export const ShibaInu = () => {
       animation?.pause();
     };
   }, [actions, position, scene]);
+
+  useFrame(() => {
+    if (!ref.current) return;
+    if (!nameRef.current) return;
+    nameRef.current.position.set(
+      ref.current.position.x,
+      ref.current.position.y + 4,
+      ref.current.position.z
+    );
+    nameRef.current.lookAt(10000, 10000, 10000);
+  });
+
   return (
-    <primitive
-      ref={ref}
-      scale={0.7}
-      visible
-      name={name}
-      position={position}
-      rotation-y={Math.PI / 1.5}
-      object={scene}
-    />
+    <>
+      <NicknameBoard ref={nameRef} text="PUPPI" isNpc />
+      <primitive
+        ref={ref}
+        scale={0.7}
+        visible
+        name={name}
+        position={position}
+        rotation-y={Math.PI / 1.5}
+        object={scene}
+      />
+    </>
   );
 };
