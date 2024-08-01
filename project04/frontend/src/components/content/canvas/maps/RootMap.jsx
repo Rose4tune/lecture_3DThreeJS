@@ -7,10 +7,8 @@ import {
 } from "../../../../store/PlayersAtom";
 import { CharacterInit } from "../../lobby/CharacterInit";
 import { useThree } from "@react-three/fiber";
-import { Man } from "./player/Man";
-import { Woman } from "./player/Woman";
-import { Kid } from "./player/Kid";
 import { Vector3 } from "three";
+import { Player } from "./player/Player";
 
 export const RootMap = () => {
   const characterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
@@ -33,44 +31,17 @@ export const RootMap = () => {
           <GroundElements />
           {players.map((player) => {
             return (
-              <>
-                {player.selectedCharacterGlbNameIndex === 0 && (
-                  <Man
-                    player={player}
-                    position={
-                      new Vector3(
-                        player.position[0],
-                        player.position[1],
-                        player.position[2]
-                      )
-                    }
-                  />
-                )}
-                {player.selectedCharacterGlbNameIndex === 1 && (
-                  <Woman
-                    player={player}
-                    position={
-                      new Vector3(
-                        player.position[0],
-                        player.position[1],
-                        player.position[2]
-                      )
-                    }
-                  />
-                )}
-                {player.selectedCharacterGlbNameIndex === 2 && (
-                  <Kid
-                    player={player}
-                    position={
-                      new Vector3(
-                        player.position[0],
-                        player.position[1],
-                        player.position[2]
-                      )
-                    }
-                  />
-                )}
-              </>
+              <Player
+                key={player.id}
+                player={player}
+                position={
+                  new Vector3(
+                    player.position[0],
+                    player.position[1],
+                    player.position[2]
+                  )
+                }
+              />
             );
           })}
         </>
