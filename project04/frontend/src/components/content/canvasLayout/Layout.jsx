@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import { SideBar } from "./UserInterfaces/common/SideBar";
 import { Minimap } from "./ground/Minimap";
 import { ChatArea } from "./UserInterfaces/common/ChatArea";
+import { Notice } from "./UserInterfaces/common/Notice";
 
 export const CanvasLayout = ({ children }) => {
   const isLoadCompleted = useRecoilValue(IsLoadCompletedAtom);
@@ -14,6 +15,7 @@ export const CanvasLayout = ({ children }) => {
       {children}
       {isLoadCompleted && (
         <>
+          <Notice />
           <SideBar />
           <Minimap />
           {currentMap !== "MINI_GAME" && <ChatArea />}
