@@ -1,12 +1,23 @@
 import { useEffect } from "react";
 import { socket } from "../../sockets/clientSocket";
-import { useRecoilState } from "recoil";
-import { ChatsAtom, MeAtom, PlayersAtom } from "../../store/PlayersAtom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  AlreadyDisplayedRecentChatsAtom,
+  ChatsAtom,
+  MeAtom,
+  PlayersAtom,
+  RecentChatsAtom,
+} from "../../store/PlayersAtom";
+import _ from "lodash-es";
 
 export const ClientSocketControls = () => {
   const [me, setMe] = useRecoilState(MeAtom);
   const [players, setPlayers] = useRecoilState(PlayersAtom);
   const [chats, setChats] = useRecoilState(ChatsAtom);
+  const setRecentChats = useSetRecoilState(RecentChatsAtom);
+  const alreadyDisplayedRecentChats = useRecoilValue(
+    AlreadyDisplayedRecentChatsAtom
+  );
 
   useEffect(() => {
     const handleConnect = () => {
@@ -51,7 +62,25 @@ export const ClientSocketControls = () => {
         ...prev,
         { senderId, senderNickname, senderJobPosition, text, timestamp },
       ]);
-      console.info("새로운 텍스트");
+
+      const uniqRecentChats = _.uniqBy(
+        [
+          ...chats,
+          { senderId, senderNickname, senderJobPosition, text, timestamp },
+        ].reverse(),
+        "senderId"
+      );
+
+      setRecentChats(
+        uniqRecentChats.filter(
+          (chat) =>
+            !alreadyDisplayedRecentChats.some(
+              (alreadyChats) =>
+                alreadyChats.senderId === chat.senderId &&
+                alreadyChats.timestamp === chat.timestamp
+            )
+        )
+      );
     };
 
     socket.on("connect", handleConnect);
@@ -70,7 +99,16 @@ export const ClientSocketControls = () => {
       socket.off("players", handlePlayers);
       socket.off("newText", handleNewText);
     };
-  }, []);
+  }, [
+    alreadyDisplayedRecentChats,
+    chats,
+    me,
+    me?.id,
+    setChats,
+    setMe,
+    setPlayers,
+    setRecentChats,
+  ]);
 
   return null;
 };
