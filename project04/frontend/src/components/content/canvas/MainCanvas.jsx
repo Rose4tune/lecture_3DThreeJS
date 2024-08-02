@@ -1,9 +1,12 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { RootMap } from "./maps/RootMap";
+import { useRecoilValue } from "recoil";
+import { CurrentMapAtom } from "../../../store/PlayersAtom";
 
 export const MainCanvas = () => {
   const aspectRatio = window.innerWidth / window.innerHeight;
+  const currentMap = useRecoilValue(CurrentMapAtom);
   return (
     <Canvas
       id="canvas"
@@ -17,6 +20,9 @@ export const MainCanvas = () => {
         position: [12, 12, 12],
       }}
     >
+      {currentMap === "MY_ROOM" && (
+        <color attach="background" args={["beige"]} />
+      )}
       <OrbitControls />
       <RootMap />
     </Canvas>
