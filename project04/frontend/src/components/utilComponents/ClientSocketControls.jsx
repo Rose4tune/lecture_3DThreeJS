@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { socket } from "../../sockets/clientSocket";
 import { useRecoilState } from "recoil";
-import { MeAtom, PlayersAtom } from "../../store/PlayersAtom";
+import { ChatsAtom, MeAtom, PlayersAtom } from "../../store/PlayersAtom";
 
 export const ClientSocketControls = () => {
   const [me, setMe] = useRecoilState(MeAtom);
   const [players, setPlayers] = useRecoilState(PlayersAtom);
+  const [chats, setChats] = useRecoilState(ChatsAtom);
 
   useEffect(() => {
     const handleConnect = () => {
@@ -39,7 +40,17 @@ export const ClientSocketControls = () => {
       console.info("플레이어 관련 이벤트");
     };
 
-    const handleNewText = () => {
+    const handleNewText = ({
+      senderId,
+      senderNickname,
+      senderJobPosition,
+      text,
+      timestamp,
+    }) => {
+      setChats((prev) => [
+        ...prev,
+        { senderId, senderNickname, senderJobPosition, text, timestamp },
+      ]);
       console.info("새로운 텍스트");
     };
 
