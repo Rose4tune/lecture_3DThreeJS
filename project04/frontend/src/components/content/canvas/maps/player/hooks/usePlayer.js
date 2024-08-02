@@ -1,5 +1,5 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
-import { useFrame, useGraph } from "@react-three/fiber";
+import { useFrame, useGraph, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { SkeletonUtils } from "three-stdlib";
@@ -7,6 +7,7 @@ import {
   MeAtom,
   PlayerGroundStructuresFloorPlaneCornersSelector,
 } from "../../../../../../store/PlayersAtom";
+import { calculateMinimapPosition } from "../../../../../../utils";
 
 export const usePlayer = ({ player, position, modelIndex }) => {
   const playerId = player?.id;
@@ -16,6 +17,12 @@ export const usePlayer = ({ player, position, modelIndex }) => {
   );
 
   const memoizedPosition = useMemo(() => position, []);
+  const point = document.getElementById(`player-point-${playerId}`);
+
+  const { scene: threeScene } = useThree();
+  const chatBubbleBoard = threeScene.getObjectByName(
+    `chat-bubble-billboard-${playerId}`
+  );
 
   const playerRef = useRef(null);
   const nicknameRef = useRef(null);
@@ -65,6 +72,13 @@ export const usePlayer = ({ player, position, modelIndex }) => {
       playerRef.current.position.sub(direction);
       playerRef.current.lookAt(position);
 
+      if (point) {
+        point.style.transform = `translate(
+          ${calculateMinimapPosition(playerRef.current.position).x}px,
+          ${calculateMinimapPosition(playerRef.current.position).y}px
+          )`;
+      }
+
       setAnimation("CharacterArmature|CharacterArmature|CharacterArmature|Run");
     } else {
       setAnimation(
@@ -79,6 +93,15 @@ export const usePlayer = ({ player, position, modelIndex }) => {
         playerRef.current.position.z
       );
       nicknameRef.current.lookAt(10000, 10000, 10000);
+    }
+
+    if (chatBubbleBoard) {
+      chatBubbleBoard.position.set(
+        playerRef.current.position.x,
+        playerRef.current.position.y + 4,
+        playerRef.current.position.z
+      );
+      chatBubbleBoard.lookAt(10000, 10000, 10000);
     }
 
     if (me?.id === playerId) {

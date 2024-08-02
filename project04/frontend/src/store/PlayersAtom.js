@@ -74,3 +74,51 @@ export const PlayerGroundStructuresFloorPlaneCornersSelector = selector({
     });
   },
 });
+
+// 초기 모델링 로드가 완료되었는가 여부
+export const IsLoadCompletedAtom = atom({
+  key: "IsLoadCompletedAtom",
+  default: false,
+});
+
+// 현재 있는 맵 정보
+export const CurrentMapAtom = atom({
+  key: "CurrentMapAtom",
+  default: "GROUND",
+});
+
+// 현재 들어가있는 마이룸의 주인 유저 정보
+export const CurrentMyRoomPlayerAtom = atom({
+  key: "CurrentMyRoomPlayerAtom",
+  default: undefined,
+});
+
+// 모든 채팅 정보
+export const ChatsAtom = atom({
+  key: "ChatsAtom",
+  default: [],
+});
+
+// 최근 채팅 정보
+export const RecentChatsAtom = atom({
+  key: "RecentChatsSelector",
+  default: [],
+});
+
+// 이미 표시된 최근 채팅 정보
+export const AlreadyDisplayedRecentChatsAtom = atom({
+  key: "AlreadyDisplayedRecentChatsAtom",
+  default: [],
+});
+
+// 입장 공지 정보
+export const EnteredPlayerNoticeAtom = atom({
+  key: "EnteredPlayerNoticeAtom",
+  default: undefined,
+});
+
+// 퇴장 공지 정보
+export const ExitedPlayerNoticeAtom = atom({
+  key: "ExitedPlayerNoticeAtom",
+  default: undefined,
+});

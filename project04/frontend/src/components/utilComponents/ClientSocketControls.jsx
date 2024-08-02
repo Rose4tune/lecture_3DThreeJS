@@ -1,11 +1,27 @@
 import { useEffect } from "react";
 import { socket } from "../../sockets/clientSocket";
-import { useRecoilState } from "recoil";
-import { MeAtom, PlayersAtom } from "../../store/PlayersAtom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  AlreadyDisplayedRecentChatsAtom,
+  ChatsAtom,
+  EnteredPlayerNoticeAtom,
+  ExitedPlayerNoticeAtom,
+  MeAtom,
+  PlayersAtom,
+  RecentChatsAtom,
+} from "../../store/PlayersAtom";
+import _ from "lodash-es";
 
 export const ClientSocketControls = () => {
   const [me, setMe] = useRecoilState(MeAtom);
   const [players, setPlayers] = useRecoilState(PlayersAtom);
+  const [chats, setChats] = useRecoilState(ChatsAtom);
+  const setRecentChats = useSetRecoilState(RecentChatsAtom);
+  const alreadyDisplayedRecentChats = useRecoilValue(
+    AlreadyDisplayedRecentChatsAtom
+  );
+  const setEnterNotice = useSetRecoilState(EnteredPlayerNoticeAtom);
+  const setExitNotice = useSetRecoilState(ExitedPlayerNoticeAtom);
 
   useEffect(() => {
     const handleConnect = () => {
@@ -21,12 +37,14 @@ export const ClientSocketControls = () => {
       console.info("초기화됨");
     };
 
-    const handleEnter = () => {
+    const handleEnter = (value) => {
       console.info("입장함");
+      setEnterNotice(value);
     };
 
-    const handleExit = () => {
+    const handleExit = (value) => {
       console.info("퇴장함");
+      setExitNotice(value);
     };
 
     const handlePlayers = (value) => {
@@ -39,8 +57,36 @@ export const ClientSocketControls = () => {
       console.info("플레이어 관련 이벤트");
     };
 
-    const handleNewText = () => {
-      console.info("새로운 텍스트");
+    const handleNewText = ({
+      senderId,
+      senderNickname,
+      senderJobPosition,
+      text,
+      timestamp,
+    }) => {
+      setChats((prev) => [
+        ...prev,
+        { senderId, senderNickname, senderJobPosition, text, timestamp },
+      ]);
+
+      const uniqRecentChats = _.uniqBy(
+        [
+          ...chats,
+          { senderId, senderNickname, senderJobPosition, text, timestamp },
+        ].reverse(),
+        "senderId"
+      );
+
+      setRecentChats(
+        uniqRecentChats.filter(
+          (chat) =>
+            !alreadyDisplayedRecentChats.some(
+              (alreadyChats) =>
+                alreadyChats.senderId === chat.senderId &&
+                alreadyChats.timestamp === chat.timestamp
+            )
+        )
+      );
     };
 
     socket.on("connect", handleConnect);
@@ -59,7 +105,16 @@ export const ClientSocketControls = () => {
       socket.off("players", handlePlayers);
       socket.off("newText", handleNewText);
     };
-  }, []);
+  }, [
+    alreadyDisplayedRecentChats,
+    chats,
+    me,
+    me?.id,
+    setChats,
+    setMe,
+    setPlayers,
+    setRecentChats,
+  ]);
 
   return null;
 };
