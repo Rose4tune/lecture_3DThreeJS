@@ -3,9 +3,12 @@ import { IsLoadCompletedAtom } from "../../../store/PlayersAtom";
 import { styled } from "styled-components";
 import { SideBar } from "./UserInterfaces/common/SideBar";
 import { Minimap } from "./ground/Minimap";
+import { ChatArea } from "./UserInterfaces/common/ChatArea";
 
 export const CanvasLayout = ({ children }) => {
   const isLoadCompleted = useRecoilValue(IsLoadCompletedAtom);
+  const currentMap = useRecoilValue(IsLoadCompletedAtom);
+
   return (
     <Wrapper>
       {children}
@@ -13,6 +16,7 @@ export const CanvasLayout = ({ children }) => {
         <>
           <SideBar />
           <Minimap />
+          {currentMap !== "MINI_GAME" && <ChatArea />}
         </>
       )}
     </Wrapper>
