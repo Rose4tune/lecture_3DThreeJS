@@ -15,7 +15,7 @@ import { Player } from "./player/Player";
 import { Line, OrbitControls } from "@react-three/drei";
 import { Loader } from "../../loader/Loader";
 import { ChatBubble } from "./structures/ground/3dUIs/ChatBubble";
-import { MyRoom } from "./structures/myRomm";
+import { MyRoom } from "./structures/myRoom";
 import gsap from "gsap";
 
 export const RootMap = () => {
