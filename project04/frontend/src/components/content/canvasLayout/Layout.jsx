@@ -1,5 +1,6 @@
 import { useRecoilValue } from "recoil";
 import {
+  CurrentMapAtom,
   CurrentMyRoomPlayerAtom,
   IsLoadCompletedAtom,
   MeAtom,
@@ -11,10 +12,11 @@ import { ChatArea } from "./UserInterfaces/common/ChatArea";
 import { Notice } from "./UserInterfaces/common/Notice";
 import { Footer } from "./UserInterfaces/common/Footer";
 import { Popup } from "./ground/Popup";
+import { MyRoomToolBar } from "./UserInterfaces/myRoom/MyRoomToolBar";
 
 export const CanvasLayout = ({ children }) => {
   const isLoadCompleted = useRecoilValue(IsLoadCompletedAtom);
-  const currentMap = useRecoilValue(IsLoadCompletedAtom);
+  const currentMap = useRecoilValue(CurrentMapAtom);
   const currentMyRoomPlayer = useRecoilValue(CurrentMyRoomPlayerAtom);
   const me = useRecoilValue(MeAtom);
 
@@ -30,6 +32,7 @@ export const CanvasLayout = ({ children }) => {
           {currentMap !== "GROUND" &&
             currentMyRoomPlayer &&
             me?.id !== currentMyRoomPlayer.id && <Popup />}
+          {currentMap === "MY_ROOM" && <MyRoomToolBar />}
         </>
       )}
       <Footer />
