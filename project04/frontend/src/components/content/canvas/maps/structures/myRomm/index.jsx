@@ -1,8 +1,15 @@
 import { MyRoomFloor } from "./elements/MyRoomFloor";
 import { MyRoomLeftWall } from "./elements/MyRoomLeftWall";
 import { MyRoomRightWall } from "./elements/MyRoomRightWall";
+import { CurrentPlacingMyRoomSkillAtom } from "../../../../../../store/PlayersAtom";
+import { useRecoilValue } from "recoil";
+import { MyRoomSkillPlaceMode } from "../../../../canvasLayout/UserInterfaces/myRoom/placeMode/MyRoomSkillPlaceMode";
 
 export const MyRoom = () => {
+  const currentPlacingMyRoomSkill = useRecoilValue(
+    CurrentPlacingMyRoomSkillAtom
+  );
+
   return (
     <>
       <directionalLight
@@ -24,6 +31,11 @@ export const MyRoom = () => {
       <MyRoomFloor />
       <MyRoomLeftWall />
       <MyRoomRightWall />
+      {currentPlacingMyRoomSkill && (
+        <MyRoomSkillPlaceMode
+          currentPlacingMyRoomSkill={currentPlacingMyRoomSkill}
+        />
+      )}
     </>
   );
 };
