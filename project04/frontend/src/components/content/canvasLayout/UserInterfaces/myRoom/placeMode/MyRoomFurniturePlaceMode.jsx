@@ -75,8 +75,8 @@ export const MyRoomFurniturePlaceMode = ({ currentPlacingMyRoomFurniture }) => {
             item.object.name
           )
         );
-      const intersect = intersects[0];
 
+      const intersect = intersects[0];
       let roomTouched = false;
       let xOffset = 0;
       const yOffset = -myRoomSize / 2 - boundingBox.min.y;

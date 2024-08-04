@@ -9,12 +9,13 @@ import {
 import { useRecoilValue } from "recoil";
 import { MyRoomSkillPlaceMode } from "../../../../canvasLayout/UserInterfaces/myRoom/placeMode/MyRoomSkillPlaceMode";
 import { MyRoomFurniturePlaceMode } from "../../../../canvasLayout/UserInterfaces/myRoom/placeMode/MyRoomFurniturePlaceMode";
-import { MyRoomElemetns } from "./elements";
+import { MyRoomElements } from "./elements";
 
 export const MyRoom = () => {
   const currentPlacingMyRoomSkill = useRecoilValue(
     CurrentPlacingMyRoomSkillAtom
   );
+
   const currentPlacingMyRoomFurniture = useRecoilValue(
     CurrentPlacingMyRoomFurnitureAtom
   );
@@ -23,7 +24,7 @@ export const MyRoom = () => {
   return (
     <>
       {currentMyRoomPlayer?.myRoom?.objects.map((object) => {
-        return <MyRoomElemetns key={object.name} object={object} />;
+        return <MyRoomElements key={object.name} object={object} />;
       })}
       <directionalLight
         castShadow
@@ -44,6 +45,7 @@ export const MyRoom = () => {
       <MyRoomFloor />
       <MyRoomLeftWall />
       <MyRoomRightWall />
+
       {currentPlacingMyRoomSkill && (
         <MyRoomSkillPlaceMode
           currentPlacingMyRoomSkill={currentPlacingMyRoomSkill}
