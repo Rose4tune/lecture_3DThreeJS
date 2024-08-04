@@ -8,8 +8,12 @@ import {
   CurrentPlacingMyRoomFurnitureAtom,
 } from "../../../../../../store/PlayersAtom";
 import gsap from "gsap";
-import { calculateThreePosition } from "../../../../../../utils";
+import {
+  calculateThreePosition,
+  getMyRoomObjects,
+} from "../../../../../../utils";
 import { myRoomSize } from "../../../../../../data/constants";
+import { socket } from "../../../../../../sockets/clientSocket";
 
 const leftWallVector = new THREE.Vector3(1, 0, 0);
 const rightWallVector = new THREE.Vector3(0, 0, 1);
@@ -126,16 +130,57 @@ export const MyRoomFurniturePlaceMode = ({ currentPlacingMyRoomFurniture }) => {
       }
     };
 
+    const handlePointerUp = () => {
+      if (!currentPlacingMyRoomFurniture) return;
+
+      const myRoomObjects = getMyRoomObjects(
+        threeScene,
+        `my-room-${currentPlacingMyRoomFurniture}`
+      );
+      socket.emit(
+        "myRoomChange",
+        {
+          objects: [
+            ...myRoomObjects,
+            {
+              name: `my-room-${currentPlacingMyRoomFurniture}`,
+              position: [positionVector.x, positionVector.y, positionVector.z],
+              rotation: [
+                0,
+                currentObject?.rotation.y ?? ref.current.rotation.y,
+                0,
+              ],
+            },
+          ],
+        },
+        currentMyRoomPlayer?.id
+      );
+      setCurrentPlacingMyRoomFurniture(undefined);
+    };
+
     gl.domElement.addEventListener("pointermove", handlePointerMove);
+    gl.domElement.addEventListener("pointerup", handlePointerUp);
 
     return () => {
+      positionVector.set(0, 0, 0);
       gl.domElement.removeEventListener("pointermove", handlePointerMove);
+      gl.domElement.removeEventListener("pointerup", handlePointerUp);
     };
-  }, []);
+  }, [
+    camera,
+    currentPlacingMyRoomFurniture,
+    gl.domElement,
+    threeScene,
+    threeScene.children,
+    setCurrentPlacingMyRoomFurniture,
+    scene,
+    currentMyRoomPlayer?.id,
+    currentObject?.rotation.y,
+  ]);
 
   return (
     <primitive
-      visible={true}
+      visible={false}
       name="placing"
       ref={ref}
       object={scene.clone()}
