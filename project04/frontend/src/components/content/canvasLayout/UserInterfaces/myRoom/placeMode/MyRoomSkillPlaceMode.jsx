@@ -12,7 +12,11 @@ import {
 } from "../../../../../../store/PlayersAtom";
 import * as THREE from "three";
 import gsap from "gsap";
-import { calculateThreePosition } from "../../../../../../utils";
+import {
+  calculateThreePosition,
+  getMyRoomObjects,
+} from "../../../../../../utils";
+import { socket } from "../../../../../../sockets/clientSocket";
 
 const leftWallVector = new THREE.Vector3(1, 0, 0);
 const rightWallVector = new THREE.Vector3(0, 0, 1);
@@ -145,9 +149,43 @@ export const MyRoomSkillPlaceMode = ({ currentPlacingMyRoomSkill }) => {
       }
     };
 
+    const handlePointerUp = () => {
+      const myRoomObjects = getMyRoomObjects(
+        scene,
+        `my-room-${currentPlacingMyRoomSkill}`
+      );
+
+      socket.emit(
+        "myRoomChange",
+        {
+          objects: [
+            ...myRoomObjects,
+            {
+              name: `my-room-${currentPlacingMyRoomSkill}`,
+              position: [
+                ref.current.position.x,
+                ref.current.position.y,
+                ref.current.position.z,
+              ],
+              rotation: [
+                ref.current.rotation.x,
+                ref.current.rotation.y,
+                ref.current.rotation.z,
+              ],
+            },
+          ],
+        },
+        currentMyRoomPlayer?.id
+      );
+      setCurrentPlacingMyRoomSkill(undefined);
+    };
+
     gl.domElement.addEventListener("pointermove", handlePointerMove);
+    gl.domElement.addEventListener("pointerup", handlePointerUp);
+
     return () => {
       gl.domElement.removeEventListener("pointermove", handlePointerMove);
+      gl.domElement.removeEventListener("pointerup", handlePointerUp);
     };
   }, [
     camera,
