@@ -17,6 +17,7 @@ import { Loader } from "../../loader/Loader";
 import { ChatBubble } from "./structures/ground/3dUIs/ChatBubble";
 import { MyRoom } from "./structures/myRoom";
 import gsap from "gsap";
+import { MiniGame } from "./structures/miniGame";
 
 export const RootMap = () => {
   const characterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
@@ -59,6 +60,12 @@ export const RootMap = () => {
 
       return;
     }
+
+    if (currentMap === "MINI_GAME") {
+      camera.position.set(10, 1, 10);
+      camera.lookAt(0, 0, 0);
+      return;
+    }
   }, [camera, camera.position, currentMap]);
 
   return (
@@ -67,15 +74,16 @@ export const RootMap = () => {
         name="ambientLight"
         intensity={currentMap === "GROUND" ? 5 : 0.5}
       />
-      <OrbitControls
-        ref={controls}
-        minDistance={5}
-        maxDistance={1000}
-        maxPolarAngle={currentMap === "MY_ROOM" ? Math.PI / 2 : Math.PI}
-        maxAzimuthAngle={currentMap === "MY_ROOM" ? Math.PI / 2 : Infinity}
-        minAzimuthAngle={currentMap === "MY_ROOM" ? 0 : -Infinity}
-      />
-
+      {currentMap !== "MINI_GAME" && (
+        <OrbitControls
+          ref={controls}
+          minDistance={5}
+          maxDistance={1000}
+          maxPolarAngle={currentMap === "MY_ROOM" ? Math.PI / 2 : Math.PI}
+          maxAzimuthAngle={currentMap === "MY_ROOM" ? Math.PI / 2 : Infinity}
+          minAzimuthAngle={currentMap === "MY_ROOM" ? 0 : -Infinity}
+        />
+      )}
       {currentMap === "GROUND" && (
         <Suspense fallback={<Loader />}>
           <directionalLight
@@ -133,6 +141,7 @@ export const RootMap = () => {
         </Suspense>
       )}
       {currentMap === "MY_ROOM" && <MyRoom />}
+      {currentMap === "MINI_GAME" && <MiniGame />}
     </>
   );
 };
