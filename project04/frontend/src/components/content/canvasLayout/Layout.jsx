@@ -15,6 +15,7 @@ import { Popup } from "./ground/Popup";
 import { MyRoomToolBar } from "./UserInterfaces/myRoom/MyRoomToolBar";
 import { Memo } from "./UserInterfaces/myRoom/Memo";
 import { SelectedObjectMenuBar } from "./ground/SelectedObjectMenuBar";
+import { Tooltip } from "./UserInterfaces/myRoom/Tooltip";
 
 export const CanvasLayout = ({ children }) => {
   const isLoadCompleted = useRecoilValue(IsLoadCompletedAtom);
@@ -39,6 +40,7 @@ export const CanvasLayout = ({ children }) => {
             <>
               <MyRoomToolBar />
               {currentMyRoomPlayer?.id === me.id && <SelectedObjectMenuBar />}
+              <Tooltip />
             </>
           )}
         </>

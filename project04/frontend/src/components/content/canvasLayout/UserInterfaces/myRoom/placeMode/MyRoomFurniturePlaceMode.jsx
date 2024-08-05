@@ -81,7 +81,7 @@ export const MyRoomFurniturePlaceMode = ({ currentPlacingMyRoomFurniture }) => {
       let xOffset = 0;
       const yOffset = -myRoomSize / 2 - boundingBox.min.y;
       let zOffset = 0;
-      if (!intersect.normal) return;
+      if (!intersect?.normal) return;
 
       const width = boundingBox.max.x - boundingBox.min.x;
       const depth = boundingBox.max.z - boundingBox.min.z;

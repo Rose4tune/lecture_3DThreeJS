@@ -65,7 +65,7 @@ export const MyRoomSkillPlaceMode = ({ currentPlacingMyRoomSkill }) => {
       let xOffset = 0;
       let yOffset = 0;
       let zOffset = 0;
-      if (!intersect.normal) return;
+      if (!intersect?.normal) return;
 
       // 현재 rayCaster에 잡힌 첫번째 오브젝트의 법선벡터와 3축의 벡터가 평행하다면 각 축에 맞는 offset을 더해준다.
       if (1 - Math.abs(intersect.normal.clone().dot(floorVector)) < 0.1) {
