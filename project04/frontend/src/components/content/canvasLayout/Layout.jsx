@@ -14,6 +14,7 @@ import { Footer } from "./UserInterfaces/common/Footer";
 import { Popup } from "./ground/Popup";
 import { MyRoomToolBar } from "./UserInterfaces/myRoom/MyRoomToolBar";
 import { Memo } from "./UserInterfaces/myRoom/Memo";
+import { SelectedObjectMenuBar } from "./ground/SelectedObjectMenuBar";
 
 export const CanvasLayout = ({ children }) => {
   const isLoadCompleted = useRecoilValue(IsLoadCompletedAtom);
@@ -34,7 +35,12 @@ export const CanvasLayout = ({ children }) => {
           {currentMap === "GROUND" &&
             currentMyRoomPlayer &&
             me?.id !== currentMyRoomPlayer.id && <Popup />}
-          {currentMap === "MY_ROOM" && <MyRoomToolBar />}
+          {currentMap === "MY_ROOM" && (
+            <>
+              <MyRoomToolBar />
+              {currentMyRoomPlayer?.id === me.id && <SelectedObjectMenuBar />}
+            </>
+          )}
         </>
       )}
       <Footer />
