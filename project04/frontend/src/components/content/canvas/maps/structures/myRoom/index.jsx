@@ -6,12 +6,14 @@ import {
   CurrentPlacingMyRoomFurnitureAtom,
   CurrentPlacingMyRoomMemoAtom,
   CurrentPlacingMyRoomSkillAtom,
+  CurrentRotationingMyRoomObjectAtom,
 } from "../../../../../../store/PlayersAtom";
 import { useRecoilValue } from "recoil";
 import { MyRoomSkillPlaceMode } from "../../../../canvasLayout/UserInterfaces/myRoom/placeMode/MyRoomSkillPlaceMode";
 import { MyRoomFurniturePlaceMode } from "../../../../canvasLayout/UserInterfaces/myRoom/placeMode/MyRoomFurniturePlaceMode";
 import { MyRoomMemoPlaceMode } from "../../../../canvasLayout/UserInterfaces/myRoom/placeMode/MyRoomMemoPlaceMode";
 import { MyRoomElements } from "./elements";
+import { MyRoomFurnitureRotationMode } from "../../../../canvasLayout/UserInterfaces/myRoom/rotationMode/MyRoomFurnitureRotationMode";
 
 export const MyRoom = () => {
   const currentPlacingMyRoomSkill = useRecoilValue(
@@ -21,8 +23,10 @@ export const MyRoom = () => {
     CurrentPlacingMyRoomFurnitureAtom
   );
   const currentPlacingMyRoomMemo = useRecoilValue(CurrentPlacingMyRoomMemoAtom);
-
   const currentMyRoomPlayer = useRecoilValue(CurrentMyRoomPlayerAtom);
+  const currentRotationingMyRoomObject = useRecoilValue(
+    CurrentRotationingMyRoomObjectAtom
+  );
 
   return (
     <>
@@ -60,6 +64,7 @@ export const MyRoom = () => {
         />
       )}
       {currentPlacingMyRoomMemo && <MyRoomMemoPlaceMode />}
+      {currentRotationingMyRoomObject && <MyRoomFurnitureRotationMode />}
     </>
   );
 };

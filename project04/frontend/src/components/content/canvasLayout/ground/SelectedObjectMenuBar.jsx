@@ -1,10 +1,13 @@
 import { useEffect, useRef } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
   CurrentPlacingMyRoomFurnitureAtom,
+  CurrentRotationAtom,
+  CurrentRotationingMyRoomObjectAtom,
   CurrentSelectedMyRoomObjectAtom,
 } from "../../../../store/PlayersAtom";
+import RotateRightIcon from "@mui/icons-material/RotateRight";
 
 export const SelectedObjectMenuBar = () => {
   const ref = useRef(null);
@@ -15,6 +18,10 @@ export const SelectedObjectMenuBar = () => {
   const setCurrentPlacingMyRoomFurniture = useSetRecoilState(
     CurrentPlacingMyRoomFurnitureAtom
   );
+
+  const [currentRotationingMyRoomObject, setCurrentRotationingMyRoomObject] =
+    useRecoilState(CurrentRotationingMyRoomObjectAtom);
+  const setCurrentRotation = useSetRecoilState(CurrentRotationAtom);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -33,6 +40,7 @@ export const SelectedObjectMenuBar = () => {
     >
       <Menu
         onClick={() => {
+          setCurrentRotationingMyRoomObject(undefined);
           setCurrentPlacingMyRoomFurniture((prev) => {
             if (prev === currentSelectedMyRoomObject?.name) {
               return undefined;
@@ -43,6 +51,36 @@ export const SelectedObjectMenuBar = () => {
       >
         <span>이동</span>
       </Menu>
+      <Menu
+        onClick={(e) => {
+          e.stopPropagation();
+          setCurrentPlacingMyRoomFurniture(undefined);
+          setCurrentRotationingMyRoomObject((prev) => {
+            if (prev === currentSelectedMyRoomObject?.name) {
+              return undefined;
+            }
+            return currentSelectedMyRoomObject?.name;
+          });
+          setCurrentRotation(0);
+        }}
+      >
+        <span>회전</span>
+      </Menu>
+      <RotationMenu
+        onClick={() => {
+          if (!currentRotationingMyRoomObject) return;
+          setCurrentRotation((prev) => {
+            if (prev !== undefined) {
+              prev += Math.PI / 4;
+              return prev % (Math.PI * 2);
+            }
+            return 0;
+          });
+        }}
+        className={currentRotationingMyRoomObject ? "visible" : "invisible"}
+      >
+        <RotateRightIcon />
+      </RotationMenu>
     </MenuBarWrapper>
   );
 };
