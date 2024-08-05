@@ -4,21 +4,24 @@ import { MyRoomRightWall } from "./elements/MyRoomRightWall";
 import {
   CurrentMyRoomPlayerAtom,
   CurrentPlacingMyRoomFurnitureAtom,
+  CurrentPlacingMyRoomMemoAtom,
   CurrentPlacingMyRoomSkillAtom,
 } from "../../../../../../store/PlayersAtom";
 import { useRecoilValue } from "recoil";
 import { MyRoomSkillPlaceMode } from "../../../../canvasLayout/UserInterfaces/myRoom/placeMode/MyRoomSkillPlaceMode";
 import { MyRoomFurniturePlaceMode } from "../../../../canvasLayout/UserInterfaces/myRoom/placeMode/MyRoomFurniturePlaceMode";
+import { MyRoomMemoPlaceMode } from "../../../../canvasLayout/UserInterfaces/myRoom/placeMode/MyRoomMemoPlaceMode";
 import { MyRoomElements } from "./elements";
 
 export const MyRoom = () => {
   const currentPlacingMyRoomSkill = useRecoilValue(
     CurrentPlacingMyRoomSkillAtom
   );
-
   const currentPlacingMyRoomFurniture = useRecoilValue(
     CurrentPlacingMyRoomFurnitureAtom
   );
+  const currentPlacingMyRoomMemo = useRecoilValue(CurrentPlacingMyRoomMemoAtom);
+
   const currentMyRoomPlayer = useRecoilValue(CurrentMyRoomPlayerAtom);
 
   return (
@@ -56,6 +59,7 @@ export const MyRoom = () => {
           currentPlacingMyRoomFurniture={currentPlacingMyRoomFurniture}
         />
       )}
+      {currentPlacingMyRoomMemo && <MyRoomMemoPlaceMode />}
     </>
   );
 };

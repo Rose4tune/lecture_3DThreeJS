@@ -2,11 +2,13 @@ import styled from "styled-components";
 import {
   CurrentMyRoomPlayerAtom,
   CurrentPlacingMyRoomFurnitureAtom,
+  CurrentPlacingMyRoomMemoAtom,
   CurrentPlacingMyRoomSkillAtom,
   MeAtom,
 } from "../../../../../store/PlayersAtom";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isValidText } from "../../../../../utils";
 
 const skills = [
   "skill-html",
@@ -45,18 +47,25 @@ const furnitures = [
 
 export const MyRoomToolBar = () => {
   const [openedDropdownIndex, setOpenedDropdownIndex] = useState();
+  const [currentMemoText, setCurrentMemoText] = useState(undefined);
+  const [isMemoFormOpen, setIsMemoFormOpen] = useState(false);
+
   const currentMyRoomPlayer = useRecoilValue(CurrentMyRoomPlayerAtom);
   const me = useRecoilValue(MeAtom);
-  const [, setCurrentPlacingMyRoomSkill] = useRecoilState(
+
+  const setCurrentPlacingMyRoomSkill = useSetRecoilState(
     CurrentPlacingMyRoomSkillAtom
   );
-  const [, setCurrentPlacingMyRoomFurniture] = useRecoilState(
+  const setCurrentPlacingMyRoomFurniture = useSetRecoilState(
     CurrentPlacingMyRoomFurnitureAtom
+  );
+  const setCurrentPlacingMyRoomMemo = useSetRecoilState(
+    CurrentPlacingMyRoomMemoAtom
   );
 
   return (
     <MyRoomToolBarWrapper>
-      {currentMyRoomPlayer?.id === me?.id && (
+      {currentMyRoomPlayer?.id === me?.id ? (
         <>
           {["스택 배치", "가구 배치"].map((item, index) => {
             return (
@@ -110,6 +119,42 @@ export const MyRoomToolBar = () => {
             </ToolBarBtnDropdown>
           )}
         </>
+      ) : (
+        <ColumnWrapper>
+          {`${currentMyRoomPlayer?.nickname}[${currentMyRoomPlayer?.jobPosition}]의 방`}{" "}
+          <ToolBarBtn
+            onClick={() => {
+              setIsMemoFormOpen((prev) => !prev);
+            }}
+          >
+            메모
+          </ToolBarBtn>
+          <MemoFormPropdown
+            className={isMemoFormOpen ? "visible" : "invisible"}
+          >
+            <textarea
+              value={currentMemoText ?? ""}
+              onChange={(e) => {
+                setCurrentMemoText(e.currentTarget.value);
+              }}
+            ></textarea>
+
+            <MemoSubmitBtn
+              onClick={() => {
+                if (!isValidText(currentMemoText)) return;
+                setCurrentPlacingMyRoomMemo({
+                  text: currentMemoText,
+                  authorNickname: me.nickname,
+                  timestamp: new Date() + "",
+                });
+                setCurrentMemoText(undefined);
+                setIsMemoFormOpen(false);
+              }}
+            >
+              메모 남기기
+            </MemoSubmitBtn>
+          </MemoFormPropdown>
+        </ColumnWrapper>
       )}
     </MyRoomToolBarWrapper>
   );
