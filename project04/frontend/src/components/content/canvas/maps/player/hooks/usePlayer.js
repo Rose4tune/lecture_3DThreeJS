@@ -1,9 +1,10 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { useFrame, useGraph, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SkeletonUtils } from "three-stdlib";
 import {
+  CurrentMyRoomPlayerAtom,
   MeAtom,
   PlayerGroundStructuresFloorPlaneCornersSelector,
 } from "../../../../../../store/PlayersAtom";
@@ -15,6 +16,7 @@ export const usePlayer = ({ player, position, modelIndex }) => {
   const playerGroundStructuresFloorPlaneCorners = useRecoilValue(
     PlayerGroundStructuresFloorPlaneCornersSelector
   );
+  const setCurrentMyRoomPlayer = useSetRecoilState(CurrentMyRoomPlayerAtom);
 
   const memoizedPosition = useMemo(() => position, []);
   const point = document.getElementById(`player-point-${playerId}`);
@@ -142,5 +144,6 @@ export const usePlayer = ({ player, position, modelIndex }) => {
     playerId,
     nodes,
     materials,
+    setCurrentMyRoomPlayer,
   };
 };

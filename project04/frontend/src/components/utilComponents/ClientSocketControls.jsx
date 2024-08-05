@@ -4,6 +4,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   AlreadyDisplayedRecentChatsAtom,
   ChatsAtom,
+  CurrentMyRoomPlayerAtom,
   EnteredPlayerNoticeAtom,
   ExitedPlayerNoticeAtom,
   MeAtom,
@@ -22,6 +23,9 @@ export const ClientSocketControls = () => {
   );
   const setEnterNotice = useSetRecoilState(EnteredPlayerNoticeAtom);
   const setExitNotice = useSetRecoilState(ExitedPlayerNoticeAtom);
+  const [currentMyRoomPlayer, setCurrentMyRoomPlayer] = useRecoilState(
+    CurrentMyRoomPlayerAtom
+  );
 
   useEffect(() => {
     const handleConnect = () => {
@@ -49,11 +53,19 @@ export const ClientSocketControls = () => {
 
     const handlePlayers = (value) => {
       setPlayers(value);
-      const newMe = value.find((p) => p && me && p.id === me.id);
+      const newMe = value.find((p) => p && me && p?.id === me?.id);
 
       if (newMe) {
         setMe(newMe);
       }
+      const currentMyRoomUpdated = value.find(
+        (p) => p && currentMyRoomPlayer && p?.id === currentMyRoomPlayer?.id
+      );
+
+      if (currentMyRoomUpdated) {
+        setCurrentMyRoomPlayer(currentMyRoomUpdated);
+      }
+
       console.info("플레이어 관련 이벤트");
     };
 
@@ -114,6 +126,11 @@ export const ClientSocketControls = () => {
     setMe,
     setPlayers,
     setRecentChats,
+    currentMyRoomPlayer,
+    currentMyRoomPlayer?.id,
+    setCurrentMyRoomPlayer,
+    setEnterNotice,
+    setExitNotice,
   ]);
 
   return null;

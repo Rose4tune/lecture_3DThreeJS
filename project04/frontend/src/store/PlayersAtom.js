@@ -122,3 +122,45 @@ export const ExitedPlayerNoticeAtom = atom({
   key: "ExitedPlayerNoticeAtom",
   default: undefined,
 });
+
+//  현재 배치중인 기술스택박스 이름
+export const CurrentPlacingMyRoomSkillAtom = atom({
+  key: "CurrentPlacingMyRoomSkillAtom",
+  default: undefined,
+});
+
+// 현재 배치중인 가구 이름
+export const CurrentPlacingMyRoomFurnitureAtom = atom({
+  key: "CurrentPlacingMyRoomFurnitureAtom",
+  default: undefined,
+});
+
+// 현재 배치중인 메모 정보
+export const CurrentPlacingMyRoomMemoAtom = atom({
+  key: "CurrentPlacingMyRoomMemoAtom",
+  default: undefined,
+});
+
+// 현재 팝업에 띄워진 메모 정보
+export const CurrentSelectedMemoAtom = atom({
+  key: "CurrentSelectedMemoAtom",
+  default: undefined,
+});
+
+// 현재 선택된 마이룸 내 배치된 오브젝트 정보
+export const CurrentSelectedMyRoomObjectAtom = atom({
+  key: "CurrentSelectedMyRoomObjectAtom",
+  default: undefined,
+});
+
+//  현재 회전중인 가구
+export const CurrentRotationingMyRoomObjectAtom = atom({
+  key: "CurrentRotationingMyRoomObjectAtom",
+  default: undefined,
+});
+
+// 현재 회전된 각
+export const CurrentRotationAtom = atom({
+  key: "CurrentRotationAtom",
+  default: undefined,
+});
