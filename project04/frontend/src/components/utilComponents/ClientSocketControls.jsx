@@ -53,14 +53,15 @@ export const ClientSocketControls = () => {
 
     const handlePlayers = (value) => {
       setPlayers(value);
-      const newMe = value.find((p) => p && me && p.id === me.id);
+      const newMe = value.find((p) => p && me && p?.id === me?.id);
 
       if (newMe) {
         setMe(newMe);
       }
       const currentMyRoomUpdated = value.find(
-        (p) => p?.id === currentMyRoomPlayer?.id
+        (p) => p && currentMyRoomPlayer && p?.id === currentMyRoomPlayer?.id
       );
+
       if (currentMyRoomUpdated) {
         setCurrentMyRoomPlayer(currentMyRoomUpdated);
       }
