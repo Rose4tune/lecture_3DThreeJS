@@ -29,7 +29,7 @@ export const CanvasLayout = ({ children }) => {
           <SideBar />
           <Minimap />
           {currentMap !== "MINI_GAME" && <ChatArea />}
-          {currentMap !== "GROUND" &&
+          {currentMap === "GROUND" &&
             currentMyRoomPlayer &&
             me?.id !== currentMyRoomPlayer.id && <Popup />}
           {currentMap === "MY_ROOM" && <MyRoomToolBar />}
