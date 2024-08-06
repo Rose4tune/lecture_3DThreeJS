@@ -1,15 +1,17 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { GunHand } from "./elements/GunHand";
 import { MiniGameFloor } from "./elements/MiniGameFloor";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import {
   CurrentMapAtom,
+  HitCountAtom,
   IsMiniGameClearedAtom,
   IsMiniGameStartedAtom,
 } from "../../../../../../store/PlayersAtom";
 import { PointerLockControls } from "@react-three/drei";
 import { Color, Quaternion, Vector3 } from "three";
+import { TargetMesh } from "./elements/TargetMesh";
 
 const COOL_TIME = 2000;
 let movement = { forward: false, backward: false, left: false, right: false };
@@ -19,15 +21,58 @@ export const MiniGame = () => {
   const three = useThree();
   const spotLightRef = useRef(null);
   const ref = useRef(null);
+
   const [isMiniGameStarted, setIsMiniGameStarted] = useRecoilState(
     IsMiniGameStartedAtom
   );
   const [isMiniGameCleared, setIsMiniGameCleared] = useRecoilState(
     IsMiniGameClearedAtom
   );
+  const [hitCount, setHitCount] = useRecoilState(HitCountAtom);
+
   const [isBouncing, setIsBouncing] = useState(false); //총기 반동
   const [isShooting, setIsShooting] = useState(false);
   const gunHand = three.scene.getObjectByName("gunHand");
+
+  const randomShapes = useMemo(
+    () =>
+      Array(10)
+        .fill(null)
+        .map(() => {
+          return new Vector3(
+            Math.random() - 0.5 + 1,
+            Math.random() - 0.5 + 1,
+            Math.random() - 0.5 + 1
+          );
+        }),
+    [isMiniGameCleared]
+  );
+
+  const randomPositions = useMemo(
+    () =>
+      Array(10)
+        .fill(null)
+        .map(() => {
+          return new Vector3(
+            (Math.random() - 0.5) * 30,
+            2,
+            (Math.random() - 0.5) * 30
+          );
+        }),
+    [isMiniGameCleared]
+  );
+
+  const randomColors = useMemo(
+    () =>
+      Array(10)
+        .fill(null)
+        .map(
+          () =>
+            Number(`0x${Math.floor(Math.random() * 16777000).toString(16)}`),
+          -10
+        ),
+    []
+  );
 
   // 게임 시작, 끝
   useEffect(() => {
@@ -247,6 +292,19 @@ export const MiniGame = () => {
         />
       )}
       <GunHand />
+      <instancedMesh>
+        {!isMiniGameCleared &&
+          randomPositions.map((position, i) => {
+            return (
+              <TargetMesh
+                position={position}
+                color={randomColors[i]}
+                shapes={randomShapes[i]}
+                setHitCount={setHitCount}
+              />
+            );
+          })}
+      </instancedMesh>
     </>
   );
 };
