@@ -9,8 +9,7 @@ import {
   IsMiniGameStartedAtom,
 } from "../../../../../../store/PlayersAtom";
 import { PointerLockControls } from "@react-three/drei";
-import { Color, Vector3 } from "three";
-import { Quaternion } from "cannon-es";
+import { Color, Quaternion, Vector3 } from "three";
 
 const COOL_TIME = 2000;
 let movement = { forward: false, backward: false, left: false, right: false };

@@ -10,7 +10,7 @@ export const MiniGameFloor = () => {
   return (
     <mesh name="mini-game-floor" ref={ref} castShadow receiveShadow>
       <planeGeometry args={[200, 200]} />
-      <meshStandardMaterial color="eeeeee" />
+      <meshStandardMaterial color="#eeeeee" />
     </mesh>
   );
 };
