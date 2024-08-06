@@ -164,3 +164,33 @@ export const CurrentRotationAtom = atom({
   key: "CurrentRotationAtom",
   default: undefined,
 });
+
+// 미니게임(사격게임) 관련
+export const IsMiniGameStartedAtom = atom({
+  key: "IsMiniGameStartedAtom",
+  default: false,
+});
+
+// 현재 미니게임이 끝났는지 여부
+export const IsMiniGameClearedAtom = atom({
+  key: " IsMiniGameClearedAtom",
+  default: false,
+});
+
+// 현재 맞춘 표적 수
+export const HitCountAtom = atom({
+  key: "HitCountAtom",
+  default: 0,
+});
+
+// 현재 남은 총알 개수
+export const BulletCountAtom = atom({
+  key: "BulletCountAtom",
+  default: 15,
+});
+
+// 현재 발사된 총의 남은 쿨타임
+export const CoolTimeAtom = atom({
+  key: "CoolTimeAtom",
+  default: undefined,
+});
