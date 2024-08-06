@@ -1,9 +1,11 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { GunHand } from "./elements/GunHand";
 import { MiniGameFloor } from "./elements/MiniGameFloor";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import {
+  BulletCountAtom,
+  CoolTimeAtom,
   CurrentMapAtom,
   HitCountAtom,
   IsMiniGameClearedAtom,
@@ -12,6 +14,7 @@ import {
 import { PointerLockControls } from "@react-three/drei";
 import { Color, Quaternion, Vector3 } from "three";
 import { TargetMesh } from "./elements/TargetMesh";
+import { Bullet } from "./elements/Bullet";
 
 const COOL_TIME = 2000;
 let movement = { forward: false, backward: false, left: false, right: false };
@@ -29,22 +32,38 @@ export const MiniGame = () => {
     IsMiniGameClearedAtom
   );
   const [hitCount, setHitCount] = useRecoilState(HitCountAtom);
+  const setBulletCount = useSetRecoilState(BulletCountAtom);
 
   const [isBouncing, setIsBouncing] = useState(false); //총기 반동
   const [isShooting, setIsShooting] = useState(false);
+  const [coolTime, setCoolTime] = useRecoilState(CoolTimeAtom);
+
   const gunHand = three.scene.getObjectByName("gunHand");
+  const crosshair = document.getElementById("crosshair");
+  const cooltimeProgress = document.getElementById("cooltime-progress");
+
+  const shot = useCallback(
+    (api) => {
+      const cameraDirection = new Vector3();
+      three.camera.getWorldDirection(cameraDirection).multiplyScalar(100);
+      api.velocity.copy(cameraDirection);
+      setBulletCount((prev) => prev - 1);
+    },
+    [setBulletCount, three.camera]
+  );
 
   const randomShapes = useMemo(
     () =>
       Array(10)
         .fill(null)
-        .map(() => {
-          return new Vector3(
-            Math.random() - 0.5 + 1,
-            Math.random() - 0.5 + 1,
-            Math.random() - 0.5 + 1
-          );
-        }),
+        .map(
+          () =>
+            new Vector3(
+              Math.random() - 0.5 + 1,
+              Math.random() - 0.5 + 1,
+              Math.random() - 0.5 + 1
+            )
+        ),
     [isMiniGameCleared]
   );
 
@@ -52,13 +71,14 @@ export const MiniGame = () => {
     () =>
       Array(10)
         .fill(null)
-        .map(() => {
-          return new Vector3(
-            (Math.random() - 0.5) * 30,
-            2,
-            (Math.random() - 0.5) * 30
-          );
-        }),
+        .map(
+          () =>
+            new Vector3(
+              (Math.random() - 0.5) * 30,
+              2,
+              (Math.random() - 0.5) * 30
+            )
+        ),
     [isMiniGameCleared]
   );
 
@@ -82,8 +102,29 @@ export const MiniGame = () => {
       three.scene.background = new Color(0xffffff);
       setIsMiniGameStarted(false);
       setIsMiniGameCleared(false);
+      setBulletCount(15);
+      setHitCount(0);
     };
-  }, [three.scene.background, setIsMiniGameStarted, setIsMiniGameCleared]);
+  }, [
+    three.scene,
+    setIsMiniGameStarted,
+    setBulletCount,
+    setHitCount,
+    setIsMiniGameCleared,
+  ]);
+
+  useEffect(() => {
+    if (hitCount === 10) {
+      setIsMiniGameCleared(true);
+      ref.current?.unlock();
+    }
+  }, [hitCount, setIsMiniGameCleared]);
+
+  useEffect(() => {
+    if (isMiniGameStarted) {
+      ref.current?.lock();
+    }
+  }, [isMiniGameStarted]);
 
   // 게임 조명
   useEffect(() => {
@@ -121,6 +162,7 @@ export const MiniGame = () => {
       }
       setIsBouncing(true);
       setIsShooting(true);
+      setCoolTime(Date.now());
     };
     window.addEventListener("pointerdown", handlePointerDown);
 
@@ -135,6 +177,7 @@ export const MiniGame = () => {
     isShooting,
     setIsBouncing,
     setIsShooting,
+    setCoolTime,
   ]);
 
   // 방향 이동 로직
@@ -193,6 +236,28 @@ export const MiniGame = () => {
   const quaterinion = new Quaternion(); // 회전정보 담는 계산 체계
 
   useFrame(() => {
+    if (coolTime) {
+      if (Date.now() - coolTime >= COOL_TIME) {
+        setCoolTime(undefined);
+      }
+      if (crosshair) {
+        crosshair.style.display = "none";
+      }
+      if (cooltimeProgress) {
+        cooltimeProgress.style.display = "block";
+        cooltimeProgress.style.background = `conic-gradient(hotpink ${
+          ((Date.now() - coolTime) / COOL_TIME) * 100
+        }%, pink 0)`;
+      }
+    } else {
+      if (crosshair) {
+        crosshair.style.display = "block";
+      }
+      if (cooltimeProgress) {
+        cooltimeProgress.style.display = "none";
+      }
+    }
+
     if (!gunHand) return;
     if (!ref.current) return;
     ref.current.getDirection(directionVector);
@@ -274,11 +339,13 @@ export const MiniGame = () => {
 
   return (
     <>
-      <PointerLockControls
-        ref={ref}
-        maxPolarAngle={Math.PI / 1.5}
-        minPolarAngle={Math.PI / 2.5}
-      />
+      {isMiniGameStarted && (
+        <PointerLockControls
+          ref={ref}
+          maxPolarAngle={Math.PI / 1.5}
+          minPolarAngle={Math.PI / 2.5}
+        />
+      )}
       <MiniGameFloor />
       <spotLight ref={spotLightRef} intensity={200} position={[0, 20, 0]} />
       {gunHand && (
@@ -292,6 +359,16 @@ export const MiniGame = () => {
         />
       )}
       <GunHand />
+      {isShooting && gunHand && (
+        <Bullet
+          shot={shot}
+          position={[
+            gunHand.position.x,
+            gunHand.position.y + 0.1,
+            gunHand.position.z,
+          ]}
+        />
+      )}
       <instancedMesh>
         {!isMiniGameCleared &&
           randomPositions.map((position, i) => {
