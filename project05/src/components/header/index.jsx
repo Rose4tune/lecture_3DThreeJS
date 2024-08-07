@@ -1,3 +1,8 @@
+import MacLogo from "@/public/icons/logo.svg";
+import SearchIcon from "@/public/icons/search.svg";
+import CartIcon from "@/public/icons/cart.svg";
+import MenuIcon from "@/public/icons/menu.svg";
+
 export default function Header() {
   const SubMenuNames = [
     "스토어",
@@ -17,6 +22,10 @@ export default function Header() {
       <nav className="z-20 h-11 flex flex-1">
         <div className="flex flex-1 max-w-screen-lg mx-auto px-8">
           <ul className="flex flex-1 items-center justify-between text-xs gap-8 min-[835px]:gap-0">
+            <div className="group cursor-pointer">
+              <MacLogo className="group-hover:flex hidden" color="white" />
+              <MacLogo className="group-hover:hidden flex" color="#cccccc" />
+            </div>
             {SubMenuNames.map((subMenu, index) => {
               return (
                 <div
@@ -27,6 +36,18 @@ export default function Header() {
                 </div>
               );
             })}
+            <div className="flex flex-1 min-[835px]:hidden" />
+            <div className="group cursor-pointer">
+              <SearchIcon className="group-hover:flex hidden" color="white" />
+              <SearchIcon className="group-hover:hidden flex" color="#cccccc" />
+            </div>
+            <div className="group cursor-pointer">
+              <CartIcon className="group-hover:flex hidden" color="white" />
+              <CartIcon className="group-hover:hidden flex" color="#cccccc" />
+            </div>
+            <div className="flex min-[835px]:hidden cursor-pointer">
+              <MenuIcon />
+            </div>
           </ul>
         </div>
       </nav>
