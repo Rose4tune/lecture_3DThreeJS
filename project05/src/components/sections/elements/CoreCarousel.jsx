@@ -8,19 +8,19 @@ export default function CoreCarousel() {
   const VIDEOS = [
     {
       text: "A17 Pro 등장.\n게임의 판도를 바꾸는 칩.\n획기적인 성능.",
-      source: "/assets/videos/section2_1_large_2x.mp4",
+      source: "/videos/section2_1_large_2x.mp4",
     },
     {
       text: "티타늄.\n초강력. 초경량. 초프로.",
-      source: "/assets/videos/section2_2_large_2x.mp4",
+      source: "/videos/section2_2_large_2x.mp4",
     },
     {
       text: "iPhone 사상 가장 긴\n광학 줌 초점 거리를 자랑하는\niPhone 15 Pro Max.\n저 멀리 내다보다.",
-      source: "/assets/videos/section2_3_large_2x.mp4",
+      source: "/videos/section2_3_large_2x.mp4",
     },
     {
       text: "완전히 새로운 동작 버튼.\n요모조모 요긴하게.",
-      source: "/assets/videos/section2_4_large_2x.mp4",
+      source: "/videos/section2_4_large_2x.mp4",
     },
   ];
 
