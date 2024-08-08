@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import { useRef, useState } from "react";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -23,6 +24,32 @@ export default function CoreCarousel() {
       source: "/videos/section2_4_large_2x.mp4",
     },
   ];
+  const [swiper, setSwiper] = useState(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const videosRefs = useRef([]);
+
+  const handleSlideChange = (e) => {
+    setActiveSlide(e.activeIndex);
+
+    if (isVideoPlaying) {
+      playVideo();
+    } else {
+      setIsVideoPlaying(true);
+    }
+  };
+
+  const playVideo = () => {
+    if (!swiper) return;
+    videosRefs.current.map((videoRef, index) => {
+      if (index === swiper.activeIndex) {
+        videoRef.play();
+      } else {
+        videoRef.pause();
+        videoRef.currentTime = 0;
+      }
+    });
+  };
 
   return (
     <div className="relative">
@@ -34,6 +61,8 @@ export default function CoreCarousel() {
           spaceBetween={40}
           speed={800}
           autoplay={{ delay: 6000, stopOnLastSlide: true }}
+          onSwiper={setSwiper}
+          onSlideChange={handleSlideChange}
         >
           {VIDEOS.map((video, index) => (
             <SwiperSlide key={`slide-${index}`}>
@@ -44,6 +73,9 @@ export default function CoreCarousel() {
                       {video.text}
                     </div>
                     <video
+                      ref={(ref) => {
+                        videosRefs.current[index] = ref;
+                      }}
                       className="w-full h-full object-contain"
                       playsInline
                       muted
