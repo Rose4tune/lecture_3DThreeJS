@@ -2,6 +2,7 @@
 
 import { motion, useAnimationControls, useScroll } from "framer-motion";
 import { useEffect, useRef } from "react";
+import CoreCarousel from "./elements/CoreCarousel";
 
 export default function Core() {
   const scrollRef = useRef();
@@ -67,7 +68,7 @@ export default function Core() {
           </motion.div>
         </div>
       </div>
-      <div>carousel</div>
+      <CoreCarousel />
     </section>
   );
 }
