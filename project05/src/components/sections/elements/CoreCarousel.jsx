@@ -81,106 +81,102 @@ export default function CoreCarousel() {
 
   return (
     <div className="relative">
-      <div>
-        <Swiper
-          modules={[Autoplay]}
-          className="w-full"
-          slidesPerView={1}
-          spaceBetween={40}
-          speed={800}
-          autoplay={{ delay: 6000, stopOnLastSlide: true }}
-          onSwiper={setSwiper}
-          onSlideChange={handleSlideChange}
-        >
-          {VIDEOS.map((video, index) => (
-            <SwiperSlide key={`slide-${index}`}>
-              <div className="max-w-[1260px] w-full mx-auto relative">
-                <div className="h-[680px] bg-black rounded-[28px] overflow-hidden relative">
-                  <div className="w-full h-full cursor-pointer">
-                    <div className="absolute top-10 left-10 color-[#f5f5f7] text-[24px] font-medium whitespace-pre-line text-left">
-                      {video.text}
-                    </div>
-                    <video
-                      ref={(ref) => {
-                        videosRefs.current[index] = ref;
-                      }}
-                      className="w-full h-full object-contain"
-                      playsInline
-                      muted
-                    >
-                      <source src={video.source} type="video/mp4" />
-                    </video>
+      <Swiper
+        modules={[Autoplay]}
+        className="w-full"
+        slidesPerView={1}
+        spaceBetween={40}
+        speed={800}
+        autoplay={{ delay: 6000, stopOnLastSlide: true }}
+        onSwiper={setSwiper}
+        onSlideChange={handleSlideChange}
+      >
+        {VIDEOS.map((video, index) => (
+          <SwiperSlide key={`slide-${index}`}>
+            <div className="max-w-[1260px] w-full mx-auto relative">
+              <div className="h-[680px] bg-black rounded-[28px] overflow-hidden relative">
+                <div className="w-full h-full cursor-pointer">
+                  <div className="absolute top-10 left-10 color-[#f5f5f7] text-[24px] font-medium whitespace-pre-line text-left">
+                    {video.text}
                   </div>
+                  <video
+                    ref={(ref) => {
+                      videosRefs.current[index] = ref;
+                    }}
+                    className="w-full h-full object-contain"
+                    playsInline
+                    muted
+                  >
+                    <source src={video.source} type="video/mp4" />
+                  </video>
                 </div>
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-        <div
-          ref={sectionRef}
-          className="flex justify-center sticky bottom-0 z-10 py-[100px]"
-        >
-          <AnimatePresence>
-            {isInView && (
-              <div className="flex flex-row">
+      <div
+        ref={sectionRef}
+        className="flex justify-center sticky bottom-0 z-10 py-[100px]"
+      >
+        <AnimatePresence>
+          {isInView && (
+            <div className="flex flex-row">
+              <motion.div
+                className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]"
+                initial={{ x: 28 }}
+                animate={{ x: 0 }}
+                exit={{ x: 28 }}
+              >
                 <motion.div
-                  className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]"
-                  initial={{ x: 28 }}
-                  animate={{ x: 0 }}
-                  exit={{ x: 28 }}
+                  className="flex justify-center h-full overflow-hidden relative"
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: "168px", opacity: 1 }}
+                  exit={{ width: 0, opacity: 0 }}
                 >
-                  <motion.div
-                    className="flex justify-center h-full overflow-hidden relative"
-                    initial={{ width: 0, opacity: 0 }}
-                    animate={{ width: "168px", opacity: 1 }}
-                    exit={{ width: 0, opacity: 0 }}
-                  >
-                    {VIDEOS.map((_, paginationIndex) => {
-                      return (
-                        <motion.button
-                          key={`pagination-${paginationIndex}`}
-                          className="p-2 paginate"
-                          onClick={() => {
-                            handlePaginationClick(paginationIndex);
+                  {VIDEOS.map((_, paginationIndex) => {
+                    return (
+                      <motion.button
+                        key={`pagination-${paginationIndex}`}
+                        className="p-2 paginate"
+                        onClick={() => {
+                          handlePaginationClick(paginationIndex);
+                        }}
+                      >
+                        <motion.span
+                          className="bg-[#f5f5f7] h-2 rounded-full block"
+                          initial={{ opacity: 0, minWidth: "8px" }}
+                          animate={{
+                            opacity: 1,
+                            minWidth:
+                              activeSlide === paginationIndex ? "48px" : "8px",
                           }}
-                        >
-                          <motion.span
-                            className="bg-[#f5f5f7] h-2 rounded-full block"
-                            initial={{ opacity: 0, minWidth: "8px" }}
-                            animate={{
-                              opacity: 1,
-                              minWidth:
-                                activeSlide === paginationIndex
-                                  ? "48px"
-                                  : "8px",
-                            }}
-                          />
-                        </motion.button>
-                      );
-                    })}
-                  </motion.div>
+                        />
+                      </motion.button>
+                    );
+                  })}
                 </motion.div>
-                <motion.div
-                  className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]"
-                  initial={{ x: -28, marginInlineStart: 0 }}
-                  animate={{ x: 0, marginInlineStart: "14px" }}
-                  exit={{ x: -28, marginInlineStart: 0 }}
+              </motion.div>
+              <motion.div
+                className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]"
+                initial={{ x: -28, marginInlineStart: 0 }}
+                animate={{ x: 0, marginInlineStart: "14px" }}
+                exit={{ x: -28, marginInlineStart: 0 }}
+              >
+                <motion.span
+                  className="cursor-pointer"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={toggleVideoPlay}
                 >
-                  <motion.span
-                    className="cursor-pointer"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={toggleVideoPlay}
-                  >
-                    {isVideoPlaying ? <PauseIcon /> : <PlayIcon />}
-                  </motion.span>
-                </motion.div>
-              </div>
-            )}
-          </AnimatePresence>
-        </div>
+                  {isVideoPlaying ? <PauseIcon /> : <PlayIcon />}
+                </motion.span>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
