@@ -52,13 +52,20 @@ export default function MainIntro() {
           ref={videoRef}
           className="flex md:hidden w-[376px] mx-auto"
           muted
-        ></video>
+        >
+          <source src="/videos/small_2x.webm" type="video/mp4" />
+          <source src="/videos/small_2x.mp4" type="video/mp4" />이
+          브라우저에서는 해당 video tag를 지원하지 않습니다.
+        </video>
         <video
           ref={videoRef}
           className="hidden md:flex w-[1200px] mx-auto"
           muted
-          src="/videos/large_2x.mp4"
-        ></video>
+        >
+          <source src="/videos/large_2x.webm" type="video/webm" />
+          <source src="/videos/large_2x.mp4" type="video/mp4" />이
+          브라우저에서는 해당 video tag를 지원하지 않습니다.
+        </video>
       </div>
       <div className="w-full relative flex flex-col -top-[20px] md:-top-[100px] pb-10 md:pb-0 items-center justify-center gap-10">
         <motion.div
