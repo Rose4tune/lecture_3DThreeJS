@@ -3,7 +3,7 @@
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-export default function MainIntro() {
+export default function Intro() {
   const videoRef = useRef();
   const control = useAnimationControls();
   const control2 = useAnimationControls();
