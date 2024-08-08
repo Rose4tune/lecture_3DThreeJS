@@ -1,6 +1,10 @@
+"use client";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import PauseIcon from "@/public/icons/pause.svg";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -88,6 +92,25 @@ export default function CoreCarousel() {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        <div className="flex justify-center sticky bottom-0 z-10 py-[100px]">
+          <AnimatePresence>
+            <div className="flex flex-row">
+              <motion.div className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]">
+                <motion.div className="flex justify-center h-full overflow-hidden relative">
+                  <motion.button className="p-2 paginate">
+                    <motion.span className="bg-[#f5f5f7] h-2 rounded-full block" />
+                  </motion.button>
+                </motion.div>
+              </motion.div>
+              <motion.div className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]">
+                <motion.span className="cursor-pointer">
+                  <PauseIcon />
+                </motion.span>
+              </motion.div>
+            </div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
