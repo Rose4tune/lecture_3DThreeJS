@@ -24,6 +24,20 @@ export default function Header() {
   const [menuIdx, setMenuIdx] = useState(null);
   const menuControl = useAnimationControls();
   const backDropControl = useAnimationControls();
+  const flotingNavControl = useAnimationControls();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      flotingNavControl.start({ y: scrollTop > 392 ? 0 : "-100%" });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const openMenuAnimation = () => {
     menuControl.start({ opacity: 1, height: "auto" });
@@ -172,6 +186,34 @@ export default function Header() {
         animate={backDropControl}
         transition={{ duration: 0.2 }}
       />
+      <motion.div
+        className="flex items-center h-[52px] text-white fixed w-full top-0 z-30 border-b-2 border-[#424245]"
+        style={{ backdropFilter: "saturate(180%) blur(20px)" }}
+        initial={{ y: "-100%" }}
+        animate={flotingNavControl}
+      >
+        <div className="max-w-screen-lg w-full mx-auto px-4 flex items-center gap-5 text-[10px] font-semibold">
+          <a href="#" className="mr-auto">
+            <h1 className="text-xl font-semibold">iPhone 15 Pro</h1>
+          </a>
+          <a href="#" className="opacity-50 hidden min-[835px]:block">
+            개요
+          </a>
+          <a href="#" className="hidden min-[835px]:block hover:text-[#0077ed]">
+            안드로이드에서 갈아타기
+          </a>
+          <a href="#" className="hidden min-[835px]:block hover:text-[#0077ed]">
+            제품 사양
+          </a>
+          <a
+            href="#"
+            type="button"
+            className="bg-[#0071e3] hover:bg-[#0077ed] py-1 px-3 text-center rounded-full"
+          >
+            구입하기
+          </a>
+        </div>
+      </motion.div>
     </div>
   );
 }
