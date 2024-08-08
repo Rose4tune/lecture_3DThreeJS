@@ -23,13 +23,16 @@ export default function Header() {
 
   const [menuIdx, setMenuIdx] = useState(null);
   const menuControl = useAnimationControls();
+  const backDropControl = useAnimationControls();
 
   const openMenuAnimation = () => {
     menuControl.start({ opacity: 1, height: "auto" });
+    backDropControl.start({ backdropFilter: "blur(8px)", height: "100%" });
   };
 
   const closeMenuAnimation = () => {
     menuControl.start({ opacity: 0, height: 0 });
+    backDropControl.start({ backdropFilter: "none", height: 0 });
   };
 
   const renderSubMenu = () => {
@@ -108,56 +111,67 @@ export default function Header() {
   };
 
   return (
-    <div
-      className="flex justify-center bg-black text-white px-1.5"
-      onMouseLeave={closeMenuAnimation}
-    >
-      <nav className="z-20 h-11 flex flex-1">
-        <div className="flex flex-1 max-w-screen-lg mx-auto px-8">
-          <ul className="flex flex-1 items-center justify-between text-xs gap-8 min-[835px]:gap-0">
-            <div className="group cursor-pointer">
-              <MacLogo className="group-hover:flex hidden" color="white" />
-              <MacLogo className="group-hover:hidden flex" color="#cccccc" />
-            </div>
-            {SubMenuNames.map((subMenu, index) => {
-              return (
-                <div
-                  key={index}
-                  className="hidden min-[835px]:flex text-[#cccccc] hover:text-white font-light cursor-pointer"
-                  onMouseEnter={() => {
-                    openMenuAnimation();
-                    setMenuIdx(index);
-                  }}
-                >
-                  {subMenu}
-                </div>
-              );
-            })}
-            <div className="flex flex-1 min-[835px]:hidden" />
-            <div className="group cursor-pointer">
-              <SearchIcon className="group-hover:flex hidden" color="white" />
-              <SearchIcon className="group-hover:hidden flex" color="#cccccc" />
-            </div>
-            <div className="group cursor-pointer">
-              <CartIcon className="group-hover:flex hidden" color="white" />
-              <CartIcon className="group-hover:hidden flex" color="#cccccc" />
-            </div>
-            <div className="flex min-[835px]:hidden cursor-pointer">
-              <MenuIcon />
-            </div>
-          </ul>
-        </div>
-      </nav>
-      <motion.div
-        className="bg-[#1d1d1f] absolute w-full overflow-hidden left-0 top-0 z-10"
-        initial={{ opacity: 0, height: 0 }}
-        animate={menuControl}
-        transition={{ duration: 0.4, delayChildren: 0.5 }}
+    <div>
+      <div
+        className="flex justify-center bg-black text-white px-1.5"
+        onMouseLeave={closeMenuAnimation}
       >
-        <div className="max-w-screen-lg mx-auto mt-11 px-4 pt-10 pb-[84px]">
-          <div>{renderSubMenu()}</div>
-        </div>
-      </motion.div>
+        <nav className="z-20 h-11 flex flex-1">
+          <div className="flex flex-1 max-w-screen-lg mx-auto px-8">
+            <ul className="flex flex-1 items-center justify-between text-xs gap-8 min-[835px]:gap-0">
+              <div className="group cursor-pointer">
+                <MacLogo className="group-hover:flex hidden" color="white" />
+                <MacLogo className="group-hover:hidden flex" color="#cccccc" />
+              </div>
+              {SubMenuNames.map((subMenu, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="hidden min-[835px]:flex text-[#cccccc] hover:text-white font-light cursor-pointer"
+                    onMouseEnter={() => {
+                      openMenuAnimation();
+                      setMenuIdx(index);
+                    }}
+                  >
+                    {subMenu}
+                  </div>
+                );
+              })}
+              <div className="flex flex-1 min-[835px]:hidden" />
+              <div className="group cursor-pointer">
+                <SearchIcon className="group-hover:flex hidden" color="white" />
+                <SearchIcon
+                  className="group-hover:hidden flex"
+                  color="#cccccc"
+                />
+              </div>
+              <div className="group cursor-pointer">
+                <CartIcon className="group-hover:flex hidden" color="white" />
+                <CartIcon className="group-hover:hidden flex" color="#cccccc" />
+              </div>
+              <div className="flex min-[835px]:hidden cursor-pointer">
+                <MenuIcon />
+              </div>
+            </ul>
+          </div>
+        </nav>
+        <motion.div
+          className="bg-[#1d1d1f] absolute w-full overflow-hidden left-0 top-0 z-10"
+          initial={{ opacity: 0, height: 0 }}
+          animate={menuControl}
+          transition={{ duration: 0.4, delayChildren: 0.5 }}
+        >
+          <div className="max-w-screen-lg mx-auto mt-11 px-4 pt-10 pb-[84px]">
+            <div>{renderSubMenu()}</div>
+          </div>
+        </motion.div>
+      </div>
+      <motion.div
+        className="fixed top-0 w-full left-0 z-[1]"
+        initial={{ backdropFilter: "none", height: 0 }}
+        animate={backDropControl}
+        transition={{ duration: 0.2 }}
+      />
     </div>
   );
 }
