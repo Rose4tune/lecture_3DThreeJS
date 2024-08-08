@@ -3,8 +3,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import PauseIcon from "@/public/icons/pause.svg";
+import PlayIcon from "@/public/icons/play.svg";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -32,6 +33,9 @@ export default function CoreCarousel() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const videosRefs = useRef([]);
+  const sectionRef = useRef(null);
+
+  const isInView = useInView(sectionRef, { amount: "all" });
 
   const handleSlideChange = (e) => {
     setActiveSlide(e.activeIndex);
@@ -93,22 +97,64 @@ export default function CoreCarousel() {
           ))}
         </Swiper>
 
-        <div className="flex justify-center sticky bottom-0 z-10 py-[100px]">
+        <div
+          ref={sectionRef}
+          className="flex justify-center sticky bottom-0 z-10 py-[100px]"
+        >
           <AnimatePresence>
-            <div className="flex flex-row">
-              <motion.div className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]">
-                <motion.div className="flex justify-center h-full overflow-hidden relative">
-                  <motion.button className="p-2 paginate">
-                    <motion.span className="bg-[#f5f5f7] h-2 rounded-full block" />
-                  </motion.button>
+            {isInView && (
+              <div className="flex flex-row">
+                <motion.div
+                  className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]"
+                  initial={{ x: 28 }}
+                  animate={{ x: 0 }}
+                  exit={{ x: 28 }}
+                >
+                  <motion.div
+                    className="flex justify-center h-full overflow-hidden relative"
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: "168px", opacity: 1 }}
+                    exit={{ width: 0, opacity: 0 }}
+                  >
+                    {VIDEOS.map((_, paginationIndex) => {
+                      return (
+                        <motion.button
+                          key={`pagination-${paginationIndex}`}
+                          className="p-2 paginate"
+                        >
+                          <motion.span
+                            className="bg-[#f5f5f7] h-2 rounded-full block"
+                            initial={{ opacity: 0, minWidth: "8px" }}
+                            animate={{
+                              opacity: 1,
+                              minWidth:
+                                activeSlide === paginationIndex
+                                  ? "48px"
+                                  : "8px",
+                            }}
+                          />
+                        </motion.button>
+                      );
+                    })}
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-              <motion.div className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]">
-                <motion.span className="cursor-pointer">
-                  <PauseIcon />
-                </motion.span>
-              </motion.div>
-            </div>
+                <motion.div
+                  className="min-h-[56px] min-w-[56px] rounded-[32px] backdrop-blur backdrop-effect bg-[#f5f5f730]"
+                  initial={{ x: -28, marginInlineStart: 0 }}
+                  animate={{ x: 0, marginInlineStart: "14px" }}
+                  exit={{ x: -28, marginInlineStart: 0 }}
+                >
+                  <motion.span
+                    className="cursor-pointer"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {isVideoPlaying ? <PauseIcon /> : <PlayIcon />}
+                  </motion.span>
+                </motion.div>
+              </div>
+            )}
           </AnimatePresence>
         </div>
       </div>
