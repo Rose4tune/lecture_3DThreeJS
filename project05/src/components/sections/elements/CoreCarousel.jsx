@@ -2,7 +2,7 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import PauseIcon from "@/public/icons/pause.svg";
 import PlayIcon from "@/public/icons/play.svg";
@@ -47,6 +47,11 @@ export default function CoreCarousel() {
     }
   };
 
+  const handlePaginationClick = (_index) => {
+    if (!swiper) return;
+    swiper.slideTo(_index);
+  };
+
   const playVideo = () => {
     if (!swiper) return;
     videosRefs.current.map((videoRef, index) => {
@@ -58,6 +63,21 @@ export default function CoreCarousel() {
       }
     });
   };
+
+  const pauseVideo = () => {
+    if (!swiper) return;
+    videosRefs.current.map((videoRef) => {
+      videoRef.pause();
+    });
+  };
+
+  const toggleVideoPlay = () => {
+    setIsVideoPlaying((prev) => !prev);
+  };
+
+  useEffect(() => {
+    isVideoPlaying ? playVideo() : pauseVideo();
+  }, [isVideoPlaying]);
 
   return (
     <div className="relative">
@@ -121,6 +141,9 @@ export default function CoreCarousel() {
                         <motion.button
                           key={`pagination-${paginationIndex}`}
                           className="p-2 paginate"
+                          onClick={() => {
+                            handlePaginationClick(paginationIndex);
+                          }}
                         >
                           <motion.span
                             className="bg-[#f5f5f7] h-2 rounded-full block"
@@ -149,6 +172,7 @@ export default function CoreCarousel() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
+                    onClick={toggleVideoPlay}
                   >
                     {isVideoPlaying ? <PauseIcon /> : <PlayIcon />}
                   </motion.span>
