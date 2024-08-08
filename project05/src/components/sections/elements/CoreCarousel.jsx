@@ -34,8 +34,10 @@ export default function CoreCarousel() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const videosRefs = useRef([]);
   const sectionRef = useRef(null);
+  const videoPlayRef = useRef(null);
 
   const isInView = useInView(sectionRef, { amount: "all" });
+  const isVideoPlayRefInView = useInView(videoPlayRef);
 
   const handleSlideChange = (e) => {
     setActiveSlide(e.activeIndex);
@@ -79,8 +81,13 @@ export default function CoreCarousel() {
     isVideoPlaying ? playVideo() : pauseVideo();
   }, [isVideoPlaying]);
 
+  useEffect(() => {
+    isVideoPlayRefInView ? setIsVideoPlaying(true) : setIsVideoPlaying(false);
+  }, [isVideoPlayRefInView]);
+
   return (
     <div className="relative">
+      <div ref={videoPlayRef} />
       <Swiper
         modules={[Autoplay]}
         className="w-full"
@@ -95,7 +102,10 @@ export default function CoreCarousel() {
           <SwiperSlide key={`slide-${index}`}>
             <div className="max-w-[1260px] w-full mx-auto relative">
               <div className="h-[680px] bg-black rounded-[28px] overflow-hidden relative">
-                <div className="w-full h-full cursor-pointer">
+                <div
+                  className="w-full h-full cursor-pointer"
+                  onClick={toggleVideoPlay}
+                >
                   <div className="absolute top-10 left-10 color-[#f5f5f7] text-[24px] font-medium whitespace-pre-line text-left">
                     {video.text}
                   </div>

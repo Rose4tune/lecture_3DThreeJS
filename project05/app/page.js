@@ -3,7 +3,7 @@ import Intro from "@/src/components/sections/Intro";
 
 export default function Home() {
   return (
-    <div className="h-[2000px] bg-[#121212]">
+    <div className="bg-[#121212]">
       <Intro />
       <Core />
     </div>
