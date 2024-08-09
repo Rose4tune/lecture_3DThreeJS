@@ -3,13 +3,14 @@
 import { motion, AnimatePresence, useAnimate, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-export default function FloatingBtnForCanvas() {
-  const sectionsRef = useRef(null);
-  const isInView = useInView(sectionsRef, { amount: "all" });
+export default function FloatingBtnForCanvas({ colors, color, setColor }) {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { amount: "all" });
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
     if (!isInView) return;
+
     const animateButton = async () => {
       if (!scope?.current) return;
       await animate(scope.current, { borderWidth: "20px" });
@@ -21,7 +22,7 @@ export default function FloatingBtnForCanvas() {
 
   return (
     <div
-      ref={sectionsRef}
+      ref={sectionRef}
       className="flex justify-center sticky bottom-0 z-10 py-[100px]"
     >
       <AnimatePresence>
@@ -47,16 +48,30 @@ export default function FloatingBtnForCanvas() {
                   }}
                   exit={{ width: 0, opacity: 0 }}
                 >
-                  <motion.div className="p-1 paginate">
-                    <motion.span
-                      className="rounded-full block w-6 h-6 cursor-pointer"
-                      style={{
-                        backgroundColor: "white",
-                        borderWidth: 2,
-                        borderColor: "blue",
-                      }}
-                    />
-                  </motion.div>
+                  {colors.map((_color, paginationIndex) => {
+                    const isSelected = color === _color.hex;
+
+                    return (
+                      <motion.div
+                        key={`pagination-${paginationIndex}`}
+                        className="p-1 paginate"
+                      >
+                        <motion.span
+                          className="rounded-full block w-6 h-6 cursor-pointer"
+                          style={{
+                            backgroundColor: _color.hex,
+                            borderWidth: isSelected ? 2 : 0,
+                            borderColor: isSelected ? "white" : _color.hex,
+                          }}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1, transition: { delay: 1 } }}
+                          onClick={() => {
+                            setColor(_color.hex);
+                          }}
+                        />
+                      </motion.div>
+                    );
+                  })}
                 </motion.div>
               </motion.div>
               <motion.div

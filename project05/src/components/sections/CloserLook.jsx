@@ -4,8 +4,23 @@ import { motion, useScroll } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import Iphone from "../models/Iphone";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import FloatingBtnForCanvas from "./buttons/FloatingBtnForCanvas";
+import { Color } from "three";
+
+const COLORS = [
+  { hex: "#8f8a81" },
+  { hex: "#202630" },
+  { hex: "#c9c8c3" },
+  { hex: "#242526" },
+];
+const COLOR_CHANGABLE_MATERIAL_NAMES = [
+  "cam",
+  "ant",
+  "frame",
+  "rglass",
+  "back",
+];
 
 export default function CloserLook() {
   const scrollRef = useRef();
@@ -17,6 +32,24 @@ export default function CloserLook() {
     target: scrollRef,
     offset: ["start end", "end start"],
   });
+
+  const [color, setColor] = useState(COLORS[0].hex);
+
+  const handleColor = () => {
+    if (!proRef.current) return;
+    proRef.current.children.map((child) => {
+      if (!child.isMesh) return;
+      const isChangable =
+        COLOR_CHANGABLE_MATERIAL_NAMES.indexOf(child.material.name) > -1;
+
+      if (!isChangable) return;
+      child.material.color = new Color(color);
+    });
+  };
+
+  useEffect(() => {
+    handleColor();
+  }, [color]);
 
   return (
     <section className="bg-black px-10">
@@ -45,7 +78,11 @@ export default function CloserLook() {
             </Canvas>
           </div>
         </div>
-        <FloatingBtnForCanvas />
+        <FloatingBtnForCanvas
+          colors={COLORS}
+          color={color}
+          setColor={setColor}
+        />
       </div>
     </section>
   );
