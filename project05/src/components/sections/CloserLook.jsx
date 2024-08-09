@@ -5,6 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import Iphone from "../models/Iphone";
 import { useRef } from "react";
+import FloatingBtnForCanvas from "./buttons/FloatingBtnForCanvas";
 
 export default function CloserLook() {
   const scrollRef = useRef();
@@ -44,6 +45,7 @@ export default function CloserLook() {
             </Canvas>
           </div>
         </div>
+        <FloatingBtnForCanvas />
       </div>
     </section>
   );
