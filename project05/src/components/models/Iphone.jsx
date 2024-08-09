@@ -5,7 +5,10 @@ import gsap from "gsap";
 import { forwardRef, useEffect } from "react";
 import { Box3, Vector3 } from "three";
 
-export default forwardRef(function IphoneMesh({ type, scrollYProgress }, ref) {
+export default forwardRef(function IphoneMesh(
+  { type, scrollYProgress, setLoading },
+  ref
+) {
   const iphoneModelFbx = useFBX(
     type === "pro" ? "/models/model_low.fbx" : "/models/model_high.fbx"
   );
@@ -20,6 +23,11 @@ export default forwardRef(function IphoneMesh({ type, scrollYProgress }, ref) {
 
     new Box3().setFromObject(obj).getCenter(newPosition);
     obj.position.setY(-newPosition.y);
+
+    if (type === "proMax") {
+      obj.position.setX(10);
+    }
+    setLoading(false);
 
     const unsubscribe = scrollYProgress.on("change", (_scrollYProgress) => {
       if (type === "proMax") return;

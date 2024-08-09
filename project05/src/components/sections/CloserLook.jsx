@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll } from "framer-motion";
+import { motion, useScroll, AnimatePresence } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import Iphone from "../models/Iphone";
@@ -37,6 +37,8 @@ export default function CloserLook() {
 
   const [color, setColor] = useState(COLORS[0].hex);
   const [model, setModel] = useState(MODELS[0]);
+  const [isProLoading, setIsProLoading] = useState(true);
+  const [isMaxLoading, setIsMaxLoading] = useState(true);
 
   const handleColor = () => {
     if (!proRef?.current || !proMaxRef?.current) return;
@@ -111,16 +113,31 @@ export default function CloserLook() {
                 <directionalLight color="white" position={[0, 0, 5]} />
               </PerspectiveCamera>
               <Iphone
-                scrollYProgress={scrollYProgress}
                 type={"pro"}
+                scrollYProgress={scrollYProgress}
+                setLoading={setIsProLoading}
                 ref={proRef}
               />
               <Iphone
-                scrollYProgress={scrollYProgress}
                 type={"proMax"}
+                scrollYProgress={scrollYProgress}
+                setLoading={setIsMaxLoading}
                 ref={proMaxRef}
               />
             </Canvas>
+            <AnimatePresence>
+              {(isProLoading || isMaxLoading) && (
+                <motion.div
+                  className="text-white absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center backdrop-blur gap-0 text-[28px]"
+                  initial={{ opacity: 1, zIndex: 1 }}
+                  exit={{ opacity: 0, zIndex: -1 }}
+                >
+                  <div>탭하고 돌려가며</div>
+                  <div>iPhone을 자세히 살펴볼 수 있습니다</div>
+                  <div>loading..</div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
         <FloatingBtnForCanvas
