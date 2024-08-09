@@ -1,13 +1,13 @@
 import Core from "@/src/components/sections/Core";
 import Intro from "@/src/components/sections/Intro";
-import CloserLook from "@/src/components/sections/CloserLook";
+import ModelingView from "@/src/components/sections/ModelingView";
 
 export default function Home() {
   return (
     <div className="bg-[#121212]">
       <Intro />
       <Core />
-      <CloserLook />
+      <ModelingView />
     </div>
   );
 }
