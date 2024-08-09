@@ -3,8 +3,12 @@
 import { motion } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import IphoneMesh from "../models/IphoneMesh";
+import { useRef } from "react";
 
 export default function IphoneModel() {
+  const iphoneRef = useRef();
+
   return (
     <section className="bg-black px-10">
       <div className="bg-black max-w-[1260px] mx-auto w-full">
@@ -24,10 +28,7 @@ export default function IphoneModel() {
               <PerspectiveCamera makeDefault position={[0, 0, 10]}>
                 <directionalLight color="white" position={[0, 0, 5]} />
               </PerspectiveCamera>
-              <mesh>
-                <boxGeometry />
-                <meshStandardMaterial />
-              </mesh>
+              <IphoneMesh type={"pro"} ref={iphoneRef} />
             </Canvas>
           </div>
         </div>
