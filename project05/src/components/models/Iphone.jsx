@@ -22,7 +22,7 @@ export default forwardRef(function IphoneMesh({ type, scrollYProgress }, ref) {
     obj.position.setY(-newPosition.y);
 
     const unsubscribe = scrollYProgress.on("change", (_scrollYProgress) => {
-      if (type === "pro-max") return;
+      if (type === "proMax") return;
       if (_scrollYProgress > THRESHOLD) {
         gsap.to(obj.rotation, { y: Math.PI / 4 });
         unsubscribe();

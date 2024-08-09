@@ -7,7 +7,9 @@ import Iphone from "../models/Iphone";
 import { useEffect, useRef, useState } from "react";
 import FloatingBtnForCanvas from "./buttons/FloatingBtnForCanvas";
 import { Color } from "three";
+import gsap from "gsap";
 
+const MODELS = ["pro", "pro-max"];
 const COLORS = [
   { hex: "#8f8a81" },
   { hex: "#202630" },
@@ -34,22 +36,56 @@ export default function CloserLook() {
   });
 
   const [color, setColor] = useState(COLORS[0].hex);
+  const [model, setModel] = useState(MODELS[0]);
 
   const handleColor = () => {
-    if (!proRef.current) return;
-    proRef.current.children.map((child) => {
-      if (!child.isMesh) return;
-      const isChangable =
-        COLOR_CHANGABLE_MATERIAL_NAMES.indexOf(child.material.name) > -1;
-
-      if (!isChangable) return;
-      child.material.color = new Color(color);
+    if (!proRef?.current || !proMaxRef?.current) return;
+    [proRef, proMaxRef].map((_ref) => {
+      _ref.current.children.map((_children) => {
+        if (!_children?.isMesh) return;
+        const isChangable =
+          COLOR_CHANGABLE_MATERIAL_NAMES.indexOf(_children.material.name) > -1;
+        if (!isChangable) return;
+        _children.material.color = new Color(color);
+      });
     });
+  };
+
+  const handleModel = () => {
+    if (!cameraRef?.current || !proRef?.current || !proMaxRef?.current) return;
+    gsap.to(cameraRef.current.position, { x: 0, y: 0, z: 10 });
+    gsap.to(proRef.current.rotation, { y: 0 });
+
+    proRef.current.visible = true;
+    proMaxRef.current.visible = true;
+
+    const isProModel = model === MODELS[0];
+
+    gsap.to(proRef.current.rotation, { y: 0 });
+    gsap.to(proRef.current.position, {
+      x: isProModel ? 0 : -10,
+      duration: 1,
+      ease: "circ.inOut",
+    });
+    gsap.to(proMaxRef.current.position, {
+      x: isProModel ? 10 : 0,
+      duration: 1,
+      ease: "circ.inOut",
+    });
+
+    setTimeout(() => {
+      proRef.current.visible = isProModel;
+      proMaxRef.current.visible = !isProModel;
+    }, [1000]);
   };
 
   useEffect(() => {
     handleColor();
   }, [color]);
+
+  useEffect(() => {
+    handleModel();
+  }, [model]);
 
   return (
     <section className="bg-black px-10">
@@ -67,13 +103,22 @@ export default function CloserLook() {
             <Canvas id="canvas">
               <ambientLight intensity={0.1} />
               <OrbitControls enableZoom={false} enablePan={false} />
-              <PerspectiveCamera makeDefault position={[0, 0, 10]}>
+              <PerspectiveCamera
+                ref={cameraRef}
+                makeDefault
+                position={[0, 0, 10]}
+              >
                 <directionalLight color="white" position={[0, 0, 5]} />
               </PerspectiveCamera>
               <Iphone
                 scrollYProgress={scrollYProgress}
                 type={"pro"}
                 ref={proRef}
+              />
+              <Iphone
+                scrollYProgress={scrollYProgress}
+                type={"proMax"}
+                ref={proMaxRef}
               />
             </Canvas>
           </div>
@@ -82,6 +127,8 @@ export default function CloserLook() {
           colors={COLORS}
           color={color}
           setColor={setColor}
+          model={model}
+          setModel={setModel}
         />
       </div>
     </section>

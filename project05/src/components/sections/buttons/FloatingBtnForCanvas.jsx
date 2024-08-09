@@ -3,7 +3,13 @@
 import { motion, AnimatePresence, useAnimate, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-export default function FloatingBtnForCanvas({ colors, color, setColor }) {
+export default function FloatingBtnForCanvas({
+  colors,
+  color,
+  setColor,
+  model,
+  setModel,
+}) {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { amount: "all" });
   const [scope, animate] = useAnimate();
@@ -90,7 +96,9 @@ export default function FloatingBtnForCanvas({ colors, color, setColor }) {
                 exit={{ backgroundColor: "#f5f5f780", marginLeft: 0 }}
               >
                 <motion.div
-                  className={`cursor-pointer flex items-center justify-center cursor-pointer px-2 rounded-full `}
+                  className={`cursor-pointer flex items-center justify-center cursor-pointer px-2 rounded-full ${
+                    model === "pro" ? "bg-white text-black" : "text-white"
+                  }`}
                   initial={{ opacity: 0, width: 0 }}
                   animate={{
                     opacity: 1,
@@ -98,11 +106,16 @@ export default function FloatingBtnForCanvas({ colors, color, setColor }) {
                     transition: { delay: 1 },
                   }}
                   exit={{ opacity: 0 }}
+                  onClick={() => {
+                    setModel("pro");
+                  }}
                 >
                   15.5cm
                 </motion.div>
                 <motion.div
-                  className={`cursor-pointer flex items-center justify-center cursor-pointer px-2 rounded-full`}
+                  className={`cursor-pointer flex items-center justify-center cursor-pointer px-2 rounded-full ${
+                    model === "proMax" ? "bg-white text-black" : "text-white"
+                  }`}
                   initial={{ opacity: 0, width: 0 }}
                   animate={{
                     opacity: 1,
@@ -110,6 +123,9 @@ export default function FloatingBtnForCanvas({ colors, color, setColor }) {
                     transition: { delay: 1 },
                   }}
                   exit={{ opacity: 0 }}
+                  onClick={() => {
+                    setModel("proMax");
+                  }}
                 >
                   17.0cm
                 </motion.div>
