@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
+import { motion, useTransform, useScroll, useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export default function DetailView() {
   const textInitial = { opacity: 0, y: 20 };
@@ -9,7 +9,7 @@ export default function DetailView() {
   const textViewport = { amout: "all" };
 
   const imgRef = useRef(null);
-
+  const videoRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: imgRef,
     offset: ["start end", "50% center"],
@@ -17,6 +17,14 @@ export default function DetailView() {
 
   const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const scale = useTransform(scrollYProgress, [0, 1], [1.5, 1]);
+  const isInView = useInView(videoRef, { amount: "all" });
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+    if (isInView) {
+      videoRef.current.play();
+    }
+  }, [isInView]);
 
   return (
     <section className="bg-[#101010] flex flex-col pt-[200px] pb-[100px] px-10">
@@ -35,7 +43,13 @@ export default function DetailView() {
           </div>
           <div className="flex flex-col gap-4 mt-[100px]">
             <div className="">
-              <video playsInline autoPlay muted src="/videos/section3_1.mp4" />
+              <video
+                ref={videoRef}
+                playsInline
+                autoPlay
+                muted
+                src="/videos/section3_1.mp4"
+              />
             </div>
             <div className="flex flex-row gap-4">
               <div className="flex flex-1 flex-col">
