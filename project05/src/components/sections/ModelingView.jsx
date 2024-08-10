@@ -24,7 +24,7 @@ const COLOR_CHANGABLE_MATERIAL_NAMES = [
   "back",
 ];
 
-export default function CloserLook() {
+export default function ModelingView() {
   const scrollRef = useRef();
   const proRef = useRef();
   const proMaxRef = useRef();
