@@ -2,6 +2,7 @@
 
 import { motion, useTransform, useScroll, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
+import FloatingPlusBtn from "./buttons/FloatingPlusBtn";
 
 export default function DetailView() {
   const textInitial = { opacity: 0, y: 20 };
@@ -99,6 +100,7 @@ export default function DetailView() {
             </motion.div>
           </div>
         </div>
+        <FloatingPlusBtn title="디자인 및 디스플레이에 대해 더 알아보기" />
       </div>
     </section>
   );
