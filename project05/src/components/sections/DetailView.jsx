@@ -15,8 +15,8 @@ export default function DetailView() {
     offset: ["start end", "50% center"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1.5, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.2, 1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1.3, 1]);
   const isInView = useInView(videoRef, { amount: "all" });
 
   useEffect(() => {
