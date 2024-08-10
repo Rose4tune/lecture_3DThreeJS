@@ -4,6 +4,7 @@ import Image from "next/image";
 import RenderVideo from "./elements/RenderVideo";
 import RenderDescription from "./elements/RenderDescription";
 import { motion } from "framer-motion";
+import FloatingPlusBtn from "./buttons/FloatingPlusBtn";
 
 export default function A17ProChip() {
   return (
@@ -32,6 +33,7 @@ export default function A17ProChip() {
         </div>
         <RenderVideo />
         <RenderDescription />
+        <FloatingPlusBtn title="A17 Pro 칩 속속들이 살펴보기" />
       </div>
     </section>
   );
