@@ -1,11 +1,22 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useTransform, useScroll } from "framer-motion";
+import { useRef } from "react";
 
 export default function DetailView() {
   const textInitial = { opacity: 0, y: 20 };
   const textWhileInView = { opacity: 1, y: 0 };
   const textViewport = { amout: "all" };
+
+  const imgRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: imgRef,
+    offset: ["start end", "50% center"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1.5, 1]);
 
   return (
     <section className="bg-[#101010] flex flex-col pt-[200px] pb-[100px] px-10">
@@ -29,16 +40,24 @@ export default function DetailView() {
             <div className="flex flex-row gap-4">
               <div className="flex flex-1 flex-col">
                 <div className="flex flex-1 bg-black aspect-square overflow-hidden">
-                  <div className="flex flex-1 bg-black aspect-square">
+                  <motion.div
+                    ref={imgRef}
+                    className="flex flex-1 bg-black aspect-square"
+                    style={{ opacity, scale }}
+                  >
                     <img src="/images/explore_1.jpeg" />
-                  </div>
+                  </motion.div>
                 </div>
               </div>
               <div className="flex flex-1 flex-col">
                 <div className="flex flex-1 bg-black aspect-square overflow-hidden">
-                  <div className="flex flex-1 bg-black aspect-square">
+                  <motion.div
+                    ref={imgRef}
+                    className="flex flex-1 bg-black aspect-square"
+                    style={{ opacity, scale }}
+                  >
                     <img src="/images/explore_2.jpeg" />
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </div>
