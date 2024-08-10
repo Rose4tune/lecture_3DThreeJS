@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-three/drei": "^9.109.5",
     "@react-three/fiber": "^8.16.8",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "framer-motion": "^11.3.21",
     "gsap": "^3.12.5",
     "next": "14.2.5",
