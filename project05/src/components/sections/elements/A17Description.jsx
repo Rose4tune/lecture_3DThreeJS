@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export default function RenderDescription() {
+export default function A17Description() {
   return (
     <div className="flex flex-row flex-1 py-[60px] text-[21px] font-semibold w-full">
       <div className="flex flex-1 flex-col gap-4">

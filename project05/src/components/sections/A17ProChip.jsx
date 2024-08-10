@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import RenderVideo from "./elements/RenderVideo";
-import RenderDescription from "./elements/RenderDescription";
+import A17Description from "./elements/A17Description";
 import { motion } from "framer-motion";
 import FloatingPlusBtn from "./buttons/FloatingPlusBtn";
 
@@ -32,7 +32,7 @@ export default function A17ProChip() {
           마침내 Apple GPU 사상 가장 큰 변화가 찾아왔습니다.
         </div>
         <RenderVideo />
-        <RenderDescription />
+        <A17Description />
         <FloatingPlusBtn title="A17 Pro 칩 속속들이 살펴보기" />
       </div>
     </section>
