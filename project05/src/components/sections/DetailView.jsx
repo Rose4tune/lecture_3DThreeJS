@@ -1,12 +1,23 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 export default function DetailView() {
+  const textInitial = { opacity: 0, y: 20 };
+  const textWhileInView = { opacity: 1, y: 0 };
+  const textViewport = { amout: "all" };
+
   return (
     <section className="bg-[#101010] flex flex-col pt-[200px] pb-[100px] px-10">
       <div className="max-w-[1260px] mx-auto w-full">
-        <div className="text-[56px] text-[#86868b] font-semibold">
+        <motion.div
+          className="text-[56px] text-[#86868b] font-semibold"
+          initial={textInitial}
+          whileInView={textWhileInView}
+          viewport={textViewport}
+        >
           본격적으로 탐구해 보기.
-        </div>
+        </motion.div>
         <div className="flex flex-col pt-[200px] max-w-[1050px] mx-auto w-full">
           <div className="text-[80px] text-[#f5f5f7] leading-tight font-semibold px-2 whitespace-pre-line">
             iPhone.{"\n"}티타늄을 두르다.
@@ -31,7 +42,12 @@ export default function DetailView() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-1 flex-row gap-4 items-center justify-center py-20 text-[21px] text-[#86868b]">
+            <motion.div
+              className="flex flex-1 flex-row gap-4 items-center justify-center py-20 text-[21px] text-[#86868b]"
+              initial={textInitial}
+              whileInView={textWhileInView}
+              viewport={textViewport}
+            >
               <div className="max-w-[330px] mx-auto w-full">
                 <span className="text-white">
                   iPhone 사상 최초로 항공우주 등급의 티타늄 디자인
@@ -47,7 +63,7 @@ export default function DetailView() {
                 </span>
                 . 기기를 집어드는 순간, 가벼워진 무게감이 확연히 느껴지죠.
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
