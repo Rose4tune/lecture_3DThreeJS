@@ -1,4 +1,5 @@
 import A17ProChip from "@/src/components/sections/A17ProChip";
+import CameraPerformance from "@/src/components/sections/CameraPerformance";
 import Core from "@/src/components/sections/Core";
 import DetailView from "@/src/components/sections/DetailView";
 import Intro from "@/src/components/sections/Intro";
@@ -12,6 +13,7 @@ export default function Home() {
       <ModelingView />
       <DetailView />
       <A17ProChip />
+      <CameraPerformance />
     </div>
   );
 }
