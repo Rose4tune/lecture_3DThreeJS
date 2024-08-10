@@ -1,4 +1,5 @@
 import Core from "@/src/components/sections/Core";
+import DetailView from "@/src/components/sections/DetailView";
 import Intro from "@/src/components/sections/Intro";
 import ModelingView from "@/src/components/sections/ModelingView";
 
@@ -8,6 +9,7 @@ export default function Home() {
       <Intro />
       <Core />
       <ModelingView />
+      <DetailView />
     </div>
   );
 }
