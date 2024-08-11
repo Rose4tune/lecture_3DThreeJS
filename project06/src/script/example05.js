@@ -1,12 +1,14 @@
 import gsap from "gsap";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 function pageExample05() {
   makeMainVideo();
   makeSection();
   makeHeader();
+  makeFooter();
 }
 
 const makeMainVideo = () => {
@@ -166,6 +168,16 @@ const makeHeader = () => {
     }
 
     lastScroll = currentScroll;
+  });
+};
+
+const makeFooter = () => {
+  const footerNav = document.querySelector(".footer-nav");
+  footerNav.querySelector(".nav-1").addEventListener("click", () => {
+    gsap.to(window, {
+      duration: 2,
+      scrollTo: "#TOP",
+    });
   });
 };
 
