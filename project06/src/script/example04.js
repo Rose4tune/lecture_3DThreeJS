@@ -53,7 +53,25 @@ const makeMainVideo = () => {
   preloadImages();
 };
 
-const makeSection = () => {};
+const makeSection = () => {
+  const sections = document.querySelectorAll(".section");
+
+  sections.forEach((section) => {
+    const h1 = section.querySelector(".title");
+    gsap.set(h1, { opacity: 0 });
+    gsap.to(h1, {
+      opacity: 1,
+      scrollTrigger: {
+        trigger: section,
+        start: "top center",
+        end: "bottom center",
+        markers: true,
+        toggleActions: "play reverse play reverse",
+      },
+      duration: 3,
+    });
+  });
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   pageExample04();
