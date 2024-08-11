@@ -1,3 +1,5 @@
+import { gsap } from "gsap";
+
 function pageExample03() {
   const html = document.documentElement;
   const canvas = document.querySelector("canvas");
@@ -42,6 +44,13 @@ function pageExample03() {
   preloadImages();
 }
 
+function makeSection() {
+  gsap.to(".box1", { rotate: 27, x: 120, duration: 1 });
+  gsap.from(".box2", { rotate: 27, x: 120, duration: 1 });
+  gsap.fromTo(".box3", { x: -100 }, { rotate: 27, x: 120, duration: 1 });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   pageExample03();
+  makeSection();
 });
