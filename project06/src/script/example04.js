@@ -53,31 +53,7 @@ const makeMainVideo = () => {
   preloadImages();
 };
 
-const makeSection = () => {
-  const second = document.querySelector(".second");
-  gsap.to(second.querySelector(".title"), {
-    x: 100,
-    color: "purple",
-    scrollTrigger: {
-      trigger: second,
-      // scroll start, end 확인 할 수 있음
-      markers: true,
-      // triger, 기준선 위치 변경 가능
-      // "(trigger position), (animate position)"
-      start: "top center",
-      end: "bottom center",
-      // up -> down 확인 가능
-      onEnter: () => console.log("entered"),
-      onLeave: () => console.log("leave"),
-      // down -> up 확인 가능
-      onEnterBack: () => console.log("onEnterBack"),
-      onLeaveBack: () => console.log("onLeaveBack"),
-      // onEnter, onLeave, onEnterBack, onLeaveBack 순서대로 함수 실행 지정
-      toggleAttribute: "play reverse play reverse",
-    },
-    duration: 5,
-  });
-};
+const makeSection = () => {};
 
 document.addEventListener("DOMContentLoaded", () => {
   pageExample04();
