@@ -109,7 +109,7 @@ const makeSection = () => {
       start: "top top",
       end: "+=300%",
       pin: true,
-      toggleActions: "play reverse play reverse",
+      toggleActions: "play reverse play reverse", // 통통 튀는 느낌내기 좋음
     },
     ease: "elastic.inOut(1.2, 0.75",
   });
@@ -118,6 +118,30 @@ const makeSection = () => {
     scale: 0,
     stagger: 0.04, // 각각이 다르게 지연되서 나오게 할 수 있음
   });
+
+  const imgSection = document.querySelector(".img-container");
+  const t4 = gsap.timeline({});
+  t4.fromTo(
+    imgSection,
+    {
+      y: 0,
+    },
+    {
+      y: 0,
+      scale: 0.8,
+      duration: 2,
+      ease: "power4.out",
+      scrollTrigger: {
+        pin: sections[4],
+        start: "top center",
+        end: "+=10000",
+        scrub: true, // 스무스한 느낌 내기 좋음
+        markers: true,
+        // 화면 크기 변경되거나 새로고침 될 때 애니메이션 상태 초기화 해줌 (반응형 최적화)
+        invalidateOnRefresh: true,
+      },
+    }
+  );
 };
 
 document.addEventListener("DOMContentLoaded", () => {
