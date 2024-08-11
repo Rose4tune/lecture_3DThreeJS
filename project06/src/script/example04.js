@@ -55,21 +55,23 @@ const makeMainVideo = () => {
 
 const makeSection = () => {
   const sections = document.querySelectorAll(".section");
+  const title = document.querySelector(".title");
 
-  sections.forEach((section) => {
-    const h1 = section.querySelector(".title");
-    gsap.set(h1, { opacity: 0 });
-    gsap.to(h1, {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: section,
-        start: "top center",
-        end: "bottom center",
-        markers: true,
-        toggleActions: "play reverse play reverse",
-      },
-      duration: 3,
-    });
+  const t1 = gsap.timeline({
+    scrollTrigger: {
+      trigger: sections[1],
+      pin: true, // 트리거로 지정된 요소가 뷰포트 안에 고정되도록 해준다
+      scrub: 0.3, // 애니메이션 지연시켜 부드럽게 만들어준다 (1이 될수록 많이 부드러워진다)
+      start: "top top",
+      end: "+=300%", // 트리거의 시작부터 뷰포트의 3배까지 스크롤 할 때까지 스크롤트리거 활성화
+      markers: true,
+      toggleActions: "play reverse play reverse",
+    },
+  });
+
+  t1.from(title, {
+    autoAlpha: 0,
+    duration: 2,
   });
 };
 
