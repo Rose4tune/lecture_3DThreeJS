@@ -6,6 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 function pageExample05() {
   makeMainVideo();
   makeSection();
+  makeHeader();
 }
 
 const makeMainVideo = () => {
@@ -142,6 +143,30 @@ const makeSection = () => {
       },
     }
   );
+};
+
+const makeHeader = () => {
+  const body = document.querySelector("body");
+  let lastScroll = 0;
+
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll <= 0) {
+      body.classList.remove("up");
+      return;
+    }
+
+    if (currentScroll > lastScroll && !body.classList.contains("down")) {
+      body.classList.add("down");
+      body.classList.remove("up");
+    } else if (currentScroll < lastScroll && !body.classList.contains("up")) {
+      body.classList.add("up");
+      body.classList.remove("down");
+    }
+
+    lastScroll = currentScroll;
+  });
 };
 
 document.addEventListener("DOMContentLoaded", () => {
