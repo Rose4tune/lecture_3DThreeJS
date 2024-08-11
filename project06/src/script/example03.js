@@ -45,9 +45,16 @@ function pageExample03() {
 }
 
 function makeSection() {
-  gsap.to(".box1", { rotate: 27, x: 120, duration: 1 });
-  gsap.from(".box2", { rotate: 27, x: 120, duration: 1 });
-  gsap.fromTo(".box3", { x: -100 }, { rotate: 27, x: 120, duration: 1 });
+  const t1 = gsap.to(".box1", { rotate: 27, x: 120, duration: 1 });
+  document.querySelector(".restart").addEventListener("click", () => {
+    t1.restart();
+  });
+  document.querySelector(".start").addEventListener("click", () => {
+    t1.play();
+  });
+  document.querySelector(".pause").addEventListener("click", () => {
+    t1.pause();
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
