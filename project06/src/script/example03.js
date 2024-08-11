@@ -1,3 +1,5 @@
+import { gsap } from "gsap";
+
 function pageExample03() {
   const html = document.documentElement;
   const canvas = document.querySelector("canvas");
@@ -42,6 +44,20 @@ function pageExample03() {
   preloadImages();
 }
 
+function makeSection() {
+  const t1 = gsap.to(".box1", { rotate: 27, x: 120, duration: 1 });
+  document.querySelector(".restart").addEventListener("click", () => {
+    t1.restart();
+  });
+  document.querySelector(".start").addEventListener("click", () => {
+    t1.play();
+  });
+  document.querySelector(".pause").addEventListener("click", () => {
+    t1.pause();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   pageExample03();
+  makeSection();
 });
