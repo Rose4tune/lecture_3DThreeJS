@@ -68,10 +68,34 @@ const makeSection = () => {
       toggleActions: "play reverse play reverse",
     },
   });
-
   t1.from(title, {
     autoAlpha: 0,
     duration: 2,
+  });
+
+  const production = document.querySelector(".product-explain");
+  const t2 = gsap.timeline({
+    scrollTrigger: {
+      trigger: sections[2],
+      pin: true,
+      scrub: 0.3,
+      start: "top top",
+      end: "+=300%",
+      markers: true,
+    },
+  });
+  t2.from(production, {
+    x: "300%",
+    autoAlpha: 0,
+    duration: 2,
+    stagger: 3,
+  }).to(production, { duration: 3 });
+
+  gsap.to(production.querySelector(".dot"), {
+    duration: 1,
+    opacity: 1,
+    scale: 1.2,
+    repeat: Infinity,
   });
 };
 
